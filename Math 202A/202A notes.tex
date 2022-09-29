@@ -1,0 +1,250 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{amsmath}
+\pagestyle{fancy}{
+	\fancyhead[L]{Fall 2022}
+	\fancyhead[C]{202A - Complex Analysis}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+
+\title{220A - Riemann Surfaces}
+\author{John White}
+\date{Fall 2022}
+
+\begin{document}
+
+\section*{Lecture 1}
+
+We begin by trying to gain a deeper understanding of the Cauchy-Riemann equations. 
+
+Let $f:X\to \C$, where $X \subset \C^n$. For now, let's say $X \subset \C$. In real analysis, we have a notion of differentiability for $f:\R^n\to\R^k$. We can say that $f$ is differentiable at a point $p \in X$ when
+\[
+f(p + h) = f(p) + (df_p)h + \rho(h)
+\]
+Where $(df)_p:\R^n\to\R^k$ is a linear map $\in \Hom_{\R}(\R^n,\R^k)$, and $\frac{|\rho(h)|}{|h|} \to 0$ as $h \to 0$. 
+
+So we can think of the ``real differential" as a linear map in $\Hom_{\R}(\C^n,\C)$. 
+
+\defn
+
+Let $X \subset \C$, and $f:X\to\C$. Differentiability refers to the existence of a $(df)_p \in \Hom_{\R}(\C,\C)$. 
+
+So, $f$ is complex differentiable at $p \in X$ means that 
+\[
+f(p + h) = f(p) + f'(p)h + \rho(h)
+\]
+Where $f'(p)$ is a complex number and $\frac{|\rho(h)|}{|h|}\to 0$. 
+
+If $A \in \Hom_{\C})(\C,\C) \cong \C$, $A(z) = \alpha z, \alpha \in \C$. 
+
+So $(df)_p \in \Hom_{\C}(\C,\C)$.
+
+$\Hom_{\C}(\C,\C)$ is a $\C$-vector space of dimension 1. 
+
+$\Hom_{\R}(\C, \C) \cong \Hom_{\R}(\R^2,\R^2)$ is a $\C$-vector space of dimension 2. 
+
+So where did the extra dimension go? What happened? 
+
+Consider an element of $\Hom_{\R}(\C,\C)$ given by $\begin{pmatrix} x \\ y \end{pmatrix} \mapsto x - iy$. 
+
+We also have $\begin{pmatrix} x \\ y \end{pmatrix} \mapsto x + iy$. 
+
+From the real analysis point of view, these two functions are equal to their differentials. The first is called $d\bar{z}$, and the second is called $dz$.
+
+$dz = dx + idy$ and
+$d\bar{z} = dx - idy$
+\begin{align*}
+dx\begin{pmatrix} h_1 \\ h_2 \end{pmatrix} & = h_1 \\
+dy\begin{pmatrix} h_1 \\ h_2 \end{pmatrix} & = h_2 \\
+\end{align*}
+
+On a complex vector space, suppose $\phi\in\Hom_{\mathbb{K}}(\C^n,\C)$, we have $(\bar{\phi})(v) = \bar{\phi(v)}.$ So $\bar{dz} = d\bar{z}$. 
+
+Now, $\C$-valued real differentiable functions are just pairs of $\R$-valued real differentiable functions. 
+
+\exm
+
+If $k, m \in \N$, then $z^k\bar{z}^m:\C\to\C$ is a \underline{real} smooth function (when viewed as an element of $\Hom_{\R}(\R^2, \R^2)$), with
+
+\[
+d(z^k\bar{z}^m) = kz^{k - 1}\bar{z}^m + m\bar{z}^{m - 1}z^kd\bar{z}
+\]
+
+We will study the differences between $\Hom_{\R}(\C^n, \C)$ versus $\Hom_{\C}(\C^n, \C)$, with complex dimensions $2$ and $1$, respectively. 
+
+\defn Let $V$ be a real vector space. 
+
+A \underline{complex structure} on $V$ is a $J \in \End_{\R}(V)$ which satisfies $J^2 = -\operatorname{Id}_V$
+
+\prop Define $V_J = V$ as a set and group, with a $\C$-action $\C\times V_J \to V_J$ defined by $((\alpha + i\beta), x) \mapsto \alpha x + \beta Jx.$
+
+\proof Check $z(wx) = (zw)x$ for all $z, w \in \C$ and $x \in V_J$. 
+
+\prop If a vector space $V$ admits a complex structure $J$, then $\dim_\R V = 2n$. Further, $\dim_\R V = 2\dim_\C V_J$. 
+
+\proof 
+
+First, $\det(J^2) = \det(-id_V) = (-1)^{\dim_\R V}$, so the dimension must be even. Alternatively, if $e_1, \dots, e_n$ is a basis of $V_J$, then check $e_1, \dots, e_n, Je_1, \dots, Je_n$ is a basis of $V$ over $R$.
+
+\exm For $\R^2$, let $J_0 = \begin{pmatrix} 0 & - 1\\ 1 & 0 \\ \end{pmatrix}$. We see that $J_0\begin{pmatrix}x \\ y\end{pmatrix} = \begin{pmatrix} -y \\ x \end{pmatrix}$.  This is like $i(x + iy) = ix - y$.
+
+So $A: (\R^2)_{J_0} \to \C$ is an isomorphism of $\C$-vector spaces. 
+
+Let $W$ be a vector space over $\C$. Consider $W_{\R}$, a real vector space. We see $\dim_{\R}W_{\R} = 2\dim_{\C}W$. Consider $J:W_\R\to W\R$ given by $x \mapsto ix$. Then $J^2 = -\Id_{W_\R}$. 
+
+Let $V$ be a real vector space with complex structure $J$. Consider $\Hom_{\R}(V, \C) =\C\otimes_{\R} V^*$. 
+
+$J^t: \Hom_{\R}(V, \C)\to\Hom_{\R}(V, \C)$, we can express $\Hom_{\R}(V,\C) \ni \phi = \phi_1 + \phi_2$, and by definition, 
+\[
+J^t \phi = \phi \circ J = \phi_1 \circ J + i\phi_2 \circ J
+\]
+So $(J^t)^2 = -1$. 
+
+$J^t \in \End_{\C}(\Hom_{\R}(V, \C))$. 
+
+Main observation: $\phi \in \Hom_\R(V, \C)$ is $\C$-linear in $V_j$, meaning $\phi(ix) = i\phi(x)$, which is equivalent to $\phi(Jx) = i\phi(x)$. 
+
+In other words, such a $\phi$ is only $\C$-linear if $\phi$ is an eigenfunction of $J^t$ with eigenvalue $i$. 
+
+\defn $\phi$ is $\C$-antilinear on $V_J$ means 
+\[
+\phi((\alpha + i\beta)x) = \bar{(\alpha + i\beta)}\phi(x)
+\]
+for all $x \in V$. 
+
+We denote the space of $\C$-antilinear functionals by $\bar{\Hom}_{\C}(V_J,\C)$. 
+
+In fact, there is an isomorphism between $\Hom_{\C}(V_J,\C)$ and $\bar{\Hom}_{\C}(V_J, \C)$ as \underline{real} vector spaces. 
+
+\thm 
+
+Let $V$ be a real vector space with complex structure $J$. Then
+\begin{enumerate}
+\item $\Hom_{\R}(V, \C) = \Hom_{\C}(V_J, \C)\oplus\bar{\Hom}_{\C}(V_J, \C)$. 
+\item If $\Hom_{\C}(V_J, \C) := V^{1, 0}$, and $\bar{\Hom}_{\C}(V_J, \C) := V^{0, 1}$, then $\Hom_{\R}(V,\C) = V^{1, 0} \oplus_{\C}V^{0, 1}$. 
+\item $\dim_{\C}V^{1, 0} = \dim_{\C}V^{0, 1} = \frac{\dim_{\C}(\Hom_{\R}(V, \C))}{2}$
+\end{enumerate}
+
+\proof
+
+Observe that $\phi \in \Hom_{\R}(V, \C)$ can be written as 
+\[
+\phi = \frac{\phi -i\phi\circ J}{2} + \frac{\phi + i\phi\circ J}{2} = \frac{\phi(Jx) + i\phi(x)}{2} = i\frac{\phi - i\phi\circ J}{2}(x) = \phi
+\]
+
+Further, $V^{1, 0} \cap V^{0, 1} = 0$ by the definitions, so we are done. 
+
+\qed
+
+Thus, any differential can be split into a $\C$-linear and a $\C$-antilinear part. 
+
+\defn
+
+$\pi^{1, 0}$ is projection on the first factor, $\pi^{0, 1}$ is projection onto the second. We have
+\[
+\phi = \pi^{1, 0}\phi + \pi^{0, 1}\phi
+\]
+
+\cor
+
+If $\phi \in \Hom_{\R}(V,\C)$, then $\phi$ being $\C$-linear (i.e $\phi \in V^{1, 0}$) if and only if $\pi^{0, 1}\phi = 0$. 
+
+\defn
+
+Applying to $(df)_p \in \Hom_{\R}(V, \C)$, then 
+\[
+(df)_p = \pi^{1, 0}df_p + \pi^{0, 1}df_p
+\]
+Say $\pi^{1, 0}df_p = \underbrace{\partial f_p}_{\text{ complex linear}}$ and $\pi^{0, 1}df_p = \underbrace{\bar{\partial}df_p}_{\text{ complex antilinear}}$
+
+\thm A function $f:X\to\C$ is $\C$-differentiable at $p \in X$ if and only if $f$ is $\R$-differentiable at $p$ and $df_p = \partial f_p$, which happens if and only if $\bar{\partial}f_p = 0$. 
+
+\proof
+
+We have $\C \cong \R^2_{J_0}$, which has standard basis $\R^2 = \langle e_1, e_2\rangle_{\R^2}$. This has a dual basis in $\Hom_{\R}(\R^2, \R)$ given by $dx$ and $dy$. That is, $\Hom_{\R}(\R^2, \C) = \langle dx, dy \rangle_{\C}$. 
+
+$J_0e_1 = e_2$ and $J_0e_2 = -e_1$, so $dx \circ J_0 = -dy$ and $dy \circ J_0 = dx$. 
+
+\begin{align*}
+\pi^{0, 1}dx & =\frac{1}{2}(dx - idx\circ J_0)\\
+				 & = \frac{1}{2}(dx + idy) & := dz \\
+\end{align*}
+
+Further, 
+\begin{align*}
+\pi^{0, 1}dx & = \frac{1}{2}d\bar{z} \\
+\pi^{1, 0}dy & = \frac{1}{2}dz \\
+\end{align*}
+
+So 
+\[
+df = f_xdx + f_ydy = \frac{f_x - if_y}{2}dz + \frac{f_x + if_y}d\bar{z} = \partial f + \bar{\partial} f
+\]
+
+\defn
+
+\begin{align*}
+\frac{\partial}{\partial z} & = \frac{\partial_x - i\partial_y}{2} \\
+\frac{\partial}{\partial \bar{z}} & = \frac{\partial_x + i\partial_y}{2} \\
+\end{align*}
+
+So 
+
+\[
+df = \frac{\partial f}{\partial z}dz + \frac{\partial f}{\partial \bar{z}}d\bar{z}
+\]
+
+So analyticity is equivalent to $df = \partial f$, meaning $\bar{\partial}f = 0$, which is equivalent to $\frac{\partial f}{\partial \bar{z}} = 0$, which means
+\[
+\frac{\partial (u + iv)}{\partial\bar{z}} = 0
+\]
+So $(\partial_x + i\partial_y)(u + iv) = 0$. Multiplying out, we get
+\begin{align*}
+u_x & = v_y \\
+u_y = - v_x \\
+\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
