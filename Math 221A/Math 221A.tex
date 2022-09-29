@@ -1,0 +1,209 @@
+\documentclass[x11names,reqno,14pt]{extarticle}
+\input{preamble}
+\usepackage[document]{ragged2e}
+\usepackage{amsmath}
+\pagestyle{fancy}{
+	\fancyhead[L]{Fall 2022}
+	\fancyhead[C]{221A - General Topology}
+	\fancyhead[R]{John White}
+  
+  \fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+	\fancyfoot[C]{}
+	}
+\fancypagestyle{firststyle}{
+     \fancyhead[L]{}
+     \fancyhead[R]{}
+     \fancyhead[C]{}
+     \renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
+}
+
+\title{220A - Groups}
+\author{John White}
+\date{Fall 2022}
+
+
+
+
+\begin{document}
+
+\section{Lecture 1}
+
+\defn[1]{Metric Space}
+
+A metric space is a set $X$ equipped with a function $d:X\times X \to \R$, which satisfies the following axioms:
+\begin{enumerate}
+	\item For any $x, y \in X$, $d(x, y) = d(y, x)$
+	\item For any $x, y, z \in X$, we have $d(x, y) \leq d(x, z) + d(z, y)$. This is called the triangle inequality
+	\item For any $x, y \in X$, $d(x, y) = 0$ exactly when $x = y$.
+
+\end{enumerate}
+
+\exm
+
+For $x, y \in \R^n$, 
+\[
+d(x, y) := \left(\sum_{i=1}^n(x_i - y_i)^2\right)^{\frac{1}{2}}
+\]
+
+This is called the Euclidean distance. 2 can be replaced with any real $r \geq 1$, and it will still be a metric. 
+
+\exm 
+
+In this example, $C[0, 1]$ is the set of all continuous functions $f:[0, 1]\to\R$. Here, 
+\[
+d(f, g) := \sup_{x\in[0,1]}|f(x)- g(x)|
+\]
+
+\exm
+
+Let $X = \N$, the natural numbers, including $0$. Let $p$ be a fixed prime number. The $p$-adic metric on $\N$ is defined by 
+\[
+d_p(a, b) := \frac{1}{p^\alpha} 
+\]
+Where $p^\alpha$ is the largest power of $p$ which divides $|a - b|$. So two naturals are ``close" if their difference is divisible by a high power of $p$. 
+
+\claim[1]{This is a metric}
+\proof
+The 1st and 3rd axioms are clear. So we must prove the triangle inequality. We will consider the three quantities $d_p(a, b), d_p(a, t)$, and $d_p(b, t)$, where $a, b, t \in \N$. 
+
+Suppose $p^\beta$ divides both $a - t$ and $t - b$. Then $p^\beta$ divides $(a - t) + (t - b) = a - b$. Therefore, 
+\[
+d_p(a, b) \leq \frac{1}{p^\beta} \leq \max(d_p(a, t), d_p(t, b)) \leq d_p(a, t) + d_p(t, b)
+\]
+\qed
+
+\defn[2]{Continuity}
+
+Let $(X, d_X), (Y, d_Y)$ be two metric spaces. For a function $f:X\to Y$, we say that $f$ is continuous at $x_0 \in X$ if, for all $\epsilon > 0$, there is a $\delta > 0$ such that 
+\[
+0 < |d_X(x_0, x)| < \delta \implies |d_Y(f(x_0), f(x))| < \epsilon
+\]
+
+A function $f:X\to Y$ is said to be continuous if it is continuous at $x$ for all $x \in X$. 
+
+\exm
+
+Consider a map $(\N, d_5) \to (\N, d_5)$ defined by 
+\[
+x\mapsto x^2
+\]
+
+Is this continuous? 
+
+At 0, to be continuous, then for any $x$, if we want to get within a small distance of 0, then $x$ has to be divisible by large powers of $5$. 
+
+What about at $11$?
+
+This is continuous. 
+
+\exm
+
+What about $(\N,d_5) \to (\N, d_{17})$. 
+
+\section{Lecture 2}
+
+\thm
+
+If $f:(X, d_X)\to (Y, d_Y)$ and $g:(Y, d_Y)\to(Z, d_Z)$ are both continuous, then $g \circ f:(X, d_X)\to(Z, d_Z)$
+
+\proof
+
+Fix $x \in X$ and $\varepsilon>0$. Choose $\delta_1 > 0$ so that if $d_Y(f(x), y) < \delta_1$, then $d_Z(gf(x), g(y)) < \varepsilon$. 
+
+By continuity of $f$, we may then choose a $\delta_0 > 0$ such that if $d_X(x, x') < \delta_2$, then $d_Y(f(x), f(x')) < \delta_1$. 
+
+\qed
+
+\defn For a metric space $(X, d_X)$, and a real $r > 0$, the open $r$-ball around a point $x$ is defined as
+\[
+B_r(x) = \{x' \in X \mid d(x, x') < r\}
+\]
+
+Exercise: State and prove some theorem about the existence of a function from $X \times X' \to Y \times Y'$, given a function $f:X\to Y$ and $g:X'\to Y'$. 
+
+\exm{Balls}
+
+\begin{enumerate}
+\item In $\R^2$, consider 
+\[
+d_r\left(\begin{pmatrix} x_1 \\ y_1 \end{pmatrix}, \begin{pmatrix} x_2 \\ y_2 \end{pmatrix} \right) = \left(\sum_{i=1}^2 (x_i - y_i)^r\right)^{\frac{1}{r}}
+\]
+
+For $r = 2$, this is the usual euclidean distance. For $r = 1$, the balls look like diamonds. In the limit, as $r\to \infty$, the metric will approach what is known as the ``box metric," in which the distance between any point and 0 is it's largest coordinate. 
+\item On $C[0, 1]$, the set of continuous functions from $[0, 1]$ to $\R$, we have the sup metric: 
+\[
+d(f, g) = \sup_{x\in[0, 1]}|f(x) - g(x)|
+\]
+
+\item We also have
+\[
+d_1(f, g) = \int_0^1d|f(x) - g(x)|dx
+\]
+
+
+
+\end{enumerate}
+
+\defn
+
+For a metric space $(X, d_X)$, suppose that $U \subseteq X$ is said to be ``open" if, for any $x \in U$, there is a $\varepsilon>0$ such that $B_\varepsilon(x) \subseteq U$. 
+
+\lem 
+
+$B_\varepsilon(x)$ is always open. 
+
+\proof
+
+Let $y \in B_\varepsilon(x)$. Let $t = d(x, y)$. By construction, $t <\varepsilon$. Let $\delta = \varepsilon - t$. Consider $B_\delta(y)$. For any $z \in B_\delta(y)$, we have by the triangle inequality
+\[
+d(x, z) \leq d(x, y) + d(y, z) < \varepsilon - t + t = \varepsilon
+\]
+and so $z \in B_\varepsilon(x)$. $z$ was arbitrary, so we are done.
+
+\qed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
