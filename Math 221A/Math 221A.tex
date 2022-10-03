@@ -1,5 +1,7 @@
 \documentclass[x11names,reqno,14pt]{extarticle}
 \input{preamble}
+\newcommand*{\oo}{{\infty}}
+\DeclareMathOperator{\cl}{cl}
 \usepackage[document]{ragged2e}
 \usepackage{amsmath}
 \pagestyle{fancy}{
@@ -27,15 +29,15 @@
 
 \begin{document}
 
-\section{Lecture 1}
+\section*{Lecture 1}
 
-\defn[1]{Metric Space}
+\defn
 
-A metric space is a set $X$ equipped with a function $d:X\times X \to \R$, which satisfies the following axioms:
+A \underline{metric space} is a set $X$ equipped with a function $d:X\times X \to \R$, which satisfies the following axioms:
 \begin{enumerate}
 	\item For any $x, y \in X$, $d(x, y) = d(y, x)$
-	\item For any $x, y, z \in X$, we have $d(x, y) \leq d(x, z) + d(z, y)$. This is called the triangle inequality
-	\item For any $x, y \in X$, $d(x, y) = 0$ exactly when $x = y$.
+	\item For any $x, y, z \in X$, we have $d(x, y) \leq d(x, z) + d(z, y)$. This is called the ``triangle inequality"
+	\item For any $x, y \in X$, $d(x, y) = 0$ exactly when $x = y$
 
 \end{enumerate}
 
@@ -63,7 +65,8 @@ d_p(a, b) := \frac{1}{p^\alpha}
 \]
 Where $p^\alpha$ is the largest power of $p$ which divides $|a - b|$. So two naturals are ``close" if their difference is divisible by a high power of $p$. 
 
-\claim[1]{This is a metric}
+\claim This is a metric
+
 \proof
 The 1st and 3rd axioms are clear. So we must prove the triangle inequality. We will consider the three quantities $d_p(a, b), d_p(a, t)$, and $d_p(b, t)$, where $a, b, t \in \N$. 
 
@@ -73,9 +76,9 @@ d_p(a, b) \leq \frac{1}{p^\beta} \leq \max(d_p(a, t), d_p(t, b)) \leq d_p(a, t) 
 \]
 \qed
 
-\defn[2]{Continuity}
+\defn
 
-Let $(X, d_X), (Y, d_Y)$ be two metric spaces. For a function $f:X\to Y$, we say that $f$ is continuous at $x_0 \in X$ if, for all $\epsilon > 0$, there is a $\delta > 0$ such that 
+Let $(X, d_X), (Y, d_Y)$ be two metric spaces. For a function $f:X\to Y$, we say that $f$ is \underline{continuous} at $x_0 \in X$ if, for all $\epsilon > 0$, there is a $\delta > 0$ such that 
 \[
 0 < |d_X(x_0, x)| < \delta \implies |d_Y(f(x_0), f(x))| < \epsilon
 \]
@@ -101,7 +104,7 @@ This is continuous.
 
 What about $(\N,d_5) \to (\N, d_{17})$. 
 
-\section{Lecture 2}
+\section*{Lecture 2}
 
 \thm
 
@@ -163,17 +166,195 @@ and so $z \in B_\varepsilon(x)$. $z$ was arbitrary, so we are done.
 
 \qed
 
+\section*{Lecture 3}
+
+\defn Let $(X, d)$ be a metric space. A set $U\subseteq X$ is said to be \underline{open} if for all $x \in U$, there is an $\varepsilon > 0$ such that $B(x, \varepsilon) \subseteq U$. 
+
+\thm Let $\{U_\alpha\}_{\alpha\in A}$ be a collection of open sets. Then
+
+\begin{enumerate}
+\item $\cup_{\alpha\in A}U_\alpha$ is open. 
+\item Let $U_1, \dots, U_n$ be a finite subcollection. Then $\cap_{i=1}^\oo U_i$ is open. 
+\end{enumerate}
+
+\proof
 
 
 
 
+\section*{Lecture 4}
+
+\defn 
+
+Two metrics $d_1, d_2$ are said to be \underline{equivalent} on a space $X$ if any set which is open under the $d_1$-induced topology is also open under the $d_2$-induced topology, and vice versa. 
+
+\exm 
+
+In $\R^2$, 
+\begin{align*}
+d_2(0, (x, y)) & = (x^2 + y^2)^{\frac{1}{2}}\\
+d_1(0, (x, y)) & = |x| + |y| \\
+d_{\infty}(0, (x, y)) & = \max\{|x|, |y|\} \\
+\end{align*}
+
+How do these metric's unit balls compare? In fact, $d_1$'s is within $d_2$'s, which is within $d_{\oo}$'s.
+
+But all of these balls contain a ball of radius $\frac{1}{2}$ in any of the three metric. Thus, these are equivalent. 
+
+\defn
+
+Two metrics $d_1, d_2$ are called \underline{Lipschitz equivalent} if there exists some $k \in \R$ such that, for all $x, y \in X$, we have
+
+\[
+\frac{1}{k}d_2(x, y) 
+< d_1(x, y) < kd_2(x, y)
+\]
+
+\exm
+
+This is a non-example. The 5-adic and the 17-adics are not equivalent. 
+
+\exm
+
+Let 
+\begin{align*}
+d_1(f, g) & = \int_0^1|f(x) - g(x)|\,dx \\
+d_\oo(f, g) & = \sup_{x\in[0, 1]}|f(x) - g(x)| \\
+\end{align*}
+
+One controls for area, one controls for the maximum value of $f$. We have
+\[
+B^{d_\oo}_\varepsilon (0) \subset B^{d_1}_\varepsilon(0)
+\] 
+This is because if we control for the maximum size of $f$, we can surely control for the area under it. However, no matter how much we limit the area under $f$, there is some $f$ which has that much area which has a sup greater than some $\varepsilon$ which is fixed. 
+
+\thm
+
+Let $d_1, d_2$ be equivalent metrics on $X$. Then the following are equivalent
+\begin{enumerate}
+\item $f:X\to Y$ is $d_1, d_Y$ continuous if and only if it is $d_2, d_Y$ continuous. 
+\item $g:Z\to X$ is $d_Z, d_1$ continuous if and only if if is $d_Z, d_2$ continuous. 
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}
+\item Let $U \subset Y$ be open. We know that the preimage $f^{-1}(U)$ is open under the $d_1$ metric. But by the equivalence of $d_1, d_2$, $f^{-1}(U)$ must also be open under the $d_2$ metric. The reverse argument also holds. 
+\item Let $U \subset X$ be an open set under the $d_1$ metric. By continuity of $g$, we know $g^{-1}(U)$ is open. However, $U$ must also be open under the $d_2$ metric, meaning that $g$ must be continuous with respect to both metrics. 
+\end{enumerate}
+
+\qed
+
+Recall: If $\{U_\alpha\}_{\alpha\in A}$ is a collection of open sets, then $\cup_{\alpha\in A}U_\alpha$ is open. 
+
+We can associate to any set $R\subset X$ an open set, called the interior of $R$. 
+
+\defn
+
+For any $\R\subset X$, we define it's \underline{interior} by 
+\[
+\operatorname{int}(R) = \bigcup_{U\text{ open}, U \subseteq R}U
+\]
+
+We can say several things about $\operatorname{int}(R)$. 
+\begin{enumerate}
+\item $\operatorname{int}(R)$ is open. 
+\item If $U$ is open, then $\operatorname{int}(U) = U$, and vice versa. 
+\item Suppose $A \subseteq B$. Then $\operatorname{int}(A) \subseteq \intr(B)$. 
+\end{enumerate}
+
+Recall: If $\{C_\alpha\}_{\alpha\in A}$ are all closed, then $\cap_{\alpha\in A}C_\alpha$ is closed. 
+
+\defn 
+
+If $R\subseteq X$, then the \underline{closure} of $R$, denoted by $\bar{R}$, or sometimes $\cl(R)$, is defined as 
+\[
+\bar{R}:= \bigcap_{C\text{ closed}, C\supseteq R}C
+\]
+
+Analagously, 
+\begin{enumerate}
+\item $\bar{R}$ is closed for any $R$. 
+\item $R$ is closed if and only if $R = \bar{R}$. 
+\item If $A \subset B$, then $\cl(A) \subset \cl(B)$. 
+\end{enumerate}
+
+\prop
+
+Let $x \in \cl(R)$. Then, for all $\varepsilon>0$, $B_\varepsilon(x)\cap R \neq \varnothing$, and vice-versa. 
+
+We will prove this next lecture. 
+
+\section*{Lecture 4}
+
+\proof 
+
+First, suppose that $x\not\in \bar{A}$. The complement of $\bar{A}$ is open, so there exists a $\varepsilon>0$ such that $B_{\varepsilon}(x)\subseteq (\bar{A})^c$, and so $B_{\varepsilon}(x) \cap \bar{A} = \varnothing$. 
+
+Now, suppose that there exists some $\varepsilon> 0$ such that $B_{\varepsilon}(x) \cap A = \varnothing$. Then $(B_{\varepsilon}(x))^c$ is a closed set containing $A$ which does not contain $x$, thus $\bar{A}$ cannot contain $x$. 
+
+\qed
+
+Now, it is time for the main event. 
+
+\underline{TOPOLOGICAL SPACES}
+
+Let $X$ be a set. Let $\ms{P}(X)$ denote the power set of $X$, which is the set of all subsets of $X$. 
+
+\defn
+
+Let $\ms{T} \subset\ms{P}(X)$. $\ms{T}$ is a \underline{topology on $X$} if it has the following properties: 
+\begin{enumerate}
+\item $\varnothing, X \in \ms{T}$. 
+\item If $\{U_\alpha\}_{\alpha\in A}$ with each $U_\alpha \in \ms{T}$, then $\bigcup_{\alpha\in A}U_\alpha \in \ms{T}$. 
+\item If $A, B \in \ms{T}$, then $A \cap B \in \ms{T}$. Of course, we can ``strengthen" this to the equivalent statement: if $U_1, \dots, U_k \in \ms{T}$, then $\cap_{i=1}^kU_i \in \ms{T}$
+\end{enumerate}
+
+Elements of $\ms{T}$ are called ``open sets." 
+
+\exm Here are some simple examples. 
 
 
+\begin{enumerate}
+\item Open sets in $(X, d)$ form a topology (hence the definition)
+\item $\ms{T} = \ms{P}(X)$ forms the discrete topology. 
+\item $\ms{T} = \{\varnothing, X\}$ forms the indescrete topolgy.
+\item If $X = \{0, 1\}$, then $\ms{T} = \{\varnothing, X, \{0\}\}$ forms a topology. 
+\item We can form the \underline{Zariski topology} on $\R$ by specifying the closed sets, which satisfy a similar but slightly different set of axioms. We define the closed sets to be $\varnothing, \R$, and any finite collection of points. 
 
+More generally, the Zariski topology on some ring $R$ is specified by its closed sets, which are the solution locii of some set of polynomials in $R$. 
+\item Let $X = \R$, $\ms{T} = \{(r, \oo)\mid r\in\R\} \cup \{\varnothing, \R\}$. 
+\end{enumerate}
 
+We have now defined a set of objects (topological spaces). Now, we want to define morphisms, the maps between spaces. 
 
+\defn Let $(X, \ms{T}_X), (Y, \ms{T}_Y)$ be topological spaces. We say a function $f:X\to Y$ is \underline{continuous} if, for all $V\in\ms{T}_Y$, $f^{-1}(V) \in \ms{T}_X$. In other words, the preimage of any open subset of $Y$ is an open subset of $X$. 
 
+\exm
 
+\begin{enumerate} Some baby examples
+\item Any function $f:(X, \text{discrete})\to (Y, \ms{T}_Y)$ is continuous as long as $X$ has the discrete metric, as the preimage of any open set will be a subset of $X$, all of which are open under the discrete topology. 
+\item Any function $f:(X,\ms{T}_X)\to(Y,\text{ discrete})$ is continous for a similar reason. 
+\item $\Id_X:(X, \ms{T}_X)\to(X,\ms{T}_X)$ is continuous. 
+\end{enumerate}
+
+\thm 
+
+Let $f:(X,\ms{T}_X)\to(Y,\ms{T}_Y)$ and $g:(Y,\ms{T}_Y)\to(Z,\ms{T}_Z)$ be continuous functions. Then $g \circ f:(X,\ms{T}_X)\to(Z,\ms{T}_Z)$ is continuous. 
+
+In other words, the composition of continuous functions is continuous. 
+
+\proof
+
+Pick $W \in \ms{T}_Z$. Then $g^{-1}(W) \in \ms{T}_Y$ since $g$ is continuous. So, because $f$ is continuous, 
+\[
+(g\circ f)^{-1}(W) = f^{-1}(g^{-1}(W)) \in\ms{T}_X
+\]
+Hence, $g \circ f$ is continuous. 
+
+\defn 
+
+For $\ms{T}$ a topology on $X$, a \underline{basis} for $\ms{T}$ is a subset $\ms{B}\subseteq\ms{T}$ such that every set in $\ms{T}$ is the union of sets in $\ms{B}$. 
 
 
 
