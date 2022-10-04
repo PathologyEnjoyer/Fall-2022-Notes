@@ -17,6 +17,9 @@
      \renewcommand{\headrulewidth}{0pt}
 	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
 }
+\newcommand{\oo}{{\infty}}
+
+
 
 \title{220A - Riemann Surfaces}
 \author{John White}
@@ -215,31 +218,206 @@ u_x & = v_y \\
 u_y = - v_x \\
 \end{align*}
 
+\section*{Lecture 2} 
 
+The focus for the first bit of this course will be the so-called (by Dennis) $\bar{\del}$-calculus. 
 
+Suppose $f:X\to\C$ is differentiable for some $X \subseteq \R^{2n}$. It has a differential $df_p \in \Hom_\R(\R^{2n},\C)$.
 
+$f$ is holomorphic if and only if $df_p\in\Hom_{\C}(\C^n, \C)$. Last time, we talked about how the second sits in the first, and how they interact. 
 
+Question: How to make $\C^n$ out of $\R^{2n}$. The abstract algebra way to do it is with a complex structure $J$. If $V$ is a vector space over $\R$, then $\dim_\R V = 2n$
+$J\in\End_{\R}(V)$ with $J^2 = -\Id_V$. 
 
+For all $x \in V_J$, we define $ix = Jx$, so $V_J$ is a vector space over $\C$, and $\dim_\C V_j = \frac{\dim_\R V}{2}$
 
+\exm Let $V = \R^2$, $J = J_0 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \\ \end{pmatrix}$. $\R^2_{J_0}\cong \C$
 
+Last time, we showed that for any $\phi\in\Hom_\R(V,\C) = H$, then 
+\[
+\phi = \underbrace{\frac{\phi - i\phi\circ J}{2}}_{\in \Hom_\C(V_J,\C)} + \underbrace{\frac{\phi + i\phi\circ J}{2}}_{\in\bar{\Hom_\C}(V_J,\C)}
+\]
 
+So, $H = \Hom_\C(V_J,\C)\oplus\bar{\Hom_\C(V_J,\C)} = V^{1, 0}\oplus V^{0, 1}$
 
+Where $V^{1, 0}$ and $V^{0, 1}$ are what we call $\Hom_\C(V_J,\C)$ and $\bar{\Hom}_\C(V_J,\C)$ by tradition. 
 
+Let $V = \R^2$, $J = J_0 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \\ \end{pmatrix}$. 
 
+Let $\phi = df_p = \frac{\del f(p)}{\del x}dx_p + \frac{\del f(p)}{\del y}dy_p$
 
+After doing some computations, we get
 
+\[
+d_pf = \pi^{1, 0}df + \pi^{0, 1}df = Adz + Bd\bar{z}
+\]
 
+Where $dz = dx + idy$ and $d\bar{z} = dx - idy$. You can check that the former is in $V^{1, 0}$ and the latter in $V^{0, 1}$. 
 
+The coefficient $A$ is denoted by tradition as $\frac{\del f}{\del z}(p)$, and $B$ as $\frac{\del f}{\del \bar{z}}(p)$. Here, the presence of $\del$ does not imply any limit taking or anything, they are just notation. 
 
+Note $A = \frac{1}{2}(\del_xf - i\del_yf)|_p$ and $B = \frac{1}{2}(\del_xf + i\del_yf)|_p$.
 
+\defn
 
+We define 
+\begin{align*}
+\del f_p & = f_z(p)dz_p \\
+\bar{\del}f_p = f_{\bar{z}}(p)d\bar{z}_p \\
+\end{align*}
 
+The former is $\C$-linear, and the second $\C$-antilinear. 
 
+\claim
 
+$f$ is $\C$-differentiable at $p$ if and only if $f$ is $\R$-differentiable at $p$ and $\bar{\del}f_p = 0$
 
+\proof
 
+If $f = u + iv$, we get
+\[
+\bar{\del}f_p = \frac{\del f}{\del\bar{z}}(p) =0
+\]
+Which gives you the Cauchy-Riemann equations. 
 
+So $f$ is analytic if $d_pf = f_zdz$. 
 
+\exm
+
+What are the following? 
+\begin{enumerate}
+\item $\frac{\del|z|}{\del z}$
+\item $\frac{\del|z|}{\del\bar{z}}$
+\end{enumerate}
+
+How do we manage these problems?
+
+\claim If $m, k \in \Z\backslash\{0\}$, we will consider $d(z^m\bar{z}^k)$. We have $f(z + h) = (z + h)^m(\bar{z} + \bar{h})^m = f(z) + (mz^{m-1}\bar{z}^k)h + (k\bar{z}^{k - 1}z^m)\bar{h} + \mc{O}(h^2)$
+
+Where $\frac{|LHS - RHS|}{|z - 2|} \to 0$ ad $z\to 2$
+
+Then $\bar{\del}(z^m\bar{z}^k = (k\bar{z}^{k - 1}z^m)d\bar{z}$
+
+Let's do some examples. Consider $\frac{\bar{z} - 1}{z + 1}$. We have
+
+\[
+\frac{\bar{z} - 1}{z + 1} = \frac{(\bar{z} - 2) - 2 - 1}{(z - 2) + 2 - 1} = \frac{(\bar{z} - z) + 1}{3}\frac{1}{1 + \frac{z - 2}{3}} = \frac{\bar{z} - 1}{3}(1 - \frac{z - 2}{3} + \mc{O}(H^2)) = cAz + B\bar{z} + \rho(z)
+\]
+
+There are two building blocks for doing problems: 
+\begin{enumerate}
+\item First, remember you are really doing real analysis. 
+\item Use the formula $d_pf = \pi^{1, 0}\cdots $
+\end{enumerate}
+
+\exm
+
+We will calculate $d|z| = d\sqrt{z\bar{z}}$.
+
+\[
+d|z| = d\sqrt{z\bar{z}} = \frac{1}{2\sqrt{z\bar{z}}}d(z\bar{z}) = \frac{1}{2|z|}d(z\bar{z}) = \frac{1}{2|z|}zd\bar{z} + \bar{z}dz
+\]
+
+So the answer would be $\frac{z}{2|z|}$. 
+
+So, just express your function as a function of $z\bar{z}$ and proceed to do real analysis. 
+
+We know $\del_zf, \del_{\bar{z}}f$, and want to find $\del_z(\bar{f}), \del_{\bar{z}}(\bar{f}) = ?$
+
+We have
+
+\begin{align*}
+df = \del f & + \bar{\del}f \\
+d(\bar{f})  &= \bar{df} = \bar{(\del f)} + \bar{(\bar{\del}f)} \\
+\end{align*}
+
+Now, $\bar{\del}(\bar{f}) = \bar{\del f}$. The bottom is equal to $\frac{\del \bar{f}}{\del\bar{z}}d\bar{z}$
+
+So 
+
+\[
+\frac{\del \bar{f}}{\del \bar{z}} = \bar{\frac{\del f}{\del z}}
+\]
+The conjugate of something which is complex anti-linear is complex linear. 
+
+What is $\frac{\del \bar{f}}{\del z}$? This is $\bar{\frac{\del f}{\del \bar{z}}}$. 
+
+So, the general procedure is to decompose your function as something linear + something antilinear, and use the sentence I just wrote. 
+
+How to compute $\frac{\del f\circ g}{\del \bar{z}}$ ?
+
+Well $\underbrace{d(f\circ g) = df \circ df}_{\text{ The chain rule expresses the functoriality of the derivative}}$, which is equal to 
+
+$(\del f + \bar{\del}f)\circ(\del g + \bar{\del}g) = \del f \circ \del g + \bar{\del f}\circ dg + \cdots$.
+
+Now, $\bar{\del}f\circ\del g = f_{\bar{z}}d\bar{z}\circ(g_zdz) = f_{\bar{z}}\bar{g_z}$. 
+
+\defn
+
+Suppose $\frac{\del f}{\del \bar{z}}(p) = 0$. Then $df_p = \frac{\del f}{\del z}(p)dz_p$, and we write this as $f'(p)dz$. 
+
+Homework problem: We know $f$ holomorphic, compute $\frac{\del}{\del}{\bar{z}}F(|f|)$, where $F:\R\to\R$ is smooth. 
+
+So 
+
+\[
+dF(|f|) = F'(|f|)d|f| = F'(|f|)d\sqrt{f\bar{f}}
+\]
+
+And $d\sqrt{u} = \frac{1}{2u}du$, so the above is equal to 
+
+\[
+F'(|f|)\frac{1}{2|f|}d(f\bar{f})^{-1} = \frac{F'(|f|)}{2|f|}(\bar{f}df + fd\bar{z}) = \frac{F'(|f|}{2|f|}(\bar{f}f_zdz + f\bar{f_z}d\bar{z})
+\]
+
+Our answer is thus whatever we get in front of $d\bar{z}$, so in this case the solution is 
+
+\[
+\frac{\del}{\del\bar{z}}F(|f|) = \frac{F'(|f|)}{2|f|}f\bar{f'}
+\]
+
+The $|z| = \sqrt{z\bar{z}}$ is a very useful trick. 
+
+Complex analysis is kind of a local study of $f:X\to\C$ for some $X\subseteq\C$, where $f$ is differentiable, $\bar{\del}f = 0$, or equivalently $\frac{\del f}{\del\bar{z}} = 0$ in $X$. Really, we are studying solutions to a certain PDE (Cauchy-Riemann equation). 
+
+Suppose you want $u_{xx} - u_{yy} = 0$. If this is the case (and it turns out exactly when this is the case), we can express $u = \phi(x - y) + \psi(x + y)$ for $\phi, \psi$ arbitrary of $1$ variable. 
+
+What if we want to study $u_y = u_{xx}$ in, say, $y > -\varepsilon$? We actually have a formula:
+
+\[
+u(x, y) = frac{1}{2\pi y}\int_{-\oo}^{\oo} e^{-\frac{(x - s)^2}{4y}}u(s, 0)ds, y > 0
+\]
+
+Suppose we want to study $u_{yy} + u_{xx} = 0$ in $y > -\varepsilon$, or maybe an open ball around the origin. We have a formula
+\[
+u(x, y) = \int_{-\oo}^\oo P_H(x, y - s)u(s, 0)ds
+\]
+
+Where $P_H$ is the Poisson Kernel. 
+
+\subsection*{\underline{MAIN LOCAL THM}}
+Let $f:B_{R + \varepsilon}\to \C$. Then the following statements are all equivalent. 
+\begin{enumerate}
+\item For any $p \in B_R$, $f$ is differentiable and $df_p = \del f_p$, so $\bar{\del}f_p = 0$.
+\item $f(z) = \int_{C_R}\frac{f(w)}{z - w}dw$
+\item Like 8 other things
+\end{enumerate}
+
+What exactly is complex integration? 
+
+Let $\gamma:[a, b]\to\C$ be a piecewise smooth map. We integrate functions over maps. If $\phi$ is a continuous function, the formula is 
+
+\[
+\int_\gamma\phi(z)dz = \int_a^b\phi(\gamma(t))\dot{\gamma}(t)dt
+\]
+
+where $\dot{\gamma}$ is the time-derivative of $\gamma$, so will be a complex number. 
+
+Let $t \in [0, 2\pi]$, $C_R(t) = Re^{it}$, a circle going counterclockwise. Let $\gamma(t) = Re^{-it}$. Then $\gamma^{-1}:[a, b]\to\C$ is the same but in the opposite direction. We have
+
+\[
+\int_{\gamma^{-1}}\phi\,dz = \int_{\gamma}\phi\,dz
+\]
 
 
 
