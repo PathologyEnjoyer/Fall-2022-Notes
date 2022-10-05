@@ -297,7 +297,7 @@ Now, suppose that there exists some $\varepsilon> 0$ such that $B_{\varepsilon}(
 
 Now, it is time for the main event. 
 
-\underline{TOPOLOGICAL SPACES}
+\subsection*{\underline{Topological Spaces}}
 
 Let $X$ be a set. Let $\ms{P}(X)$ denote the power set of $X$, which is the set of all subsets of $X$. 
 
@@ -356,7 +356,96 @@ Hence, $g \circ f$ is continuous.
 
 For $\ms{T}$ a topology on $X$, a \underline{basis} for $\ms{T}$ is a subset $\ms{B}\subseteq\ms{T}$ such that every set in $\ms{T}$ is the union of sets in $\ms{B}$. 
 
+\section*{Lecture 5}
 
+\prop
+
+Suppose $f:(X, \ms{T}_X) \to (Y, \ms{T}_Y)$ is a function. Then $f$ is continuous if and only if $f^{-1}(B) \in \ms{T}_X$ for all $B \in \ms{B}$, with $\ms{B}$ a basis for $\ms{T}_Y$.
+
+\proof
+
+The forward direction is trivial, as a basis consists of sets which are all open. 
+
+Now, suppose that $f^{-1}(B) \in \ms{T}_X$ for all $B \in \ms{B}$. Let $V\in \ms{T}_Y$. Write it as $\cup_{\alpha\in A}B_\alpha = V$ for $B_{\alpha}\in \ms{B}$. 
+
+Then $f^{-1}(V) = f^{-1}(\cup_{\alpha\in A}B_\alpha) = \cup_{\alpha\in A}f^{-1}(B_\alpha)$. This is the union of open subsets of $X$, so $f^{-1}(V)$ is open. 
+
+\qed
+
+\exm
+
+Consider $B_{\frac{p}{q}}(\frac{r}{s})$, with $p, q, r, s \in \Z$, $q, s \neq 0$. In other words, the balls of rational radius and rational center. This collection of sets forms a basis for $\R$ using the standard (or, as Darren calls it, the ``Mother's Knee") topology. 
+
+Exercise: Write down the definition of interiors and closures, and check the following lemma is true: 
+
+\lem 
+
+$x \in \cl(A)$ if and only if, for all open $U \ni x$, $U\cap A \neq \varnothing$. 
+
+\exm
+
+Consider $(\N,$ Zariski). What is the closure of the collection of prime numbers under this topology? 
+
+Recall that the Zariski topology on $\N$ defines closed sets to be either empty, $\N$, or finite. So, for example, the closure of the integers from $1$ to $10$ is itself. 
+
+But the only closed set that can contain an infinite set is $\N$, so the closure of the primes is $\N$. More generally, for any infinite subset of $\N$, the closure is $\N$. 
+
+\subsection*{\underline{Subobjects and product objects}}
+
+We have now defined our objects and morphisms, so let's talk about subobjects and product objects. 
+
+Let $(X, \ms{T}_X)$ be a topological space, and $A\subseteq X$ a nonempty subset. 
+
+Denote the inclusion map $\iota:A\to X$. We want to topologize $A$ so that $\iota$ is continuous, and is as small as possible, in the sense that any topology for which $\iota$ is continuous includes this topology on $A$. 
+
+For any open $U\subseteq X$, we want $\iota^{-1}(U)$ to be open. But $\iota^{-1}(U) = U \cap A$. 
+
+\defn
+
+For $(X, \ms{T}_X)$ a topological space and $A\subset X$ a subset, then the \underline{subspace topology} on $A$, $\ms{T}_A$, consists of 
+\[
+\ms{T}_A := \{U \cap A \mid U \in \ms{T}_X\}
+\]
+
+\prop
+
+Suppose we have a commutative diagram of the form 
+\[
+\begin{tikzcd}
+(Z, \ms{T}_Z) \arrow[rd, "\iota \circ g"'] \arrow[r, "g"] & A \arrow[d, "\iota"] \\
+& X \\
+\end{tikzcd}
+\]
+
+Then $\iota$ is continuous if and only if $\iota \circ g$ is continuous. 
+
+\proof
+
+One direction is trivial, as we know the composition of continuous functions is continuous. Now, suppose that $\iota \circ g$ is continuous. 
+
+Let $W \in \ms{T}_A$. We know $W = W^*\cap A$ for some $W^* \in \ms{T}_X$. $\iota \circ g$ is continuous, so $(\iota \circ g)^{-1}W^*\in\ms{T}_Z$. 
+
+So, $\ms{T}_Z\ni(\iota\circ g)^{-1} = g^{-1}(\iota^{-1}(W^*)) = g^{-1}(W)$. 
+
+\qed
+
+So we can see that if we want the above to hold, we are forced into our definition of $\ms{T}_A$. 
+
+\prop
+
+$\ms{T}_A$ is the only topology so that the previous proposition is true for all spaces $(Z, \ms{T}_Z)$ and functions $g$. 
+
+\proof
+
+Suppose that $\ms{T}_{\mu}$ ($\mu$ for ``mystery" topology) such that the previous proposition holds for all choices of $(Z, \ms{T}_Z)$ and $g:(Z,\ms{T}_Z)\to A$.  
+
+Consider 
+\[
+\begin{tikzcd}
+(A,\ms{T}_A)\arrow[rd, "\iota \circ \Id"'] \arrow[r, "\Id"] & (A, \ms{T}_\mu) \arrow[d, "\iota"] \\
+& (X, \ms{T}_X \\
+\end{tikzcd}
+\]
 
 
 
