@@ -88,7 +88,7 @@ If $\mu$ satisfies this, we say it is ``countably additive."
 \[
 \mu(E + t) = \mu(E)
 \]
-Where ``$E + t$" $:=\{x + t \mid x \in E\}$
+Where ``$E + t$" $\eqdef\{x + t \mid x \in E\}$
 \end{enumerate}
 
 \thm{(Vitali)} There is no such $\mu$.
@@ -117,7 +117,7 @@ And because $\mu$ is always nonnegative, we may conclude that $\mu(B) \geq \mu(A
 Now, define an equivalence relation on $\R$ as follows:
 \begin{align*}
 x \sim y <=> x - y \in \Q \\
-[x] := \{y \in \R \mid x \sim y\}
+[x] \eqdef \{y \in \R \mid x \sim y\}
 \end{align*}
 
 \claim
@@ -179,19 +179,19 @@ Let $X$ be a set.
 \defn $\mathcal{A}$ is an \underline{algebra of subsets of $X$} if $\mathcal{A} \neq \varnothing$, and 
 \begin{itemize}
 \item 
-\[
+\(
 E_1, \dots, E_n \in \mathcal{U} \implies \bigcup_{i=1}^nE_i \in \mathcal{U}
-\]
-In other words, it is ``closed under finite unions." 
+\).
+ In other words, it is ``closed under finite unions." 
 \item
-\[
+\(
 E \in \mathcal{U} \implies X \backslash E \in \mathcal{U}
-\]
+\). 
 In other words it is ``closed under compliments."
 \item 
-\[
+\(
 \varnothing, X \in \mathcal{A}
-\]
+\). 
 \end{itemize}
 
 \lem 
@@ -243,7 +243,7 @@ We begin with a claim.
 
 \claim Given any nonempty collection $\mathcal{C}$ of $\sigma$-algebras on $X$, then 
 \[
-\cap \mathcal{C} := \{E \subseteq X \mid E \in \mathcal{A} \forall \mathcal{A} \in \mathcal{C}\}
+\cap \mathcal{C} \eqdef \{E \subseteq X \mid E \in \mathcal{A} \forall \mathcal{A} \in \mathcal{C}\}
 \]
 is a $\sigma$-algebra. 
 
@@ -298,7 +298,7 @@ Let
 \begin{itemize}
 \item $\{(X_1, \mathcal{M}_i)\}_{i=1}^\infty$ be a collection of measurable spaces. 
 \[
-X := \prod_{i=1}^\infty X_i
+X \eqdef \prod_{i=1}^\infty X_i
 \]
 \item $\pi_i$ be the projection $X \to X_i$
 \end{itemize}
@@ -308,7 +308,7 @@ X := \prod_{i=1}^\infty X_i
 
 \defn The \underline{product $\sigma$-algebra}
 \[
-\bigotimes_{i\in\N} \mathcal{M}_i := \mathcal{M}\left(\{\prod_{i\in\N} E_i \mid E_i \in \mathcal{M}_i\}\right)
+\bigotimes_{i\in\N} \mathcal{M}_i \eqdef \mathcal{M}\left(\{\prod_{i\in\N} E_i \mid E_i \in \mathcal{M}_i\}\right)
 \]
 
 Our goal is to show that $\mathcal{B}_{\R^n} = \otimes_{i=1}^n\mathcal{B}_\R$. 
@@ -346,7 +346,7 @@ Note that
 
 Because $\mathcal{A}$ is a $\sigma$-algebra, it suffices to show that $\pi_i^{-1}(E_i) \in \mathcal{A}$ for all $E_i \in \mathcal{M}_i$. 
 
-\claim Let $\mathcal{F}_i := \{E_i \subseteq X_i \mid \pi_i^{-1}(E_i) \in \mathcal{A}\}$.
+\claim Let $\mathcal{F}_i \eqdef \{E_i \subseteq X_i \mid \pi_i^{-1}(E_i) \in \mathcal{A}\}$.
 
 This is a $\sigma$-algebra. 
 
@@ -612,29 +612,29 @@ While we will be able to show that $\mu^*$ is an outer measure, it is \underline
 
 \defn
 
-Let $\mc{X}$ be a nonempty set, and $\mu^*$ an outer measure on $\mc{X}$. We say $A \subseteq \mc{X}$ is \underline{$\mu^*$-measurable} if, for all $E\subseteq X$, 
+Let $\mc{X}$ be a nonempty set, and $\mu^*$ an outer measure on $\mc{X}$. We say $A \subseteq \mc{X}$ is \underline{$\mu^*$-measurable} if, for all $E\subseteq \mc{X}$, 
 \[
 \mu^*(E) = \mu^*(E \cap A) + \mu^*(E \cap A^c)
 \]
 
 \rem 
 
-We know that if, in the above expression, ``$=$" is replaced by ``$\leq$", it holds for any $E\subseteq X$ by countable subadditivity
+We know that if, in the above expression, ``$=$" is replaced by ``$\leq$", it holds for any $E\subseteq \mc{X}$ by countable subadditivity
 
 \prop 
 
-If $\mu^*(B) = 0$ for $B\subseteq X$, then $B$ is $\mu^*$-measurable. 
+If $\mu^*(B) = 0$ for $B\subseteq \mc{X}$, then $B$ is $\mu^*$-measurable. 
 
 \proof
 
-Fix an arbitrary $E\subseteq X$. Then, by monotonicity, $\mu^*(E) \geq \mu^*(E\cap B^c) = \mu^*(B) + \mu^*(E\cap B^c)$, so $\mu^*(E) = E\cap B) + \mu^*(E \cap B^c)$. 
+Fix an arbitrary $E\subseteq \mc{X}$. Then, by monotonicity, $\mu^*(E) \geq \mu^*(E\cap B^c) = \mu^*(B) + \mu^*(E\cap B^c)$, so $\mu^*(E) = E\cap B) + \mu^*(E \cap B^c)$. 
 
 \thm 
 
 (Caratheodory): Given an outer measure $\mu^*$ on $\mc{X}$, let
 
 \[
-\ms{M} := \{A\subseteq X : \text{A is }\mu^*-\text{measurable}\}
+\ms{M} \eqdef \{A\subseteq X : \text{A is }\mu^*-\text{measurable}\}
 \]
 
 Then 
@@ -653,7 +653,7 @@ Now we want to see that $\ms{M}$ is closed under complements. This clearly holds
 
 We will now show $\ms{M}$ is closed under finite unions. It will suffice to show that if $A, B \in \ms{M}$, then $A \cup B \in \ms{M}$. 
 
-Fix an arbitrary $E\subseteq X$. We have 
+Fix an arbitrary $E\subseteq \mc{X}$. We have 
 \begin{align*}
 \mu^*(E) & = \mu^*(E \cap A) + \mu^*(E\cap A^c) \\
 			& = \mu^*(E\cap A) + \mu^*(E \cap A^c \cap B) + \mu^*(E\cap A^c\cap B^c) \\
@@ -671,7 +671,7 @@ Now, we will show that $\mu^*|_{\ms{M}}$ is finitely additive.
 
 \claim
 
- given $\{B_i\}_{i=1}^n\subseteq \ms{M}$ disjoint, then for all $A \subseteq X$, 
+ given $\{B_i\}_{i=1}^n\subseteq \ms{M}$ disjoint, then for all $A \subseteq \mc{X}$, 
 \[
 \mu^*(E \cap (\cup_{i=1}^n)) = \sum_{i=1}^n\mu^*(E\cap B_i)
 \]
@@ -684,16 +684,404 @@ Now, assume the result holds for $n - 1$. We will show it holds for $n$. We have
 
 \begin{align*}
 \mu^*(E\cap(\cup_{i=1}^n B_i)) & = \mu^*(E\cap(\cup_{i=1}^{n})\cap B_n) + \mu^*(E \cap (\cup_{i=1}^{n}B_i) \cap B_n^c \\
-										  & = \mu^*(E\cap B_n) + \mu^*(E\cap(\cup_{i=1}^{n - 1})) \\
+										  & = \mu^*(E\cap B_n) + \mu^*(E\cap(\cup_{i=1}^{n - 1}B_i)) \\
 										  & = \mu^*(E\cap B_n) + \sum_{i=1}^{n - 1}\mu^*(E\cap B_i) \\
 \end{align*}
 
 We will finish next time!
 
- 
+\section*{Lecture 5}
 
+Now for the exciting conclusion. 
 
+Taking $E = \mc{X}$ in the above claim, we see $\mu^*|_{\ms{M}}$ is finitely additive. 
 
+\claim
+
+Given $\{B_i\}\seq{i}\subseteq \ms{M}$ disjoint, for all $E\subseteq X$, 
+\[
+\mu^*(E)= \sum\seq{i}(\mu^*(E\cap B_i)) + \mu^*(E\cap(\cup\seq{i}B_i)^c)
+\]
+
+\proof
+
+The left hand side is immediately seen to be less than the right hand side due to the countable subadditivity of $\mu^*$, since 
+
+\begin{align*}
+E & = (E\cap(\cup\seq{i}B_i))\cup(E\cap(\cup\seq{i}B_i)^c) \\
+  & = (\cup\seq{i}(E\cap B_i))\cup(E\cap(\cup\seq{i}B_i)^c) \\
+\end{align*}
+
+It remains to show that the left hand side is greater than or equal to the right hand side. 
+
+Since $\ms{M}$ is closed under finite unions, $\cup_{i=1}^nB_i \in \ms{M}$, so by the definition of $\mu^*$-measurable, 
+\begin{align*}
+\mu^*(E) & = \mu^*(E\cap(\cup_{i=1}^nB_i)) + \mu^*(E\cap(\cup_{i=1}^nB_i)^c)\\
+			& = \sum_{i=1}^n\mu^*(E\cap B_i) + \mu^*(E\cap(\cup\seq{i}B_i)^c)\\
+\end{align*}
+
+Taking the limit as $n\to\oo$ gives the result. 
+
+Now, to show $\ms{M}$ is closed under countable unions. Fix $\{C_i\}\seq{i}\subseteq\ms{M}$. We want to show $\cup\seq{i}C_i\in\ms{M}$. 
+
+Define $B_1 = C_1$, and in general $B_n = C_n \backslash (\cup_{i=1}^{n - 1}C_i)$
+
+Then $B_n \in \ms{M}$ for each $n$, and $\cup\seq{i}B_i = \cup\seq{i}C_i$. 
+
+Fix $E\subseteq \mc{X}$. Then, by a previous claim, we know 
+\begin{align*}
+\mu^*(E) & = \sum_{i=1}^n\mu^*(E\cap B_i) + \mu^*(E\cap(\cup\seq{i}B_i)^c) \\
+			& \geq \mu^*(E\cap(\cup\seq{i}B_i)) + \mu^*(E\cap(\cup\seq{i}B_i)^c) \\
+\end{align*}
+
+Since we already have the inequality going in the other direction, we have shown $\cup\seq{i}B_i=\cup\seq{i}C_i \in \ms{M}$. 
+
+Taking $E = \cup\seq{i}B_i$, for $B_i$ disjoint, nonempty, then 
+\begin{align*}
+\mu^*(\cup\seq{i}B_i) & = \mu^*(E) \\
+							  & = \sum\seq{i}\mu^*(E\cap B_i) + \mu^*(E\cap(\cup\seq{i}B_i)^c) \\
+							  & = \sum\seq{i}\mu^*(B_i) + \mu^*(\varnothing) \\
+\end{align*}
+
+Thus $\mu^*(\cup\seq{i}B_i) = \sum\seq{i}B_i$. 
+
+\qed
+
+Back to Lebesgue outer measure. Let $\mc{X} = \R$. Recall we define 
+\[
+\mu^*(A) = \inf\{\sum\seq{i}|b_i-a_i|:A\subseteq\cup\seq{i}(a_i, b_i]\}
+\]
+We want to show that
+\begin{enumerate}
+\item $\mu^*$ is an outer measure
+\item It gives the correct lengths to $(c, d]$, 
+\item It is translation invariant
+\item $\ms{B}_\R$ is contained in the collection of $\mu^*$-measurable sets. 
+\end{enumerate}
+
+In fact, we will study a generalization of Lebesgue outer measure that will give rise to Lebesgue-Stieljes measures. 
+
+Recall: $F:\R\to\R\cup\{\oo\}$ is \underline{right continuous} if for all $x \in \R$, 
+\[
+\lim_{y\to x^+}F(y) = F(x)
+\]
+
+\defn
+
+Given $F:\R\to\R$ non-decreasing and right-continuous, define
+\[
+\mu_F^*(A) = \inf\{\sum\seq{i}(F(b_i)-F(a_i)):A\subseteq\cup\seq{i}(a_i, b_i]\}
+\]
+
+Note: Katy HATES the term ``non-decreasing," and will use it interchangeably with the term ``increasing." To denote something which is not constant anywhere, she will say ``strictly" increasing. 
+
+Why do we require $F$ to be nondecreasing?
+
+\underline{Spoiler:} We will show \underline{any} finite measure $\mu$ on $\ms{B}_\R$ satisfies $\mu = \mu^*_F|_{\ms{B}_\R}$, for 
+\[
+F(x) = \mu((-\oo, x])
+\]
+We call $F$ the \underline{Cumulative Distribution Function}, or CDF. 
+
+Note that if $\mu$ is a finite measure on $\ms{B}_\R$ and $F(x)$ is it's CDF, then $F$ is 
+\begin{itemize}
+\item \underline{Nondecreasing:} If $x\leq y$, then $(-\oo, x] \subseteq (-\oo, y]$, which implies $F(x)\leq F(y)$. 
+\item \underline{Right-continuous:} For any decreasing sequence $x_n$ whose limit is $x$, $\lim_{n\to\oo}F(x_n) = \lim_{n\to\oo}\mu((-\oo, x_n]) = \mu((-\oo, x]) = F(x)$. The penultimate equality is due to $\mu$ being continuous from above, as it is a finite measure. 
+\end{itemize}
+
+\thm For any nondecreasing right-continuous $F$, $\mu^*_F$ is an outer measure. 
+
+\proof
+
+\begin{itemize}
+\item First, $\mu^*_F(\varnothing) = \inf\{\sum\seq{i}F(b_i) - F(a_i) : \varnothing \subseteq \cup\seq{i}(a_i, b_i]\} = 0$, as every interval contains $\varnothing$ as a subset so we may set $a_i = b_i \equiv 1$ for all $i$. Since $\mu^*_F\geq0$ by definition, $\mu^*_F(\varnothing) = 0$
+\item Now, we want to show that if $A\subseteq\cup\seq{i}B_i$, then $\mu^*_F(A)\leq\sum\seq{i}\mu^*_F(B_i)$. 
+
+If $\mu^*_F(B_i) = \oo$ for some $i$, we are done. Without loss of generality, suppose $\mu^*_F(B_i)<\oo$ for each $i$. 
+
+By the definition of $\inf$, for all $\varepsilon>0$ and each $i$ there exists $\{I_i^\varepsilon\}\seq{i}$ of intervals depending on $\varepsilon$ such that 
+\begin{align*}
+B_j & \subseteq\cup\seq{i}I_i^{j, \varepsilon} \\
+\mu^*_F(B_j) & \leq \sum\seq{i}|I_i^{j, \varepsilon}| \leq \mu^*_F(B_j) + \frac{\varepsilon}{2j} \\
+\end{align*}
+Thus
+\begin{align*}
+A & \subseteq \cup\seq{j}\cup\seq{i}I_i^{j,\varepsilon} \\
+\mu^*_F(A) & \leq \sum\seq{i, j}|I|_F^{j, \varepsilon} \\
+& \leq \sum\seq{j}\mu^*_F(B_j) + \frac{\varepsilon}{2j} \\
+& = \sum\seq{j}\mu^*_F(B_j) + \varepsilon \\
+\end{align*}
+\end{itemize}
+
+Sending $\varepsilon\to0$ completes the proof. 
+
+\qed
+
+\thm For all $a, b \in \R$, $a \leq b$, 
+\[
+\mu^*((a, b]) = F(b) - F(a)
+\]
+
+\proof
+
+$\leq$ follows quickly, since we know $(a, b]\subseteq (a, b] \cup \varnothing \cup \varnothing \cup \cdots$, so the definition of $\mu^*_F$ ensures
+\[
+\mu^*_F((a, b]) \leq \sum\seq{i}F(b_i) - F(a_i) = F(b) - F(a)
+\]
+Now we turn to $\geq$. Note that if $a = b$, we already showed that $\mu^*_F((a, b]) = \mu^*_F(\varnothing) = 0 = F(b) - F(a)$, so without loss of generality $a < b$. 
+
+It suffices to show that if $(a, b]\subseteq\cup\seq{i}(a_i, b_i]$, then $F(b) - F(a) \leq \sum\seq{i}F(b_i) - F(a_i)$
+
+Since $F$ is right continuous, for all $\varepsilon>0$ we can find $\delta_i>0$ such that $F(b_i + \delta_i) < F(b_i) + \frac{\varepsilon}{2^i}$. 
+
+Note that 
+\[
+[a + \varepsilon, b]\subseteq(a, b] \subseteq \bigcup\seq{i}(a_i, b_i]\subseteq\bigcup\seq{i}(a_i, b_i+\delta_i)
+\]
+Since $[a +\varepsilon, b]$ is compact and $\{(a_i, b_i + \delta_i)\}\seq{i}$ is an open cover, there exists a finite subcover
+\[
+[s +\varepsilon] \subseteq\bigcup_{i=1}^N(a_i, b_i +\delta_i)
+\]
+Without loss of generality we may throw away any unnecessary elements of the cover. The ``first" element of the cover must overlap with exactly one other element of the cover, the ``second" interval. Thus we may assume that
+\[
+b_i + \delta_i\in(a_{i + 1}, b_{i + 1}+\delta_{i + 1})\forall i = 1, \dots, N - 1
+\]
+
+Tune in next time for the continuation!
+
+\section*{Lecture 6} 
+
+And now, for the exciting conclusion...
+
+Since $F$ is nondecreasing, 
+\begin{align*}
+F(b) - F(a + \varepsilon) & \leq f(b_N + \delta_N) - F(a_1) \\
+								   & = F(b_N + \delta_N) - F(a_N) + \sum_{i=1}^{N - 1}(F(a_{i + 1}) - F(a_i)) \\
+									& = F(b_N + \delta_N) - F(a_N) + \sum_{i=1}^{N - 1} (F(b_i + \delta_i) - F(a_i)) \\
+									& = \sum_{i=1}^N(F(b_i + \delta_i) - F(a_i)) \\
+									& \leq \sum_{i=1}^N(F(b_i) - F(a_i) + \frac{\varepsilon}{2^i}) \\
+									& \leq \abs*{\sum\seq{i}F(b_i) - F(a_i)} + \varepsilon \\
+\end{align*}
+
+Since $\varepsilon>0$ was arbitrary, and $F$ is right-continuous, sending $\varepsilon\to0$ gives the result. 
+
+\qed
+
+\defn
+
+By Carath\'eodory's theorem, we know $\mu^*_F$ is a measure when restricted to $\ms{M}_{\mu^*_F}$, the collection of $\mu^*_F$-measurable sets. We will denote this measure by $\mu_F$, and call it the \underline{Legesgue-Stieljes} measure associated to $F$. 
+
+How does this help our goals?
+
+Is $\mu_F$ a Borel measure (that is, a measure when restricted to the Borel $\sigma$-algebra)? Yes
+
+\thm
+
+$\ms{B}_\R \subseteq\ms{M}_{\mu^*_F}$
+
+\proof
+
+It suffices to show that, for all $b \in \R$, $(-\oo, b] \in \ms{M}_{\mu^*_F}$. 
+
+That is, we must show for all $E \subseteq \R$ 
+\[
+\mu^*_F(E)\geq \mu^*_F(E\cap(-\oo,b]) + \mu^*_F(E\cap(-\oo,b]^c)
+\]
+We already have $\leq$ by countable additivity. 
+
+Fix a $\varepsilon>0$. By definition of $\mu^*_F$, there exists a cover $\{(a_i, b_i]\}\seq{i}$ such that $E\subseteq\bigcup\seq{i}(a_i, b_i]$ and
+
+\[
+\sum\seq{i}(F(b_i) - F(a_i)) \leq \mu^*_F(E) + \varepsilon
+\]
+
+Note that 
+\begin{align*}
+(a_i, b_i] \cap (-\oo, b] & \subseteq (a_i, b] \\
+(a_i, b_i] \cap [b, \oo) & \subseteq (b, b_i] \\
+\end{align*}
+so
+\begin{align*}
+E\cap(-\oo,b] & \subseteq\bigcup\seq{i}(a_i, b] \\
+E \cap [b, + \oo) & \subseteq \bigcup\seq{i}(b, b_i] \\
+\end{align*}
+
+\begin{align*}
+\mu^*_F(E\cap(-\oo,b]) + \mu^*_F(E \cap [b, +\oo)) & \leq \sum\seq{i}(F(b) - F(a_i)) + \sum\seq{j}(F(b_j) - F(b)) \\
+					& = \sum\seq{i}(F(b_i) - F(a_i)) \\
+					& \leq \mu^*_F(E) + \varepsilon \\
+\end{align*}
+
+Sending $\varepsilon\to0$ gives us the result. 
+
+\qed
+
+\defn
+
+When $F(x) = x$, we write $\lambda^* \eqdef\mu^*_F$, 
+
+and we call it the \underline{Lebesgue outer measure}. Similarly, we write $\lambda \eqdef\mu_F$, and call it the \underline{Lebesgue measure}. Finally, $\ms{M}_{\lambda^*}\eqdef\ms{M}_{\mu^*_F}$, and we call this collection the \underline{Lebesgue measurable sets}. 
+
+Thus, we know all Borel sets are Lebesgue measurable. 
+
+In this way, we have found a Borel measure that gives the ``right" length to intervals $(a, b]$. 
+
+The last ``intuitive" property of $\lambda$ that we seek to show is translation invariance. 
+
+\thm
+
+$\lambda^*$ is translation invariant on $2^\R$, and $\lambda$ is translation invariant on $\ms{M}_{\lambda^*}$. 
+
+\proof For any $a \in\R$, $A\subseteq\R$, $A\subseteq\bigcup\seq{i}(a_i, b_i]$ is equivalent to
+
+$A + a \subseteq\bigcup\seq{i}(a_i + a, b_i + a]$. 
+
+Therefore $\lambda^*(A) = \lambda^*(A + a)$. The only thing left to show is $\ms{M}_{\lambda}$ is translation invariant. 
+
+\claim Let $A \in \ms{M}_{\lambda^*}$. Then $A + a \in \ms{M}_{\lambda^*}$. 
+
+\proof
+
+Fix $E\subseteq\R$. We want to show 
+\[
+\lambda^*(E) = \lambda^*(E \cap (A + a)) + \lambda^*(E\cap (A + a)^c) 
+\]
+We know $\lambda^*$ is translation invariant, so 
+\[
+\lambda^*(E) = \lambda^*((E - a) \cap A) + \lambda^*((E - a) \cap A^c)
+\]
+
+For any $S\subseteq\R$, 
+\begin{align*}
+(E - a) \cap S & = \{x - a \mid x \in E, x - a \in S \} \\
+					& = \{x \mid x \in E, x \in S + a\} \\
+					& = E \cap(S + a) - a \\
+\end{align*}
+
+So
+
+\begin{align*}
+(S + a)^c & = \{y \mid y \not\in S + a\} \\
+			 & = \{y \mid y - a \not\in S\} \\
+			 & = \{y - a \mid y - a \not\in S\} \\
+			 & = S^c + a \\
+\end{align*}
+
+Therefore
+
+\begin{align*}
+\lambda^*(E) & = \lambda^*(E \cap (A + a)) + a) + \lambda^*((E \cap (A^c + a)) - a) \\
+				 & = \lambda^*((E\cap(A + a)) - a) + \lambda^*((E\cap(A + a)^c) - a) \\
+				 & = \lambda^*(E\cap(A + a)) + \lambda^*(E\cap (A + a)^c) \\
+\end{align*}
+
+Thus, for any $A \in \ms{M}_{\lambda^*}$, we have $\lambda(A) \eqdef \lambda^*(A) = \lambda^*(A + a) \eqdef \lambda(A + a)$
+
+\qed
+
+In fact, \underline{all} finite Borel measures are of this form.
+\thm
+
+Suppose $\mu$ is a finite Borel measure. Then $\mu = \mu_F$, where $F$ is the cumulative distribution function, $F(x) = \mu((-\oo, x))$. 
+
+\proof
+
+Recall, we already showed that for any finite measure $\mu$ on $\ms{B}_\R$, $F(x) = \mu((-\oo, x])$ is nondecreasing and right-continuous. 
+
+We seek to show $\mu(E) = \mu_F(E)$ for all $E \in \ms{B}_\R$. 
+
+First, consider the half-open interval $(a, b]$, $a \leq b$. $\mu$ is a measure by hypothesis, so in particular is finitely additive: 
+\[
+\mu((a, b]) + \underbrace{\mu((-\oo, a])}_{=F(a)} = \underbrace{\mu((-\oo, b])}_{=F(b)}
+\]
+
+So, $\mu((a, b]) = F(b) - F(a) = \mu_F((a, b])$.
+
+Now, fix $E\in \ms{B}_\R$. Consider $\{(a_i, b_i]\}\seq{i}$ such that $E \subseteq\bigcup\seq{i}(a_i, b_i]$. 
+
+By countable subadditivity, 
+
+\[
+\mu(E)  \leq\sum\seq{i}\mu((a_i, b_i]) = \sum\seq{i}(F(b_i) - F(a_i)) 
+\]
+
+Taking the infimum over all such covers, $\mu(E) \leq \mu_F(E)$. It remains to show the opposite inequality.
+
+Since $E\in\ms{B}_\R$ was arbitrary, 
+\[
+\mu(E^c)\leq \mu_F(E^c)
+\]
+
+Thus $\mu(E) + \mu(E^c) = \mu(\R)$. Then $\mu(E) =\mu(\R) - \mu(E^c)$. So 
+\begin{align*}
+\mu(E) & \geq \mu(\R) - \mu_F(E^c) \\
+& = \mu_F(R) - \mu_F(E^c)) \\
+& = \mu_F(E) \\
+\end{align*}
+
+But the above has a gap: in particular, we don't know that $\mu(\R) = \mu_F(\R)$. If we prove that, we are done. 
+
+\claim 
+
+$\mu(\R) = \mu_F(\R)$. 
+
+\proof
+
+\begin{align*}
+\mu(\R) & = \mu\left(\bigcup\seq{i}[-i, i]\right) \overbrace{=}^{\text{by upper continuity}} \lim_{i\to\oo}\mu((-i, i]) \\
+		  & = \lim_{i\to\oo}\mu_F((-i, i]) \underbrace{=}_{\text{by lower continuity}} \mu_F\left(\bigcup\seq{i}[-i, i]\right) = \mu_F(\R) \\
+\end{align*}
+
+\qed
+
+We conclude our study of Borel measures on the real line with some regularity properties of Lebesgue-Stieljes measures. 
+
+\lem
+
+Given $F:\R\to\R$ nondecreasing, right-continuous, for all $E \in \ms{M}_{\mu^*_F}$, 
+\[
+\mu_F(E) = \inf\{\sum\seq{i}\mu_F((a_i, b_i)) \mid E\subseteq\bigcup\seq{i}(a_i, b_i), a_i \leq b_i \}
+\]
+
+\proof
+
+By HW3Q2, 
+\[
+\mu_F(E) = \inf\{\sum\seq{i}\mu_F(A_i) \mid E \subseteq\bigcup\seq{i} A_i, \{A_i\}\seq{i} \in \ms{M}_{\mu^*_F}^\N\}
+\]
+
+Thus, ``$\leq$" must hold. It remains to show the opposite inequality. 
+
+By definition, for all $E \in \ms{M}_{\mu^*_F}$, 
+\[
+\mu^*_F(E) = \inf\{\sum\seq{i}(F(b_i) - F(a_i)) \mid E \subseteq \bigcup\seq{i}(a_i, b_i], a_i \leq b_i\}
+\]
+Fix $\varepsilon>0$. Then there exists a sequence of intervals $\{(a_i, b_i]\}\seq{i}$ such that $E\subseteq\bigcup\seq{i}(a_i, b_i]$ and 
+\[
+\mu_F(E) + E \geq \sum\seq{i}(F(b_i) - F(a_i)) 
+\]
+
+Furthermore, for any $(a_i, b_i]$, we may define $B_n\eqdef (a_i, b_i + \frac{1}{n})$, and since $\mu_F(B_1)<+\oo$, continuity from above ensures
+\[
+\lim_{n\to\oo}\mu(B_n)=\mu_F\left(\bigcap\seq{i}B_n\right) = \mu_F((a_i, b_i])
+\]
+
+Thus, for all $i$, there exists a $\delta_i>0$ such that 
+\[
+\mu_F((a_i, b_i + \delta_i]) \leq \mu_F((a_i, b_i]) + \frac{\varepsilon}{2^i}
+\]
+
+Thus, 
+
+\begin{align*}
+\mu_F(E) & \leq \sum\seq{i}\mu_F((a_i, b_i + \delta_i]) \\
+			& \leq \sum\seq{i}\mu_F((a_i, b_i]) + \frac{\varepsilon}{2^i} \\
+			& \leq \mu_F(E) + 2\varepsilon\\
+\end{align*}
+
+Letting $\varepsilon\to0$, this shows the other direction. 
+
+\qed
 
 
 
