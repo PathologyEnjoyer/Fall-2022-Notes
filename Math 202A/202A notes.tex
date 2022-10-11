@@ -18,6 +18,7 @@
 	\fancyfoot[R]{\footnotesize Page \thepage \ of \pageref{LastPage}}
 }
 \newcommand{\oo}{{\infty}}
+\newcommand{\bigt}{\bigtriangleup}
 
 
 
@@ -49,7 +50,7 @@ f(p + h) = f(p) + f'(p)h + \rho(h)
 \]
 Where $f'(p)$ is a complex number and $\frac{|\rho(h)|}{|h|}\to 0$. 
 
-If $A \in \Hom_{\C})(\C,\C) \cong \C$, $A(z) = \alpha z, \alpha \in \C$. 
+If $A \in \Hom_{\C}(\C,\C) \cong \C$, $A(z) = \alpha z, \alpha \in \C$. 
 
 So $(df)_p \in \Hom_{\C}(\C,\C)$.
 
@@ -98,7 +99,7 @@ A \underline{complex structure} on $V$ is a $J \in \End_{\R}(V)$ which satisfies
 
 \proof 
 
-First, $\det(J^2) = \det(-id_V) = (-1)^{\dim_\R V}$, so the dimension must be even. Alternatively, if $e_1, \dots, e_n$ is a basis of $V_J$, then check $e_1, \dots, e_n, Je_1, \dots, Je_n$ is a basis of $V$ over $R$.
+First, $\det(J^2) = \det(-\Id_V) = (-1)^{\dim_\R V}$, so the dimension must be even. Alternatively, if $e_1, \dots, e_n$ is a basis of $V_J$, then check $e_1, \dots, e_n, Je_1, \dots, Je_n$ is a basis of $V$ over $R$.
 
 \exm For $\R^2$, let $J_0 = \begin{pmatrix} 0 & - 1\\ 1 & 0 \\ \end{pmatrix}$. We see that $J_0\begin{pmatrix}x \\ y\end{pmatrix} = \begin{pmatrix} -y \\ x \end{pmatrix}$.  This is like $i(x + iy) = ix - y$.
 
@@ -254,7 +255,9 @@ d_pf = \pi^{1, 0}df + \pi^{0, 1}df = Adz + Bd\bar{z}
 
 Where $dz = dx + idy$ and $d\bar{z} = dx - idy$. You can check that the former is in $V^{1, 0}$ and the latter in $V^{0, 1}$. 
 
-The coefficient $A$ is denoted by tradition as $\frac{\del f}{\del z}(p)$, and $B$ as $\frac{\del f}{\del \bar{z}}(p)$. Here, the presence of $\del$ does not imply any limit taking or anything, they are just notation. 
+The coefficient $A$ is denoted by tradition as $\frac{\del f}{\del z}(p)$, and $B$ as $\frac{\del f}{\del \bar{z}}(p)$. 
+
+\underline{Here, the presence of $\del$ does not imply any limit taking or anything, they are just notation.}
 
 Note $A = \frac{1}{2}(\del_xf - i\del_yf)|_p$ and $B = \frac{1}{2}(\del_xf + i\del_yf)|_p$.
 
@@ -262,8 +265,8 @@ Note $A = \frac{1}{2}(\del_xf - i\del_yf)|_p$ and $B = \frac{1}{2}(\del_xf + i\d
 
 We define 
 \begin{align*}
-\del f_p & = f_z(p)dz_p \\
-\bar{\del}f_p = f_{\bar{z}}(p)d\bar{z}_p \\
+\del f_p & \eqdef f_z(p)dz_p \\
+\bar{\del}f_p & \eqdef f_{\bar{z}}(p)d\bar{z}_p \\
 \end{align*}
 
 The former is $\C$-linear, and the second $\C$-antilinear. 
@@ -294,15 +297,19 @@ How do we manage these problems?
 
 \claim If $m, k \in \Z\backslash\{0\}$, we will consider $d(z^m\bar{z}^k)$. We have $f(z + h) = (z + h)^m(\bar{z} + \bar{h})^m = f(z) + (mz^{m-1}\bar{z}^k)h + (k\bar{z}^{k - 1}z^m)\bar{h} + \mc{O}(h^2)$
 
-Where $\frac{|LHS - RHS|}{|z - 2|} \to 0$ ad $z\to 2$
+Where $\frac{|LHS - RHS|}{|z - 2|} \to 0$ as $z\to 2$
 
-Then $\bar{\del}(z^m\bar{z}^k = (k\bar{z}^{k - 1}z^m)d\bar{z}$
+Then $\bar{\del}(z^m\bar{z}^k) = (k\bar{z}^{k - 1}z^m)d\bar{z}$
+
+\proof
+
+
 
 Let's do some examples. Consider $\frac{\bar{z} - 1}{z + 1}$. We have
 
-\[
-\frac{\bar{z} - 1}{z + 1} = \frac{(\bar{z} - 2) - 2 - 1}{(z - 2) + 2 - 1} = \frac{(\bar{z} - z) + 1}{3}\frac{1}{1 + \frac{z - 2}{3}} = \frac{\bar{z} - 1}{3}(1 - \frac{z - 2}{3} + \mc{O}(H^2)) = cAz + B\bar{z} + \rho(z)
-\]
+\begin{align*}
+\frac{\bar{z} - 1}{z + 1}  & = \frac{(\bar{z} - 2) + 2 - 1}{(z - 2) + 2 + 1}  \\ & = \frac{(\bar{z} - 2) + 1}{3}\frac{1}{1 + \frac{z - 2}{3}}\\ &  = \frac{\bar{z} - 1}{3}\left(1 - \frac{z - 2}{3} + \mc{O}(H^2)\right)\\ & = c + Az + B\bar{z} + \rho(z)
+\end{align*}
 
 There are two building blocks for doing problems: 
 \begin{enumerate}
@@ -314,9 +321,11 @@ There are two building blocks for doing problems:
 
 We will calculate $d|z| = d\sqrt{z\bar{z}}$.
 
-\[
-d|z| = d\sqrt{z\bar{z}} = \frac{1}{2\sqrt{z\bar{z}}}d(z\bar{z}) = \frac{1}{2|z|}d(z\bar{z}) = \frac{1}{2|z|}zd\bar{z} + \bar{z}dz
-\]
+\begin{align*}
+d|z| & = d\sqrt{z\bar{z}}\\
+& = \frac{1}{2\sqrt{z\bar{z}}}d(z\bar{z})\\
+& = \frac{1}{2|z|}d(z\bar{z})\\ & = \frac{1}{2|z|}zd\bar{z} + \bar{z}dz \\
+\end{align*}
 
 So the answer would be $\frac{z}{2|z|}$. 
 
@@ -367,7 +376,7 @@ dF(|f|) = F'(|f|)d|f| = F'(|f|)d\sqrt{f\bar{f}}
 And $d\sqrt{u} = \frac{1}{2u}du$, so the above is equal to 
 
 \[
-F'(|f|)\frac{1}{2|f|}d(f\bar{f})^{-1} = \frac{F'(|f|)}{2|f|}(\bar{f}df + fd\bar{z}) = \frac{F'(|f|}{2|f|}(\bar{f}f_zdz + f\bar{f_z}d\bar{z})
+F'(|f|)\frac{1}{2|f|}d(f\bar{f})^{-1} = \frac{F'(|f|)}{2|f|}(\bar{f}df + fd\bar{z}) = \frac{F'(|f|)}{2|f|}(\bar{f}f_zdz + f\bar{f_z}d\bar{z})
 \]
 
 Our answer is thus whatever we get in front of $d\bar{z}$, so in this case the solution is 
@@ -385,7 +394,7 @@ Suppose you want $u_{xx} - u_{yy} = 0$. If this is the case (and it turns out ex
 What if we want to study $u_y = u_{xx}$ in, say, $y > -\varepsilon$? We actually have a formula:
 
 \[
-u(x, y) = frac{1}{2\pi y}\int_{-\oo}^{\oo} e^{-\frac{(x - s)^2}{4y}}u(s, 0)ds, y > 0
+u(x, y) = \frac{1}{2\pi y}\int_{-\oo}^{\oo} e^{-\frac{(x - s)^2}{4y}}u(s, 0)ds, y > 0
 \]
 
 Suppose we want to study $u_{yy} + u_{xx} = 0$ in $y > -\varepsilon$, or maybe an open ball around the origin. We have a formula
@@ -399,7 +408,7 @@ Where $P_H$ is the Poisson Kernel.
 Let $f:B_{R + \varepsilon}\to \C$. Then the following statements are all equivalent. 
 \begin{enumerate}
 \item For any $p \in B_R$, $f$ is differentiable and $df_p = \del f_p$, so $\bar{\del}f_p = 0$.
-\item $f(z) = \int_{C_R}\frac{f(w)}{z - w}dw$
+\item $f(z) = \frac{1}{2\pi i}\int_{C_R}\frac{f(w)}{z - w}dw$
 \item Like 8 other things
 \end{enumerate}
 
@@ -418,6 +427,359 @@ Let $t \in [0, 2\pi]$, $C_R(t) = Re^{it}$, a circle going counterclockwise. Let 
 \[
 \int_{\gamma^{-1}}\phi\,dz = \int_{\gamma}\phi\,dz
 \]
+
+\section*{Lecture 3}
+
+We continue with the Local Theorem for analytic functions. Let $f:B_{R_0 + \varepsilon}\to \C$. Then the following statements are all equivalent. 
+\begin{enumerate}[label=(\roman*)]
+\item $\forall z \exists$ a finite $\lim_{\Delta z\to\oo}\frac{f(z + \Delta z) - f(z)}{\Delta z} \eqdef f'(z)$. 
+\item $\forall z$, $f$ is $\R$-differentiable at $z$ and $df_z = \del f_z$, which is equivalent to $\bar{\del}f_z \equiv 0$, which gives the Cauchy-Riemann equations. 
+\item $f$ is continuous, and for all $R < R_0$, for all $z$ such that $|z - a| < R$, then 
+\[
+f(z) = \frac{1}{2\pi i}\int_{C_R(a)}\frac{f(w)}{w - z}dw
+\]
+\item $f(z) = \sum_{n=0}^\oo a_n(z - a)^n$ in $B_R(a)$ with $a_n = \frac{1}{2\pi i}\int_{C_R(a)}\frac{f(w)}{(w - a)^{n + 1}}dw$ for all $R < R_0$. 
+\item For some coefficient $c_n$, $f(z) = \sum_{n=0}^\oo c_n(z - a)^n$ for all $|z - a|< R_0$ for some $c_n$. 
+\item For all $z$, $\exists f'(z), f''(z), \dots, f^{(n)}(z), \dots$. Moreover, $f(z) = \sum_{n=0}^\oo c_n(z - a)^n $ for all $|z - a| < R_0$ with 
+\[
+c_n = \frac{f^{(n)}(a)}{n!}
+\]
+and
+\[
+f'(z) = \sum_{n=1}^\oo nc_n(z - a)^{n - 1}
+\]
+
+for all $|z - a| < R_0$. 
+\end{enumerate}
+
+\proof
+
+We already proved (i) and (ii) equivalent. $(ii)\implies(iii)$ will come later, and the steps $(iv)\implies(v)\implies(vi)$ are proven by undergrad power series techniques. Then of course $(vi)\implies(i)$ is a triviality. 
+
+\claim $(iii)\implies(iv)$. 
+
+\proof
+
+Recall the setup: $(iii)$ holds in a disk of radius $R$, which is $\delta$ less than $R_0$. 
+
+We have $f(z) = \frac{1}{2\pi i}\int_{C_R(a)}\frac{f(w)}{z - w}dw$. Now, 
+\[
+\frac{1}{w-z} = \frac{1}{(w - z) - (z - a)} = \frac{1}{w - a}\cdot\frac{1}{1 - \frac{z - a}{w - a}} = \sum_{n=0}^\oo\frac{(z - a)^n}{(w - a)^{n + 1}}
+\]
+
+This works because $|z - a| < |w - a|$. So 
+
+\[
+f(z) = \frac{1}{2\pi i}\int_{C_R(a)}\left(\sum_{n=0}^\oo(z - a)^n\frac{f(w)}{(w - a)^{n + 1}}\right)dw
+\]
+
+We want to swap the integral and the summation, and then we will be done. We can swap an integral and a sum provided the sum converges uniformly on $[a, b]$. We will show that this sum converges uniformly using the $M$ test. 
+
+Let $M_n = \sup_{[a, b]}|f_n|$. Then if $\sum_{n\in\N}M_n$ converges, then $\sum_{n\in\N}f_n$ converges uniformly . 
+
+We have to calculate $\sup_{|w - a| = R}|(z - a)^n\frac{f(w)}{(w - a)^{n + 1}}| = M_n$. We find
+\[
+M_n = \frac{(R - \delta)^n}{R^{n + 1}}\left(\frac{\sup_{\bar{B_R(a)}}|f|}{R}\right)
+\]
+so $\sum_{n\in\N}M_n<\oo$
+
+\qed
+
+We make use of the trick where $\frac{1}{A + B} = \frac{1}{A}\cdots\frac{1}{1 + \frac{B}{A}}$, and if $\frac{B}{A}$ is small we can do a series expansion. 
+
+Now, we will prove the $\bigtriangleup$ inequality for complex integrals.
+
+Let $\gamma:[a, b]\to\C$ be $C^1$ or piecewise smooth. , and let $\phi:\C\to\C$ be continuous. By definition, we have
+\begin{align*}
+\abs*{\int_\gamma f(z)\,dz} & = \int_a^b\phi(\gamma(t))\dot{\gamma}(t)\,dt \\
+							 & \leq \int_a^b|\phi(\gamma(t))||\dot{\gamma}(t)|\,dt \\
+							 & =: \int_\gamma |\phi(z)||dz| \\
+\end{align*}
+
+We have used the fact that for continuous real functions $f:\R\to\R$ we have 
+\[
+\abs*{\int_a^b f(t)\,dt} \leq \int_a^b|f(t)|\,dt
+\]
+
+We are moving towards proving $(ii) \implies (iii)$. The next result we need \underline{Goursat's Lemma}. 
+
+\defn
+
+Let $X \subset \C$ be open. If $f'(z)$ exists for all $z \in X$, we say $f \in A(X)$ or $f \in \ms{H}(X)$. 
+
+\lem (Goursat's Lemma)
+
+Let a solid $\bigtriangleup \subset \Omega\subset \C$, with $\Omega$ open ($\bigtriangleup$ is a $2$-simplex). 
+
+Denote the boundary of $\bigtriangleup$ by $T$, with the counter-clockwise orientation. Then for any $f \in \ms{H}(\Omega)$, we have
+\[
+\int_Tf\,dz = 0
+\]
+
+\proof
+
+Recall the Cauchy-Riemann system 
+\begin{align*}
+u_x & = v_y \\
+u_y & = -v_x \\
+\end{align*}
+
+We have from Calc 3 the classic Green's theorem: 
+\[
+\int_{\del\Omega}Pdx + Qdy = \int\int_{\Omega}(\text{something})dxdy
+\]
+
+Using these together will give the proof. 
+
+\subsection*{Step 1}
+
+First, we will seek a contradiction. Suppose that there is some $\varepsilon_0>0$ such that 
+\[
+\abs*{\int_Tf\,dz}\geq\varepsilon_0
+\]
+
+We can perform barycentric subdivision to $\bigtriangleup$ (pictures forthcoming until I figure out how to insert them in TeXwriter), and we can express this integral as the sum of the integrals of four sub-simplices, $T_1,\dots,T_4$. We must have $|\int_{T_i}f\,dz|\geq \frac{\varepsilon_0}{4}$. Denote this sub-simplex by $T_1$, and it's interior by $\bigtriangleup_1$. 
+
+So we have
+\[
+\abs*{\int_{T_1}f\,dz}\geq\frac{\varepsilon_0}{4}
+\]
+Now, $\operatorname{length}(T_1) = \frac{\operatorname{length}(T)}{2} = \frac{c_0}{2}$, and $\operatorname{diam}(\bigtriangleup_1) = \frac{\operatorname{diam}(\bigtriangleup)^2}{2} = \frac{c_1}{2}$.
+
+We can keep proceeding by doing barycentric subdivision to $T_1$. 
+
+So we have a sequence $\bigt_1 \supset \bigt_2 \supset \dots $, with $\del \bigt_i = T_i$, with $|\int_{T_i}f\,dz|\geq\frac{\varepsilon_0}{4^i}$. Further, the length of $T_j$ is $\frac{c_0}{2^j}$, and the diameter of $\bigt_j$ is $\frac{c_1}{2^j}$. 
+
+We can see that $\cap_{j=1}^\oo\bigt_j = \{p\}$, and without loss of generality we can assume $p = 0 \in \Omega$. 
+
+\subsection*{Step 2}
+
+We have $f(z) = f(0) + f'(0)z + \rho(z)$, where $\frac{|\rho(z)|}{|z|}\to 0$. So
+\[
+\int_\gamma 1\,dz = \int_a^b1\cdot\dot{\gamma}(t)dt = \gamma(b) - \gamma(a)
+\]
+So
+\[
+\int_\gamma z\,dz = \int_a^b\gamma(t)\dot{\gamma}(t)\,dt = \frac{1}{2}\int_a^b(\dot{(\gamma(t)^2)})\,dt = \frac{\gamma(b)^2 - \gamma(a)^2}{2}
+\]
+
+So
+\[
+\int_{T_j}f\,dz = \int_{T_j}f(0)\,dz + \int_{T_j}f'(0)\,dz + \int_{T_j}\rho(z)\,dz = 0 + 0 + \abs*{\int_{T_j}\rho(z)\,dz}
+\]
+
+So 
+\begin{align*}
+\abs*{\int_{T_j}f\,dz} & \leq \int_{T_j}|\rho(z)||dz| = \int_{T_j}\frac{|\rho(z)|}{|z|}|z||dz| \\
+						& \leq \sup_{\bigt_j}\frac{|\rho(z)|}{|z|}\operatorname{diam}(\bigt_j)\operatorname{length}(T_j) \\
+\end{align*}
+But $\frac{\varepsilon_0}{c_0c_1 4^i}\leq \sup_{bigt_j}\frac{|\rho(z)|}{|z|}\frac{c_0c_1}{4^j}$, which for large $d$ contradicts our assumption that $\frac{|\rho(z)|}{|z|}\to0$, proving Gousat's Lemma. 
+
+Now that we have Goursat's Lemma, we can prove $(ii)\implies(iii)$. 
+
+\prop $(ii)\implies(iii)$. 
+
+\proof
+
+
+
+\subsection*{Step 1}
+
+
+By Goursat, for $F \in \ms{H}(B_{R + \varepsilon}(a))$, $\int_{C_R(a)}F\,dw = \int_{C_\varepsilon(z)}F\,dw$ when $z \in B_{R}(a)$. We will show this in step 2. 
+
+Now, consider the map $w\mapsto \frac{f(w)}{w - z}$. We have
+
+\[
+\int_{C_R(a)}\frac{f(w)}{w - z}\,dz = \int_{C_\varepsilon(z)}\frac{f(w)}{w - z}\,dz = \int_0^{2\pi}\frac{f(z + \varepsilon e^{it})}{\varepsilon e^{it}}\,dz = i\int_0^{2\pi}f(z + \varepsilon e^{it})\,dt = if(z)2\pi i
+\]
+
+\section*{Lecture 4}
+
+Suppose we have a function $F$, which is holomorphic in $B_a(R+ \varepsilon)\backslash\{z\}$. $F(w) = \frac{f(w)}{w - z}$, with $f \in \ms{H}(B_{R+\varepsilon}(a)$. We have
+
+\[
+\int_{C_R(a)}F(w)\,dw =_* \int_{C_\varepsilon(z)}F(w)\,dw
+\]
+
+Once we have established this, we can take the limit as $\varepsilon\to0$ to get the Cauchy formula $f(z) = \cdots$. 
+
+We need some facts to prove $*$
+
+\subsubsection*{\underline{Fact 1}} 
+
+Suppose a circle has $N$ points distributed on it's circumference. Any two adjacent points forms an angle with the center. Let $\varphi_N$ be the max of these angles. Note $\varphi_N\to0$ as $N\to\oo$. Let $L_n$ be the polygonal curve formed by the secants between adjacent points. Then 
+\[
+\int_{L_n}\phi(w)\, dw \to \int_{C_r(a)}\phi(w)\,dw
+\]
+for $\phi$ continuous. The proof is easy, just break up the integrals and use uniform convergence. 
+
+\subsubsection*{\underline{Fact 2}}
+
+Let $A_1, A_2, A_3, A_4$ be points in a a ball, and consider the loop going from $A_1\to A_2$, then $A_2\to A_3$, then $A_3\to A_4$, and finally $A_4\to A_1$. 
+
+Suppose that $z$ is not in the convex hull of $\{A_1, A_2, A_3, A_4\}$. 
+
+Then $\int_{A_1\to\cdots\to A_1}F(w)\,dw = 0$. We calculate this by breaking this loop up into the sum of two simplices, and the integral over the simplices will be zero by Goursat's lemma. 
+
+We can then approximate the region in between $B_a(R + \varepsilon)$ and $B_z(\varepsilon)$ by a collection of loops of the above form. 
+
+This completes the proof
+
+\qed
+
+\thm (Inverse Function Theorem)
+
+Let $f \in \ms{H}(\Omega)$, with $\Omega\subseteq \C$ open. Let $z_0 \in \Omega$. 
+
+Suppose that $f'(z_0) \neq 0$. Then there exists a $\varepsilon>0$ such that $f|_{B_\varepsilon(z_0)}$ is a biholomorphism onto its image, which is open. 
+
+Moreover, there is a $g:f(B_{\varepsilon}(z_0))\to B_{\varepsilon}(z_0))$ which is holomorphic, such that $g \circ f = \Id$. In other words, $g$ is a ``local inverse" to $f$ (think two branches of square root, etc.)
+
+
+\proof
+
+Let $z_0 = \begin{pmatrix} x_0 \\ y_0 \end{pmatrix}$
+
+Just looking at $f$ purely as a smooth function from $\R^2\to\R^2$, we have
+
+\[
+\det\begin{pmatrix} u_x & u_y \\ v_x & v_y \\ \end{pmatrix} = u_xv_y - u_yv_x 
+\]
+
+By Cauchy-Riemann, we have $f' = u_x + iv_x$, so $u_x^2 + v_x^2 = \abs*{f'}^2|_{(x_0, y_0)} \neq 0$. This immediately gives bijectivity of the map $f$, and the fact that its image is open.
+
+Now $f^{-1}:f(B_{\varepsilon}(z_0))\to B_{\varepsilon}(z_0)$ is a real $C^\oo$ function. We just need to prove it is analytic. 
+
+We know $\Id_{B_{\varepsilon}(z_0)} = g \circ f$, so 
+\begin{align*}
+\Id & = dg \circ df \\
+	 & =(\del g + \bar{\del}g)\circ(\del f + \bar{\del} f) \\
+	 & = \del g \circ \del f + \bar{\del}g \circ \del f \\
+\end{align*}
+
+We must conclude that $\bar{\del}g \circ \del f$ is both $\C$-linear and $\C$-antilinear, meaning it is identically zero. Now, $\del f$ is linear and bijective, thus, $\bar{\del}g = 0$, so $dg = \del g$, so $g$ is holomorphic. 
+
+\qed
+
+If $\det df = 0$ for a real smooth function, then we can't really say anything about $f$. However, suppose $f'(z) = 0$, but $f'(z) \not\equiv 0$. Then we know a lot about the structure of $f$. 
+
+A homework problem asks to show the following: let $K \subseteq \Omega \subseteq \C$, with $\Omega\neq K$, $K$ compact, $\Omega$ open.
+
+ By compactness, $d(K, \C\backslash\Omega) = \delta > 0$. So 
+
+\[
+f(z) = \frac{1}{2\pi i}\int_{C_{\frac{\delta}{2}}(a)}\frac{f(w)}{w - z}\,dz
+\]
+
+Then 
+
+\[
+f'(a) = \frac{1}{2\pi i}\int_{C_{\frac{\delta}{2}}(a)}\frac{f(w)}{(w - a)^2}\,dw
+\]
+
+And now you can do some bounding shenanigans to get $\leq \frac{\sup |f|}{(\frac{\delta}{2})^2}$
+
+By controlling the derivative, we may control the derivative. The reverse is not true: no matter how we restrict the variance of $f$, the derivative can do strange things. 
+
+But for solutions to PDEs, the control goes the other way. That is, if you control $\sup|f|$, this controls the derivative, a fact which is not true in general. And every holomorphic function is a solution to a PDE.
+
+So if a sequence of functions converges uniformly, so does the sequence of their derivatives, and so on. 
+
+\thm (Liouville)
+
+Suppose $f:\C\to\C$ is an entire function (meaning holomorphic on all of $\C$), such that $\sup_{\C}|f| < \oo$. Then $f(z)$ is constant. 
+
+\rem This gives the easiest proof of the fundamental theorem of algebra:
+
+Suppose we have a nice non-constant polynomial $p$ without a root. Then $\frac{1}{p}$ is entire and bounded, so $\frac{1}{p}$ must be constant, so $p$ is constant, a contradiction (unless $p$ is constant in the first place).
+
+Thus $p$ must have a root. 
+
+
+\proof
+
+Write 
+
+\[
+f(z) = \frac{1}{2\pi i}\int_{C_R(z_0)}\frac{f(w)}{w - z_0}\,dw
+\] Then 
+
+\[
+f' = \frac{1}{2\pi i}\int_{C_r(z_0)}\frac{f(w)}{(w - z_0)^2}\,dw
+\]
+
+The complex triangle inequality tells us
+
+\[
+|f'| \leq c\abs*{\int_{C_r(z_0)}\frac{f(w)}{(w - z_0)^2}}|dw| \leq c \frac{\sup_{\C}|f|}{R^2}2\pi R = c\frac{\sup_{\C}|f|}{R} 
+\]
+
+Taking a limit as $R\to\oo$, we see that $|f'(z_0)| = 0$. But $z_0$ was arbitrary, so $f$ is constant. 
+
+\thm (Factorization)
+
+Let $f:B_{\varepsilon}(a)\to\C$ be holomorphic, and suppose $f(a) = 0$ and $f' \not\equiv 0$. 
+
+Then there exists an $N \in \N$ such that $f(z) = (z - a)^N\phi(z)$, with $\phi$ holomorphic in $B_{\varepsilon}(a)$, and $\phi(a)\neq 0$. 
+
+\proof
+
+Write 
+
+Find the first $N$ such that the $N$th derivative of $f$ is nonzero. 
+
+\[
+f(z) = \sum_{n=1}^\oo c_n(z - a)^n = \sum_{n=N}^\oo c_n(z - a)^n = (z - a)^n(c_N + c_{N + 1}(z - a) + \cdots )
+\]
+
+\cor
+
+The zeroes of a holomorphic function are isolated, unless the function is identically zero. 
+
+\cor(analytic continuation principle)
+
+Let $f, g:B_{\varepsilon}(a)\to\C$ be holomorphic, and let $f(z_j) = g(z_j)$ for some sequence $z_j \to a$, $z_j \neq a$ for all $j$. 
+
+Then $f = g$ in $B_{\varepsilon}(a)$. 
+
+This follows directly from the zeroes of non-zero holomorphic functions being isolated. 
+
+\qed
+
+\rem 
+
+Let $\Omega_1, \Omega_2$ be open, $\Omega_1\subset\Omega_2\subset\C$, with $f, g:\Omega_2\to\C$ holomorphic. Suppose that $f|_{\Omega_1} = g|_{\Omega_1}$. 
+
+Then $f = g$ in $\Omega_z$. 
+
+\proof
+
+Let $a \in \Omega_1$, let $\gamma:I\to\Omega_2$ be a path from $a$ to $p \in \Omega_2$. Let $G = \{t \in I \mid |f(\gamma(t)) - g(\gamma(t))| = 0$. This set is closed, and moreover $[0, \varepsilon) \subset G$ for any $0<\varepsilon<1$. We can then prove that $G$ is open. 
+
+But for $G$ to be a clopen subset of $I$ means that $G = I$ (also because $G$ is nonempty). 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
