@@ -45,7 +45,7 @@ A \underline{metric space} is a set $X$ equipped with a function $d:X\times X \t
 
 For $x, y \in \R^n$, 
 \[
-d(x, y) := \left(\sum_{i=1}^n(x_i - y_i)^2\right)^{\frac{1}{2}}
+d(x, y) \eqdef \left(\sum_{i=1}^n(x_i - y_i)^2\right)^{\frac{1}{2}}
 \]
 
 This is called the Euclidean distance. 2 can be replaced with any real $r \geq 1$, and it will still be a metric. 
@@ -54,14 +54,14 @@ This is called the Euclidean distance. 2 can be replaced with any real $r \geq 1
 
 In this example, $C[0, 1]$ is the set of all continuous functions $f:[0, 1]\to\R$. Here, 
 \[
-d(f, g) := \sup_{x\in[0,1]}|f(x)- g(x)|
+d(f, g) \eqdef \sup_{x\in[0,1]}|f(x)- g(x)|
 \]
 
 \exm
 
 Let $X = \N$, the natural numbers, including $0$. Let $p$ be a fixed prime number. The $p$-adic metric on $\N$ is defined by 
 \[
-d_p(a, b) := \frac{1}{p^\alpha} 
+d_p(a, b) \eqdef \frac{1}{p^\alpha} 
 \]
 Where $p^\alpha$ is the largest power of $p$ which divides $|a - b|$. So two naturals are ``close" if their difference is divisible by a high power of $p$. 
 
@@ -269,7 +269,7 @@ Recall: If $\{C_\alpha\}_{\alpha\in A}$ are all closed, then $\cap_{\alpha\in A}
 
 If $R\subseteq X$, then the \underline{closure} of $R$, denoted by $\bar{R}$, or sometimes $\cl(R)$, is defined as 
 \[
-\bar{R}:= \bigcap_{C\text{ closed}, C\supseteq R}C
+\bar{R}\eqdef \bigcap_{C\text{ closed}, C\supseteq R}C
 \]
 
 Analagously, 
@@ -392,6 +392,8 @@ But the only closed set that can contain an infinite set is $\N$, so the closure
 
 \subsection*{\underline{Subobjects and product objects}}
 
+\subsubsection*{\underline{Subobjects}}
+
 We have now defined our objects and morphisms, so let's talk about subobjects and product objects. 
 
 Let $(X, \ms{T}_X)$ be a topological space, and $A\subseteq X$ a nonempty subset. 
@@ -404,7 +406,7 @@ For any open $U\subseteq X$, we want $\iota^{-1}(U)$ to be open. But $\iota^{-1}
 
 For $(X, \ms{T}_X)$ a topological space and $A\subset X$ a subset, then the \underline{subspace topology} on $A$, $\ms{T}_A$, consists of 
 \[
-\ms{T}_A := \{U \cap A \mid U \in \ms{T}_X\}
+\ms{T}_A \eqdef \{U \cap A \mid U \in \ms{T}_X\}
 \]
 
 \prop
@@ -443,19 +445,147 @@ Consider
 \[
 \begin{tikzcd}
 (A,\ms{T}_A)\arrow[rd, "\iota \circ \Id"'] \arrow[r, "\Id"] & (A, \ms{T}_\mu) \arrow[d, "\iota"] \\
-& (X, \ms{T}_X \\
+& (X, \ms{T}_X) \\
 \end{tikzcd}
 \]
 
+\section*{Lecture 6}
+
+We are trying to prove that $\ms{T}_A$ is the unique topology on $A$ such that
+\[
+\begin{tikzcd}
+(A, \ms{T}_A) \arrow[rd,"\iota\circ\Id"']\arrow[r, "\Id"] & (A, \ms{T}_\mu)\arrow[d, "\iota"] \\
+& (X, \ms{T}_X) \\
+\end{tikzcd}
+\]
+
+\proof
+
+Suppose $\ms{T}_\mu$ is such a topology on $A$. Then 
+\[
+\begin{tikzcd}
+(A, \ms{T}_A)\arrow[rd, "\iota\circ\Id"']\arrow[r,"\Id"] & (A, \ms{T}_\mu) \arrow[d, "\iota"] \\ & (X, \ms{T}_X) 
+\end{tikzcd}
+\]
+We have $\iota\circ\Id$ is continuous, so $\begin{tikzcd}( A,\ms{T}_A)\arrow[r, "\Id"] & (A,\ms{T}_\mu) \end{tikzcd}$ is continuous. So if $W\in\ms{T}_\mu$, then $W \in \ms{T}_A$. Therefore $\ms{T}_\mu\subseteq\ms{T}_A$. 
+
+We know that $\iota\circ\Id$ is continuous. Let $W \in \ms{T}_X$. By continuity, $(\iota\circ\Id)^{-1}W\in\ms{T}_\mu \implies(\Id)^{-1}\circ\iota^{-1} W \in \ms{T}_\mu$. 
+
+So then $(\Id)^{-1}(W\cap A)\in\ms{T}_\mu$, and $W\cap A \in \ms{T}_\mu$. Therefore for any $W \in \ms{T}_\mu$, $W \cap A \in \ms{T}_\mu$, so $\ms{T}_A\subset\ms{T}_\mu$. 
+
+\subsubsection*{\underline{Product Objects}}
+
+Let $(X, \ms{T}_X), (Y,\ms{T}_Y)$ be topological spaces. We want to topologize $X\times Y$. 
+
+Well, if that holds a topology, then the projections damn well better be continuous. In other words, we want to arrange such that
+\[
+\begin{tikzcd}
+X\times Y \arrow[d, "\rho_Y"'] \arrow[r, "\rho_X"] & X \\
+Y & \\
+\end{tikzcd}
+\]
+both $\rho_X, \rho_Y$ are continuous. 
+
+Let $U\in\ms{T}_X$. Then $\rho_X^{-1}U = U \times Y$. Similarly, for $V\in\ms{T}_Y$, $\rho_Y^{-1}V = X\times V$. 
+
+Thus, for the projections to be continuous, we need that the intersection of $U\times Y$ and $X \times V$ are in $\ms{T}_{X\times Y}$ for all $U\in\ms{T}_X, V\in\ms{T}_Y$. The sets of this form, $X\times V \cap U\times Y$, form a basis for a topology. 
+
+In other words, the product topology has basis $\{U\times V\mid U\in\ms{T}_X, V\in\ms{T}_Y\}$. 
+
+\thm
+Consider the commutative diagram
+
+\begin{center}
+\begin{tikzcd}
+	& Z \ar[ld,"\rho_X\circ g"'] \ar[rd,"\rho_Y\circ g"] \ar[d,"g"]& \\
+X & X\times Y \ar[l,"\pi_j"] \ar[r,"\pi_Y"']& Y
+\end{tikzcd}
+\end{center}
+
+Then $g$ is continuous if and only if $\rho_X\circ g$ and $\rho_Y\circ g$ are continuous. 
+
+\proof
+
+Next time
+
+\section*{Lecture 7}
+
+\subsection*{\underline{Relevant digression}}
+
+Let $(X_i, \ms{T}_i)_{i\geq1}$ be a family of topological spaces. A basis for a topology on $\prod_{i\geq1}X_i$ is $\{\prod_{i\geq1}u_i \mid u_i \in \ms{T}_i\}$
+
+We can ask that the projection $\prod_{i\geq1}X_i\to X_j$ is continuous for each $j$, but then 
+\begin{align*}
+p_j^{-1}(V_j) & = X_1\times\cdots\times X_{j - 1}\times V_j \times X_{j + 1} \times \cdots \\
+\end{align*}
+
+\defn
+
+Let $(X_i, \ms{T}_i)_{i\geq1}$ be a family of topological spaces. Then the 
+
+\underline{Tychonoff's product topology} has a basis consisting of sets of the form $\prod_{i\geq1}V_i$, where $V_j \subseteq X_j$, and $V_j = X_j$ for all but finitely many $j$. 
+
+\exm
+
+Let $p$ be prime. Then $\Z/p^k$ will denote $\Z/p^k\Z$. We may equip it with the discrete topology. Consider $\prod_{k\geq1}\Z/p^k$. Let's put a metric on this. We will define
+\[
+d(x, y) = \sum_{k\geq1}\frac{1}{2^k}d_k(x_k, y_k)
+\]
+It is easy to convince yourself this is a metric. 
+
+Note that there exists a map $\Z\to\prod_{k\geq1}\Z/p^k$, given by $x \mapsto (x\mod p, x\mod {p^2}, \dots)$
+
+An integer $m$ is close to zero in this metric if $m$ is divisible by large powers of $p$. 
+
+This is (basically) the $p$-adic metric. 
+
+\underline{Exercise}: What is the closure of $\Z$ in this metric space? 
+
+\subsection*{\underline{Hausdorff Spaces}}
+
+\defn
+
+Here is what Darren calls a ``reasonable definition" of convergence of a sequence in a general topological space. 
+
+Let $x_n$ be a seequence in $(X,\ms{T})$. We say that $x_n$  \underline{converges to} $x$ if, for any $x \in U \in \ms{T}$, there exists an $N$ such that $x_k \in U$ for all $k \geq N$. 
+
+\exm
+
+Let $\mc{P}$ be the set of prime numbers, and let $\N$ have the Zariski topology. What does $\mc{P}$ converge to? 
+
+Consider $193$. An open neighborhood $U$ of this would be a set which contains $193$, and all but finitely many primes. So, for any such neighborhood, there will be an $N$ such that $p_k \in U$ for all $k \geq N$. So, the sequence $x_k = p_k$ converges to $193$. But $193$ was arbitrary, so the sequence converges to any natural number. 
+
+The problem here is that the open sets are too big. The Hausdorff condition will get us around this. 
+
+\defn
+
+A topological space $(X, \ms{T})$, is said to be \underline{Hausdorff} if, for any $x, y \in X$, when $x \neq y$, there exists $U_x, U_y \in \ms{T}$, such that $x \in U_x$, $y \in U_y$, and $U_x \cap U_y = \varnothing$. 
+
+\lem
 
 
+\begin{enumerate}[label=(\alph*)]
+\item Metric spaces are Hausdorff
+\item If $(x_n)$ has a limit in a Hausdorff space $(X, \ms{T})$, then it's unique 
+\end{enumerate}
 
+\proof
+\begin{enumerate}[label=(\alph*)]
+\item Pick $x \neq y$ in $(X, d)$ with $d(x, y) = \varepsilon>0$. Consider $B_{\frac{\varepsilon}{3}}(x)$ and $B_{\frac{\varepsilon}{3}}(y)$. These obviously are disjoint by the triangle inequality.
+\item Let $x_n$ converge to $x$, and let $y \neq x$ be some other point besides $x$. Then, there is some neighborhood of $x$ which is disjoint from a neighborhood of $y$. Eventually, every $x_k$ is in this neighborhood, meaning none are in the neighborhood of $y$. Thus, $x_n$ cannot converge to $y$.  
+\end{enumerate}
 
+\thm
 
+\begin{enumerate}[label = (\alph*)]
+\item Suppose $X, Y$ are Hausdorff spaces. Then $X\times Y$ is also Hausdorff. 
+\item If $A \subseteq X$, and $X$ is Hausdorff, then $A$ is also Hausdorff under the subspace topology. 
+\item If $(X, \ms{T}_X)$ is Hausdorff, and $X$ is homeomorphic to $(Y, \ms{T}_Y)$, then $Y$ is also Hausdorff. 
+\end{enumerate}
 
+\defn
 
-
-
+Let $(X, \ms{T}_X), (Y, \ms{T}_Y)$ be topological spaces. $X$ and $Y$ are said to be \underline{homeomorphic} if there exist continuous maps $f:X\to Y$, $g:Y\to X$, such that $g \circ f = \Id_X$ and $f \circ g = \Id_Y$.
 
 
 
