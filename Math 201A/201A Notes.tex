@@ -1083,6 +1083,202 @@ Letting $\varepsilon\to0$, this shows the other direction.
 
 \qed
 
+\section*{Lecture 7}
+
+Recall: Given $F:\R\to\R$ nondecreasing and right continuous, 
+
+\[
+\mu^*_F(A) \eqdef \inf\{\sum_{i}((F(b_i) - F(a_i)) \mid A \subseteq \bigcup\seq{i}(a_i, b_i], a_i\leq b_i \}
+\]
+
+\thm 
+\[
+\mc{B}_\R \subseteq \mc{M}_{\mu^*_F}
+\]
+
+We will show that in general, this is a strict containment. 
+
+\thm For any $E \in \mc{M}_{\mu^*_F}$, 
+\begin{align*}
+\mu_F(E) & = \inf\{\mu_F(U) \mid E \subseteq U, U \text{open}\} \\
+			& = \sup\{\mu_F(K) \mid K \subseteq E, K \text{compact}\}
+\end{align*}
+
+\proof
+
+Fix $E \in \mc{M}_{\mu^*_F}$. 
+
+\subsubsection*{\underline{Step 1}}
+
+Fix $\varepsilon>0$. The lemma proven in the previous lecture ensures that there exists $\{(a_i, b_i)\}\seq{i}$ such that $E \subseteq \cup\seq{i}(a_i, b_i)$ and 
+\[
+\mu_F\underbrace{\left(\bigcup\seq{i}(a_i, b_i)\right)}_{\eqdef U} \leq \sum\seq{i}\mu_F((a_i, b_i)) \leq \mu_F(E) + \varepsilon
+\]
+The first inequality is by countable additivity of $\mu$, and the second by construction. 
+
+\subsubsection*{\underline{Step 2}}
+
+There are a few cases:
+
+\begin{enumerate}
+\item In the first case, assume that $E$ is bounded. If $E$ is closed, then by Heine-Borel $E$ is compact, and taking $K = E$ gives the result. Next, suppose that $E$ is not closed. Fix $\varepsilon>0$. By step 1, there exists an open $U\supseteq \bar{E}\setminus E$ such that 
+\[
+\mu_F(U) \leq \mu_F(\bar{E}\setminus E) + \varepsilon
+\]
+Define $K = \bar{E}\setminus U$. Then $K$ is compact. By definition, 
+\begin{align*}
+K & = \bar{E} \cap U^c \subseteq \bar{E} \cap (\bar{E}\cap E^c)^c \\
+  & = \bar{E} \cap (\bar{E}^c \cup E) = E \\
+\end{align*}
+So 
+\[
+\mu_F(E \cap U) + \mu_F(K) \geq \mu_F(E \cap U) + \mu_F(E\setminus U) = \mu_F(E)
+\]
+Since $E$ is bounded, $\mu_F(E \cap U) < +\oo$, $\mu_F(U)<+\oo$, so
+\begin{align*}
+\mu_F(K) & \geq\mu_F(E) - \mu_F(E \cap U) \\
+			& = \mu_F(E) - (\mu_F(U) - \mu_F(E\setminus U)) \\
+			& \geq \mu_F(E) - \mu_F(U) + \mu_F(\bar{E}\setminus E) \\
+			& \geq \mu_F(E) - \varepsilon
+\end{align*}
+Since $\varepsilon > 0$ was arbitrary, this gives the result. 
+
+\item In the second case, assume that $E$ is unbounded. Define $E_j = E \cap (j, j + 1], j \in \Z$. $E_j$ is clearly bounded, so by case 1, we know that for all $\varepsilon>0$, there exists a compact $K_j\subseteq E_j$, such that
+\[
+\mu_F(K_j) \geq \mu_F(E_j) - \frac{\varepsilon}{2^{|j|}}
+\]
+
+Then $H_n = \cup_{j=-n}^nE_j$ is compact, with $H_n \subseteq E$. By additivity, 
+\begin{align*}
+\mu_F(H_n) & = \sum_{j=-n}^n\mu_F(K_j)\geq\sum_{j=-n}^n\mu_F(E_j) - 2\varepsilon \\
+			  & \geq \mu_F\left(\bigcup_{j=-n}^nE_j\right) - 2\varepsilon \\
+\end{align*}
+
+By continuity from below, we may pick $N \in \N$ sufficiently large so that
+\[
+\mu_F\left(\bigcup_{j=-N}^NE_j\right) \geq \mu_F(E) - \varepsilon
+\]
+Thus, 
+\[
+\mu_F(H_N)\geq \mu_F(E) - \varepsilon
+\]
+\end{enumerate}
+
+\qed
+
+Time for an important example. 
+
+\exm The Cantor Set
+
+Warmup: 
+
+$\lambda(\{a\}) = 0$, $\lambda(\Q) = \lambda(\cup\seq{i}\{r_i\}))$, where $r_i$ is some enumeration of $\Q$. Then the above is equal to $\sum\seq{i}\lambda(\{r_i\}) = 0$. 
+
+On the other hand, fix $\varepsilon>0$ and define 
+\[
+U = (0, 1) \cap \left(\bigcup\seq{j}(r_j - \frac{\varepsilon}{2^{j + 1}}, r_j + \frac{\varepsilon}{2^{j + 1}})\right)
+\]
+
+Then $U$ is open and dense in $(0, 1)$. From a topological perspective, this means that $U$ is ``large" (comeagre). 
+
+However, in a measurable sense, $U$ is ``small:" 
+
+\[
+\lambda(U) \leq \sum\seq{j}\frac{\varepsilon}{2^j} = \varepsilon
+\]
+
+Note: $U$ depends on $\varepsilon$, so we have \underline{not} shown that $\mu(U) = 0$. 
+
+Now we construct the Cantor set. 
+
+Start with $U_1 = (0, 1)$. Let $U_2$ be $U_1$ with the middle third removed, so is two disjoint intervals. Inductively, let $U_i$ be $U_{i - 1}$, with the middle thirds of all intervals removed. Then the Cantor set is the intersection of all $U_i$. 
+
+Alternatively, the Cantor set is every real in $(0, 1)$ whose base 3 expansion does not contain a $2$. 
+
+\thm 
+
+Let $C$ be the Cantor set. Then
+
+\begin{enumerate}[label=(\roman*)]
+\item $C$ is compact, nowhere dense, and totally disconnected (meaning the only connected subsets are singletons). Further, $C$ has no isolated points. 
+\item $\lambda(C) = 0$. 
+\item $C$ has cardinality of the continuum. 
+\end{enumerate}
+
+\subsection*{\underline{Measurable Functions}}
+
+\defn
+
+Given $f:X\to Y$, $f^{-1}(E) = \{x \in X \mid f(x) \in E\}$ is called the \underline{preimage of f}
+
+These are basic set theory facts from HW 1:
+
+\begin{align*}
+f^{-1}(\cup_{\alpha}E_\alpha) & = \cup_{\alpha}f^{-1}(E_\alpha) \\
+f^{-1}(E^c) & = (f^{-1}(E))^c \\
+f^{-1}(\cap_\alpha E_\alpha ) & = \cap_\alpha f^{-1}(E\alpha) \\
+\end{align*}
+
+\defn
+
+Suppose $(X, \mc{M}), (Y, \mc{N})$ are measurable spaces, and $f:X\to Y$. Then $\{f^{-1}(E) \mid E \in \mc{N}\}$ is the \underline{pullback of $\mc{N}$}, and $\{E \mid f^{-1}(E) \in \mc{M}\}$ is the \underline{pushforward of $\mc{M}$}. 
+
+\defn
+
+A function $f:X\to Y$ is \underline{$(\mc{M}, \mc{N})$-measurable} if for all $E \in \mc{N}$, $f^{-1}(E) \in \mc{M}$. 
+
+Equivalently, the pullback of $\mc{M}$ is a subset of $N$. Equivalently, $\mc{N}$ is a subset of the pushforward of $\mc{M}$.
+
+Informally, ``the inverse image of every measurable set is measurable" (Katy says the reason this isn't formal is because ``measurable set" already means something specific in the context of an outer measure). 
+
+If $f:X\to \R (\bar{\R})$, we will suppose that the range is endowed with $\ms{B}_\R (\ms{B}_{\bar{\R}})$. 
+
+\defn
+
+\begin{enumerate}[label=(\alph*)]
+\item $f:\R\to\bar{\R}$ is \underline{Lebesgue Measurable} if it is $(\mc{M}_{\lambda^*}, \ms{B}_{\bar{\R}})$-measurable. 
+\item Given topological spaces $X, Y$, $f:X\to Y$ is \underline{Borel Measurable} if it is $(\ms{B}_X, \ms{B}_Y)$-measurable. 
+\end{enumerate}
+
+\rem Given $f:\R\to\bar{\R}$, which is a stronger criteria: being Borel measurable, or being Lebesgue measurable? Borel measurable implies Lebesgue measurable since $\ms{B}_\R \subseteq \mc{M}_{\lambda^*}$. 
+
+\prop
+
+Given measureable spaces $(X, \mc{M}), (Y, \mc{N})$, where $\mc{N}$ is generated by $\mc{E}$. Then $f:X\to Y$ is $(\mc{M}, \mc{N})$-measurable is equivalent to $f^{-1}(E) \in \mc{M}$ for all $E \in \mc{N}$. 
+
+\proof
+
+One direction is immediate. For the other direction, since $\{E: f^{-1}(E) \in \mc{M}\}$ (the pushforward of $\mc{M}$) is a $\sigma$-algebra containing $\mc{E}$. By assumption, $\mc{N}$ is generated by $\mc{E}$, meaning $\mc{N} \subseteq \{E \mid f^{-1}(E) \in \mc{M} \}$. 
+
+\cor
+
+If $X$ and $Y$ are topological spaces, then every continuous function $f:X\to Y$ is Borel measurable. 
+
+\proof 
+
+Since the open subsets of $Y$ generate the $\sigma$-algebra $\mc{N} = \mc{B}_Y$, the previous proposition ensures that it suffices to check $f^{-1}(U)\in\mc{B}_X$ for all $U$ open, and this is true, since $f^{-1}(U)$ is open. 
+
+\cor
+
+If $(X, \mc{M})$ is a measurable space and $f:X\to\R$ the following are equivalent: 
+\begin{enumerate}[label=(\roman*)]
+\item $f$ is $(\mc{M}, \ms{B}_\R)$-measurable. 
+\item $f^{-1}((a, + \oo))\in\mc{M}$ for all $a \in \R$. 
+\item $f^{-1}((-\oo, a)) \in \mc{M}$ for all $a \in \R$
+\end{enumerate}
+
+If $(X, \mc{M})$ is a measurable space and $f:X\to\bar{\R}$ the following are equivalent: 
+\begin{enumerate}[label=(\roman*)]
+\item $f$ is $(\mc{M}, \ms{B}_\R)$-measurable. 
+\item $f^{-1}((a, + \oo])\in\mc{M}$ for all $a \in \R$. 
+\item $f^{-1}([-\oo, a)) \in \mc{M}$ for all $a \in \R$
+\end{enumerate}
+
+\proof
+
+Immediate from the proposition.
+
+
 
 
 
