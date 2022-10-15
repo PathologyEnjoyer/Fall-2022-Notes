@@ -182,7 +182,7 @@ $J_0e_1 = e_2$ and $J_0e_2 = -e_1$, so $dx \circ J_0 = -dy$ and $dy \circ J_0 = 
 
 \begin{align*}
 \pi^{0, 1}dx & =\frac{1}{2}(dx - idx\circ J_0)\\
-				 & = \frac{1}{2}(dx + idy) & := dz \\
+				 & = \frac{1}{2}(dx + idy) \eqdef dz \\
 \end{align*}
 
 Further, 
@@ -216,7 +216,7 @@ So analyticity is equivalent to $df = \partial f$, meaning $\bar{\partial}f = 0$
 So $(\partial_x + i\partial_y)(u + iv) = 0$. Multiplying out, we get
 \begin{align*}
 u_x & = v_y \\
-u_y = - v_x \\
+u_y & = - v_x \\
 \end{align*}
 
 \section*{Lecture 2} 
@@ -759,24 +759,193 @@ Let $a \in \Omega_1$, let $\gamma:I\to\Omega_2$ be a path from $a$ to $p \in \Om
 
 But for $G$ to be a clopen subset of $I$ means that $G = I$ (also because $G$ is nonempty). 
 
+\section*{Lecture 4}
+
+\rem
+
+Dennis wants to comment on a question on the homework relating to expansions in an annulus. 
+
+Consider $\frac{z^2}{z - 3i}$. Expand in powers of $(z - 1)$ in an annulus containing $i$. You don't need anything about Laurent series. The only thing you need to know is 
+\[
+\frac{1}{1 - q} = \sum_{n=0}^\oo q^n
+\]
+when $|q| < 1$. 
+
+What if $|z| > 1$?
+
+Note that 
+\[
+\frac{1}{1 - z} = \frac{1}{z}\frac{1}{1 - \frac{1}{z}} = \frac{1}{z}\sum_{n=0}^\oo\frac{1}{z^n}
+\]
+
+Let's do the problem. 
+
+At $3i$ there is a singularity, and we want an annulus centered at $1$. 
+
+Take 
+
+\begin{align*}
+\frac{z^2}{z - 3i} & = ((z - 1) + 1))^2\frac{1}{(z - 1) + (1 - 3i)} \\
+						  & = \frac{(1 + (z - 1))^2}{1 - 3i}\frac{1}{1 - \frac{z - 1}{3i - 1}} \\
+						  & = \frac{(1 + w^2)}{1 - 3i}\sum_{n=0}^\oo\frac{1}{(3i - 1)^n}w^n, w = z - 1, |w| < |3i - 1| = \sqrt{10}
+\end{align*}
+
+What if we want to do it in an annulus containing $4i$? 
+
+The same calculations hold, up to the second line: 
+
+\begin{align*}
+\frac{z^2}{z - 3i} & = ((z - 1) + 1))^2\frac{1}{(z - 1) + (1 - 3i)} \\
+						  & = \frac{(1 + (z - 1))^2}{1 - 3i}\frac{1}{1 - \frac{z - 1}{3i - 1}} \\
+						  & = \frac{1 + (z - 1)^2}{(1 - 3i)\frac{z - 1}{3i - 1}}\left(\frac{1}{-1 + \frac{3i - 1}{z - 1}}\right) \\
+						  & = \frac{1 + (z - 1)^2}{(z - 1)}\frac{1}{1 - \frac{3i - 1}{z - 1}} \\
+							& = \frac{1 + \cdots}{\cdots}\sum_{n=0}^\oo (3i - 1)^n\frac{1}{(z + 1)^n} \\
+\end{align*}
+
+For the last inequality, $|z - 1| > \sqrt{10}$. 
+
+What if we want an expansion in the maximal annulus containing $4i$?
+
+Now, to elaborate on something in the main local theorem. 
+
+\thm (Morera's)
+
+Let $f:B_{R_0}(a) \to \C$. The following are equivalent:
+\begin{itemize}
+\item $f \in \ms{H}(B_{R_0}(a))$
+\item $f$ is \underline{continuous} in $B_{R_0}(a)$ and for all solid 2-simplices $\bigtriangleup$ with boundary $T$, we have
+\[
+\int_Tf(z)\,dz = 0
+\]
+for some appropriate parameterization of $T$. 
+\end{itemize}
+
+\defn
+
+Let $\phi$ be a function. The \underline{support} of $\phi$, $\operatorname{supp} \phi$, is defined as $S = \bar{\{z\mid\phi(z)\neq 0\}}$. 
+
+\rem The support is a closed set, and $\phi|_{S^c} \equiv 0$. 
+
+\defn
+
+Let $X$ be an open subset of $C$. 
+
+Then 
+\[
+C_0^\oo(X, \C)\eqdef C_0^\oo(x) = \{f:X\to \C \mid \text{ all}\del_x^\alpha,\del_y^\beta f\text{ exist in }X,\operatorname{supp}f \text{ is compact}\}
+\]
+This is often called $\ms{D}(X)$
+
+Any element of $C_0^\oo$ is not holomorphic, as it is identically zero on an open set. 
+
+An example: 
+\[
+f(x) = \begin{cases} e^{-\frac{1}{|z|^2 - 1}} & |z| < 1 \\ 0 & |z| \geq 1 \end{cases} 
+\]
+Then $f(x) \in \ms{D}(\C)$. 
+
+\thm 
+
+The following are equivalent: 
+\begin{enumerate}[label=(\alph*)]
+\item $f \in \ms{H}(B_{R_0}(a))$ 
+\item $\forall R < R_0$, $f \in L^1(B_{R_0}(a))$ (in the Lebesgue sense) and $\frac{\del f}{\del \bar{z}} = 0$. This means that for any $\phi \in \ms{D}(B_{R_0}(a))$, $\int_{B_{R_0}(a)}f\frac{\del \phi}{\del \bar{z}}\,d\lambda^2 = 0 $. 
+\end{enumerate}
+
+\proof of Morera's theorem
+
+Showing $(i) \implies (ii)$ is Goursat's lemma. So we will now prove $(ii) \implies (i)$. 
+
+\subsubsection*{\underline{Step 1}}
+
+Define $F:B_{R_0}(a)\to\C$ defined by $z\mapsto\int_{S(z)}f(w)\,dw$, where $S(z): I\to B_{R_0}(a)$ is given by $t \mapsto (1 - t)a + tz$.
+
+\subsubsection*{\underline{Goal}}
+
+Our goal is to show that $F$ is holomorphic in $B_{R_0}(a)$, and $F'(z) = f(z)$ for all $z$. 
+
+\subsubsection*{\underline{Step 2}}
+
+By definition, 
+\[
+F' = \lim_{h\to0}\frac{F(z + h) - F(z)}{h} = \frac{1}{h}(\int_{I_2} + \int_{I_1}) = \frac{1}{h}\int_{I_3}f\,dz
+\]
+Where $I_1$ is a line from $z$ to $a$, $I_2$ is from $a$ to a third point, and $I_3$ is from that third point to $z$. The last term goes to $0$ as $h$ goes to $0$. 
 
 
+\thm (Removable singularity) 
 
+Let $f:B_R\setminus\{0\}\to\C$ satisfy 
+\begin{enumerate}[label=(\alph*)]
+\item $f \in \ms{H}(B_R\setminus\{0\})$
+\item $\frac{|f(z)|}{|z|}\to0$ as $z\to0$. 
+\end{enumerate}
 
+Then we can define $f(0)$ such that $f \in \ms{H}(B_R)$. 
 
+\proof
 
+Define $f(z)z = F(z)$ for $z \neq 0$. 
 
+Define $F(0) = 0$.
 
+Then $F$ is continuous in $B_R(0)$: we will prove $F \in \ms{H}(B_R(0))$
 
+So
+\begin{align*}
+f(z)z & = F(z) = \sum_{n=1}^\oo a_nz^{n - 1} \\
+		& = \sum_{n=0}^\oo b_nz^n \\
+\end{align*}
 
+And we are done. 
 
+By Goursat, we have to prove that for all $\bigtriangleup$, $\int_TF\,dz = 0$. 
 
+There are some cases:
+\begin{enumerate}
+\item In case $1$, $\int_TF\,dz = 0$, so we're done by Goursat. 
+\item In case $2$, where $T$ has 0 as a vertex, we can chop off a tiny piece of $T$, and then the integral is the integral over the new trapezoid we've created, plus the integral over a smaller triangle. The magnitude of this second integral is bounded above by the max of $F$ on the triangle times the length of the triangle. This is bounded above by a constant times $\varepsilon$.  So $\abs*{\int_TF\,dz} = 0$.
+\item In case $3$, $T$ has zero on the boundary, but not a vertex. In this case, we do more subdivision shenanigans, and it just works by case $2$. 
+\item In case $4$, 0 is an interior point of $\bigtriangleup$. We can do more subdivision shenanigans, and use case $3$ and it just works. 
+\end{enumerate}
 
+We are now done
 
+\qed
 
+We also have:
 
+Suppose $\Delta u = 0$ in $B_R\setminus\{0\}$, it suffices to have $\frac{|u(z)|}{\ln|z|}\to 0$. Then $u \in C^2(B_R(a))$ and $\Delta u = 0$. 
 
+\thm $(i)\implies (ii)$
 
+Let $f \in \ms{H}$. Then for all $k, m$, $\del_x^k\del_y^mf$ exists and is continuous, and $\frac{\del f}{\del \bar{z}} = \frac{1}{z}(\del_x + i\del_y)f = 0$. 
+
+Then $\frac{1}{2}(\del_x + i\del_y)f\phi\,dxdy = 0$ for all $\phi \in \ms{D}(B_R(a))$. 
+
+\proof
+
+By Fubini, 
+\begin{align*}
+\frac{1}{2}\int_{\C}(\del_x f)\phi dxdy + \cdots & = \frac{1}{2}\int_{\R}\left(\int_{\R}\del_xf(x, y)\phi(x, y)dx\right)dy \\
+			& = -\frac{1}{2}\int_{\R}\left(\int_{a_y}^{b_y}f\del_x\phi\,dx\right)\,dy + 0 \\
+			& = -\frac{1}{2}\int_{\C}f\frac{\del\phi}{\del\bar{z}}\,d\lambda^2 \\
+\end{align*}
+
+\qed
+
+We actually proved the following statement: 
+
+Let $x \in \Omega\subseteq \R^N$, $u$ smooth, $f$ smooth.
+Suppose we have a constant coefficient differential operator $f = \sum_{|\alpha|\leq N}C_\alpha\del_x^{\alpha}(u)$
+
+Then $u \in L^1(\Omega)$ and 
+\[
+\int u \left(\sum_{|\alpha|\leq N}(-1)^{|\alpha|}C_\alpha \del_x^\alpha \phi\right)d\lambda^2 = \int_{\Omega}f\phi\,d\lambda^N
+\]
+for all $\phi \in \ms{D}(\Omega)$. 
+
+So for a differential operator with constant coefficients, we can define a distribution of solutions to a PDE, such as $\bigtriangleup u = f$. 
 
 
 
