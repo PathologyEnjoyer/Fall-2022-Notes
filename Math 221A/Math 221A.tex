@@ -575,6 +575,12 @@ A topological space $(X, \ms{T})$, is said to be \underline{Hausdorff} if, for a
 \item Let $x_n$ converge to $x$, and let $y \neq x$ be some other point besides $x$. Then, there is some neighborhood of $x$ which is disjoint from a neighborhood of $y$. Eventually, every $x_k$ is in this neighborhood, meaning none are in the neighborhood of $y$. Thus, $x_n$ cannot converge to $y$.  
 \end{enumerate}
 
+\defn
+
+Let $(X, \ms{T}_X), (Y, \ms{T}_Y)$ be topological spaces. $X$ and $Y$ are said to be \underline{homeomorphic} if there exist continuous maps $f:X\to Y$, $g:Y\to X$, such that $g \circ f = \Id_X$ and $f \circ g = \Id_Y$.
+
+\section*{Lecture 8}
+
 \thm
 
 \begin{enumerate}[label = (\alph*)]
@@ -583,9 +589,304 @@ A topological space $(X, \ms{T})$, is said to be \underline{Hausdorff} if, for a
 \item If $(X, \ms{T}_X)$ is Hausdorff, and $X$ is homeomorphic to $(Y, \ms{T}_Y)$, then $Y$ is also Hausdorff. 
 \end{enumerate}
 
+\proof
+
+\begin{enumerate}[label=(\alph*)]
+\item Pick distinct points in $X \times Y$, $(x_1, y_1)$ and $(x_2, y_2)$. Either $x_1 \neq x_2$, or $y_1 \neq y_2$, or both. Without loss of generality, suppose $x_1 \neq x_2$. Because $X$ is Hausdorff, there are open sets $U_1, U_2 \subseteq X$, such that $x_1 \in U_1, x_2 \in U_2$, and $U_1 \cap U_2 = \varnothing$. Let $O_i = U_i \cap Y$. $(x_i, y_i) \in O_i$, and $O_1 \cap O_2 = \varnothing$, as no $x$-coordinate in $O_1$ is the same as any $x$-coordinate in $O_2$. 
+\item Exercise
+\item Pick $y_1 \neq y_2 \in Y$. Then there is a unique $x_1, x_2$ such that $f(x_i) = y_i$. Because $X$ is Hausdorff, there are disjoint open neighborhoods $x_1 \in U_1, x_2 \in U_2$. $f(U_1)$ and $f(U_2)$ are both open, as $f$ is a homeomorphic; each $f(U_i)$ contains $y_i$; finally, $f(U_1) \cap f(U_2) = \varnothing$, as $f$ was bijective. Thus, $Y$ is Hausdorff. 
+\end{enumerate}
+
+\qed
+
+\subsection*{\underline{Compact Spaces}}
+
+Compactness is a very good property that a space can have. For metric spaces, we can think of compactness as a generalization of being a finite collection of points. 
+
+\exm (Exercise)
+
+\begin{enumerate}[label=(\alph*)]
+\item Let $(X, d)$ be a metric space, $|X|<\oo$. Given $\begin{tikzcd} X \ar[r, "f"] & X \end{tikzcd}$ such that $d(f(x), f(y)) \geq d(x, y)$ for all $x, y \in X$. Then $f$ is an isometry. Give yourself one line to prove this. 
+\item Do the same thing for $(X, d)$ a compact metric space. 
+\end{enumerate}
+
 \defn
 
-Let $(X, \ms{T}_X), (Y, \ms{T}_Y)$ be topological spaces. $X$ and $Y$ are said to be \underline{homeomorphic} if there exist continuous maps $f:X\to Y$, $g:Y\to X$, such that $g \circ f = \Id_X$ and $f \circ g = \Id_Y$.
+A topological space $(X, \ms{T})$ is called \underline{compact} if, for any open cover $X = \cup_{\alpha \in A}U_\alpha$, $U_\alpha \in \ms{T}$, there exists $\alpha_1, \dots, \alpha_k \in \alpha$ such that $\cup_{i\leq j\leq k}U_{\alpha_j} = X$. In other words, any open cover admits a finite subcover. 
+
+\exm
+
+\begin{enumerate}
+\item Let $X$ be any set, and consider $\ms{T} = \{\varnothing, X\}$. This is trivially compact. 
+\item $(\R, $Zariski) is compact easily. Given an open covering, pick a set, and this covers every point of $\R$ except finitely many points. For each of those points, it is covered by another element of the covering. Thus, we can produce a finite subcover. 
+\item $(\R, \ms{T}_{MK})$. This is not compact, as $\R = \cup_{N\geq0}(-n, n)$. This is an open cover which clearly does not have a finite subcover. 
+\end{enumerate}
+
+\defn
+
+A subset $C \subseteq (X, d)$ is \underline{bounded} if for any $\xi \in C$,, there is a $K_\xi$ such that $B_{K_\xi}(\xi)\supseteq C$. 
+
+\lem
+
+If $C \subseteq (X, d)$ is compact, then $C$ is bounded. 
+
+\proof
+
+Clearly, $C = \cup_{i=1}^\oo B_i(x)$ for any particular $x \in C$. This must have a finite subcover, so in particular there is a largest $n$ such that $C \subseteq B_n(x)$. 
+
+\qed
+
+\lem
+
+Suppose $A \subseteq(X, \ms{T})$ is compact in the subspace topology with $X$ Hausdorff. Then $A$ is closed. 
+
+\proof 
+
+Take $\xi\not\in A$. We want to construct an open neighborhood of $\xi$ which is disjoint from $A$. 
+
+For any point $a \in A$, there are open neighborhoods $U_a, V_a$, with $a \in U_a, \xi \in V_a$, with $U_a \cap V_a = \varnothing$. 
+Do this for every $a \in A$. Then $\{U_a \cap A \mid a \in A \}$ is an open covering of $A$ in $\ms{T}_A$. $A$ is compact, so there exists a finite subcover $(U_{a_1} \cap A) \cup \cdots \cup (U_{a_k} \cap A) \supseteq A$. Each $U_{a_i}$ has a corrseponding $V_{a_i}$. Let $V^* = \cap_{1\leq i \leq k}V_{a_i}$. this is an open set, because the intersection of finitely many sets is open, and is disjoint from $A$, as it is disjoint from $U_{a_i}$ for each $i$. 
+
+So, $\xi$ is in the interior of $A^c$. However, $\xi$ was arbitrary, so $A^c$ is open, so $A$ is closed. 
+
+\qed
+
+\section*{Lecture 9}
+
+\thm (Heine-Borel)
+
+$[a, b]$ is compact.
+
+\section*{Lecture 10}
+
+\thm 
+
+Suppose $A \subseteq (X, \ms{T})$ is a closed subset of a compact space. Then $A$ is compact. 
+
+%%%%EVIL%%%
+\proof
+
+Let $\{U_\alpha \cap A\}_{\alpha \in A}$ be an open (in the subspace topology) cover of $A$. Of course, $U_\alpha \in \ms{T}_X$ for all $\alpha$. 
+
+Then $\{X \setminus A, U_\alpha\}_{\alpha \in A}$ is an open covering of $X$. By hypothesis, $X$ is compact, so this admits a finite subcover $\{X\setminus A, U_{\alpha_1} \cup \cdots \cup U_{\alpha_k}$ of $X$. 
+
+Then $\{U_{\alpha_i} \cap A\}_{i=1}^k$ is an open cover of $A$. So, $\{U_\alpha \cap A\}_{\alpha \in A}$ admits a finite subcover. But this cover was arbitrary, so we may conclude that any such open cover of $A$ admits a finite subcover. 
+
+Thus, $A$ is compact. 
+
+\qed
+
+\cor
+
+Let $C \subseteq (\R, \ms{T}_{MK})$. Then $C$ is compact if and only if it is closed and bounded. 
+
+\proof
+
+Compact implies closed and bounded is easy. For the other direction, if $C$ is bounded, then it is contained in some interval $[a, b]$. By Heine-Borel, such an interval is compact. So then $C$ is a closed subset of $[a, b]$, which is compact, so $C$ is a closed subset of a compact space, hence compact. 
+
+\rem
+
+Darren has several remarks:
+
+\begin{enumerate}
+\item Closed and bounded does \underline{not} equate to compactness in a general metric space. 
+\item This is a digression, but the above tells us that the Cantor set is compact.
+\end{enumerate}
+
+\defn
+
+Let $(X, d)$ be a metric space. We say that $X$ is \underline{Sequentially Compact} if, for any sequence $(x_n) \in X^\N$, there is a convergent subsequence $(x_{n_k})$ of $(x_n)$. 
+
+\thm 
+
+Let $(X, d)$ be metric space. Then $X$ is compact if and only if it is sequentially compact. 
+
+\proof of easy direction
+
+Let $(x_n) \in X^\N$ be a sequence in $X$. If $(x_n)$ takes on some value $x \in X$ infinitely many times, we're done. 
+
+So we can assume that doesn't happen. 
+
+Suppose for contradiction that there is no convergent subsequence. For each $x \in X$, there is an $\varepsilon = \varepsilon(x) > 0$ such that $B_{\varepsilon(x)}(x)$ contains only finitely many points of $(x_n)$. 
+
+Then $\bigcup_{x\in X}B_{\varepsilon(x)}(x)$ is an open cover, so there exists a finite subcover $B_{\varepsilon(x_1)}(x_1) \cup \cdots \cup B_{\varepsilon(x_n)}(x_n)$. But this implies there are only finitely many elements of our sequence, a contradiction. 
+
+\qed
+
+\defn
+
+Given $\varepsilon>0$, an $\varepsilon$-net is a set of points $x_1, \dots, x_k \in X$ so that $B_{\varepsilon}(x_1) \cup \cdots \cup B_{\varepsilon}(x_k) = X$. 
+
+\thm 
+
+Suppose a metric space $(X, d)$ is sequentially compact. Then $X$ has a (finite) $\varepsilon$-net for every $\varepsilon > 0$. 
+
+\proof
+
+We proceed by contraposition. Suppose that there exists a bad $\varepsilon>0$, such that there is no finite $\varepsilon$-net. 
+
+Pick a point $x_1$. By hypothesis, $B_{\varepsilon}(x_1)$ is \underline{not} all of $X$. So we can pick a point $x_2 \in B_\varepsilon(x_1)^c$. Then, by hypothesis, $B_\varepsilon(x_1) \cup B_\varepsilon(x_2)$ is \underline{not} all of $X$. We can keep doing this indefinitely, to get a sequence $(x_n) \in X^\N$, such that $d(x_i, x_j) \geq \varepsilon > 0$ for all $i \neq j$. 
+
+Thus, $(x_n) \in X^\N$ is a sequence which admits no cauchy subsequence, meaning it admits no convergent subsequence, meaning that $X$ cannot be compact.
+
+\qed
+
+\section*{Lecture 11}
+
+\lem
+
+Suppose $(X, d)$ is sequentially compact. Then, for all $\varepsilon>0$, $(X, d)$ has a finite $\varepsilon$-net. 
+
+We proved this last time. 
+
+\defn
+
+Let $(X, d)$ be a metric space, and $\ms{O} = \{U_\alpha\}_{\alpha\in A}$ an open covering. 
+
+Then a \underline{Lebesgue Number} for $\ms{O}$ is a $\delta>0$ such that for all $x \in X$, $B_{\delta(X)}\subset U_\beta$ for at least one $\beta \in A, U_\beta \in \ms{O}$. 
+
+\lem
+
+If $(X, d)$ is sequentially compact, then every open covering has a Lebesgue Number.
+
+\proof
+
+Let $\ms{O} = \{U_\alpha\}_{\alpha\in A}$ be an open cover of $X$.  Suppose $\ms{O}$ has no Lebesgue number. $\frac{1}{2}$ is not a Lebesgue number, so there exists a point $x_2$ such that $B_{\frac{1}{2}}(x_2)$ is not inside any single $U_\alpha$. Next, $\frac{1}{3}$ is not a Lebesgue number, so $B_{\frac{1}{3}}(x_3)$ is not in any individual $U_\alpha$. We can continue, and generate a sequence $\{x_2, x_3, \dots\}$, such that $B_{\frac{1}{i}}(x_i)$ is not contained in any $U_\alpha$. 
+
+By hypothesis, this sequence has a convergent subsequence $x_{n_k}$, which converges to $x \in X$. For any $\varepsilon>0$, $B_{\varepsilon}(x)$ contains infinitely many $x_i$. In particular, for a $U_\alpha$ containing $x$, there is a $\varepsilon>0$ such that $B_{\varepsilon}(x)$ contains infinitely many of the $x_i$. But then eventually the ball of radius $\frac{1}{i}$ around $x_i$ will be entirely in this ball, contradicting the hypothesis. 
+
+Explicitly, pick $n_k >>0$ such that $\frac{1}{n_k} < \frac{\varepsilon}{10}$, then $B_{\frac{1}{n_k}}(x_{n_k}) \subset B_\varepsilon(x) \subset U_\beta$. 
+
+\qed
+
+Now, we prove the converse of the theorem from the end of last lecture. 
+
+\proof that sequential compactness implies compactness. 
+
+Given $\ms{O} = \{U_\alpha\}_{\alpha\in A}$ an open covering. By the previous lemma, there is a Lebesgue number $\varepsilon^* > 0$ for $\ms{O}$. By another previous lemma, there is a finite $\varepsilon^*$-net for $\ms{O}$. 
+
+That is, there are points $\{x_1, \dots, x_k\}$, such that $B_{\varepsilon^*}(x_1) \cup \cdots \cup B_{\varepsilon^*}(x_k)$. But each of these lies inside one of the $U_\alpha$, so the corresponding $U_\alpha$ yields a finite subset of $\ms{O}$. 
+
+\qed
+
+\exm
+
+Consider $(C[0, 1], \sup)$. Let $f_0$ be the zero function, and consider $\bar{B_1(f_0)}$. This is closed, and bounded. However, it is not compact. 
+
+Consider a function which is zero, except for a spike at some point. Each such function is distance 1 from $f_0$, but is also distance 1 from each other such function. A sequence of such functions can't have a convergent subsequence. 
+
+So, this ball is not sequentially compact, and thus not compact. 
+
+\exm
+
+Consider the infinite product
+\[
+X = \prod_{k\geq1}\Z/p^k
+\]
+where $p$ is a prime fixed beforehand. Earlier, we defined a metric by
+\[
+d(x, y) = \sum_{k\geq1}\frac{1}{2^k}d_k(x_k, y_k)
+\]
+This is sequentially compact. Can you see why?
+
+\underline{Exercise}: Write this down. 
+
+\underline{Exercise}: Suppose $f:(X, d_X) \to (Y,d_Y)$ is continuous, and $X$ is compact. Prove $f$ is uniformly continuous. i.e. given $\varepsilon>0$, there is a $\delta>0$ such that
+\[
+d_X(x, x') < \delta \implies d_Y(f(x), f(x')) < \varepsilon
+\]
+for \underline{any} $x, x' \in X$. 
+
+\section*{Lecture 12}
+
+\thm
+
+Let $(X, \ms{T}_X)$, $(Y, \ms{T}_Y)$ be compact. Then $(X\times Y, \ms{T}_{X\times Y})$ is compact. 
+
+\rem
+
+Suppose $(X, d_X), (Y, d_Y)$ are metric spaces, both compact. Then $(X\times Y, d_X + d_Y)$ is compact. This is easy, as $X\times Y$ in this case is sequentially compact. 
+
+\proof
+
+Suppose $\{U_\alpha\}_{\alpha \in A}$ is an open covering of $X\times Y$.
+
+Fix $y \in Y$. Then $X\times\{y\}$ (with the subspace topology that $X\times Y$ induces) is homeomorphic to $X$. $X$ is compact, so $X\times\{y\}$ is compact. 
+
+For each $x \in X$, $(x, y) \in U_\beta$ for some $\beta \in A$. $U_\beta\in\ms{T}_{X\times Y}$, so $U_\beta = \bigcup($open in $X) \times$(open in $Y)$ . 
+
+So there exists $A_{(x, y)}\times B_{(x, y)} \subset U_\beta$, $A_{(x, y)} \in \ms{T}_X, B_{(x, y)}\in\ms{T}_Y$. 
+
+$\{A_{(x, y)}\}_{x\in X}$ is an open covering of $X$, and thus admits a finite subcover, $A_{(x_1, y)}\cup\cdots\cup A_{(x_k, y)} = X$. For each $A_{(x_i, y)}$, there is a $B_{(x_1, y)}$. 
+
+Set $B_y^* = \bigcap_{1\leq i \leq k}B_{(x_i, y)}$. Then the entire strip $X\times B_y^*$ is covered by a finite number of $U_\beta$.
+
+$\{B_y^*\}_{y\in Y}$ is an open covering of $Y$, so by compactness of $Y$ admits a finite subcover $B_{y_1}^*\cup\cdots\cup B_{y_\ell}^*$. Each $B_{y_i}^*$ has the property that $X\times B_{y_i}^*$ is covered by finitely many $U_\beta$. So $X \times Y$ is covered by a finite number of $U_{\beta}$'s. 
+
+The cover $\{U_\alpha\}_{\alpha \in A}$ was arbitrary, so we are done. 
+
+\qed
+
+Before we started this proof, Daren said ``First I'm gonna take a sip of the real stuff," and took a drink from his can of diet Coke. What did he mean by this? 
+
+\subsection*{\underline{Connected Spaces}}
+
+\defn 
+
+A topological space $(X, \ms{T})$ is \underline{not connected} if there exist nonempty, disjoint, open sets $A, B$ such that $X = A\coprod B$. 
+
+\defn
+
+A topological space $(X, \ms{T})$ is \underline{not connected} if there is a continuous surjection $f:(X,\ms{T})\to\{0,1\}$.
+
+\prop
+
+The above two definitions are equivalent. 
+
+\proof
+
+First, suppose that there is a continuous surjection $f:(X,\ms{T})\to\{0, 1\}$. Then $f^{-1}(0), f^{-1}(1)$ are nonempty disjoint open subsets of $X$, whose union is $X$. 
+
+Now, suppose that we can express $X$ as the union of two disjoint nonempty open sets $A, B$. Then $f(x) = \begin{cases} 1 & x \in A \\ 0 & x \in B \\ \end{cases}$ is a continuous surjection from $X$ to $\{0,1\}$. 
+
+\lem
+
+Suppose $X$ is connected, and $f:X\to Y$ is continuous. Then $f(X)$ is connected.
+
+\proof
+
+If there exists $\pi:f(X)\to\{0, 1\}$ which is continuous and surjective, then $\pi \circ f :X\to\{0, 1\}$ is continuous and surjective. 
+
+\qed
+
+\cor
+
+Connectedness is a topological property. 
+
+\thm
+
+$X \times Y$ is a connected topological space if and only if $X$ and $Y$ are connected. 
+
+\proof
+
+If $X \times Y$ is connected, then $p_X:X\times Y \to X$ is continuous, so by the above lemma, $X$ is connected. A similar argument shows $Y$ is connected. 
+
+Now, suppose $X, Y$ are connected. Let $f:X\times Y\to\{0,1\}$ be continuous. $X\times\{y\}$ is connected for any $y \in Y$, $f(X\times\{y\}) = \{0\}$ without loss of generality. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
