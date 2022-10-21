@@ -58,9 +58,9 @@ Fortunately, it's good enough for most ``ordinary" functions a student might enc
 
 Unfortunately, it's not good for taking limits. 
 
-For example, given $f_1, f_2, f_3, \cdots :[a, b]\to\R$ such that $\lim_{n\to\infty}f_n(x) =: f(x)$ exists for all $x$, when can we conclude that
+For example, given $f_1, f_2, f_3, \cdots :[a, b]\to\R$ such that $\lim_{n\to\infty}f_n(x) \eqdef f(x)$ exists for all $x$, when can we conclude that
 \[
-\lim_{n\to\infty}\int_a^bf_n(x)\,dx = \int_a^b\lim_{n\to\infty}f_n(x)]\,dx = \int_a^bf(x)\,dx
+\lim_{n\to\infty}\int_a^bf_n(x)\,dx = \int_a^b\lim_{n\to\infty}f_n(x)\,dx = \int_a^bf(x)\,dx
 \]
 We learn in undergraduate real analysis that we may only conclude the above if the $f_n$ converge uniformly to $f$. 
 
@@ -1274,11 +1274,334 @@ If $(X, \mc{M})$ is a measurable space and $f:X\to\bar{\R}$ the following are eq
 \item $f^{-1}([-\oo, a)) \in \mc{M}$ for all $a \in \R$
 \end{enumerate}
 
+\section*{Lecture 8}
+
 \proof
 
-Immediate from the proposition.
+Since open rays generate $\ms{B}_\R$, and half-open rays generate $\ms{B}_{\bar{\R}}$, this follows immediately from the proposition.
+
+For the rest of this lecture, let $(X, \mc{M})$ be a measurable space. We say a function $f:X\to\bar{\R}$ is measurable if it is $(\mc{m}, \ms{B}_{\bar{\R}})$-measurable. 
+
+\thm
+Given $f_1, f_2, \dots:X\to\bar{\R}$ measurable, then the fullowing are also measurable: 
+\begin{enumerate}[label=(\roman*)]
+\item $f_i + f_j$
+\item $f_if_j$ (our convention is $0\times x = 0$ even if $x = \pm \oo$. 
+\item $f_i \vee f_j$, where $\vee$ means pointwise maximum, i.e. $f_i \vee f_j(x) = \max(f_i(x), f_j(x))$
+\item $f_i \wedge f_j$, where $\wedge$ means pointwise minimum, i.e. $f_i \wedge f_j(x)=\min(f_i(x), f_j(x))$. 
+\item $\sup_n f_n = \vee\seq{n} f_n$.
+\item $\inf_n f_n = \wedge\seq{n} f_n$. 
+\item $\limsup_{n\to\oo}f_n$
+\item $\liminf_{n\to\oo}f_n$
+\item $\lim_{n\to\oo}f_n$, if this limit exists everywhere. 
+\end{enumerate}
+
+\rem
+
+Question: suppose $\sum\seq{i}f_i(x)$ exists for all $x\in X$. Does it follow that $\sum\seq{i}f_i(x)$ measurable? Yes! By part (i), any finite sum is measurable, and by part (ix) the limit of these partial sums (which is what an infinite sum is) is measurable. 
+
+\proof
+\begin{enumerate}[label=(\roman*)]
+\item HW5
+\item See above
+\item Fix $a \in \R$. Then 
+\begin{align*}
+(f_i\vee f_j)^{-1}((a, + \oo]) & = \{x \in \mc{X} \mid f_i \vee f_j(x) > a \} \\
+										& = \{x\in \mc{X} \mid f_i(x) > a \} \cup \{x \in \mc{X} \mid f_i \vee f_j (x) > a\} \\ 
+										& = f_i^{-1}((a, +\oo]) \cup f_2^{-1}((a, +\oo]) \\
+\end{align*}
+By the previous corollary, we are done. 
+\item Similar to above
+\item Fix $a \in \R$. Then
+\begin{align*}
+(\sup_nf_n)^{-1}((a, + \oo]) & = \{x \in \mc{X} \mid \sup_nf_n(x) > a\} \\
+										& = \cup\seq{n}\{x \in \mc{X} \mid f_n(x) > a \} \\
+\end{align*}
+By assumption, $\{x \in \mc{X} \mid f_i > a\}$ is measurable for all $a, i$. 
+\item Similar to above
+\item 
+\[
+\limsup_{n\to\oo}f_n = \inf_n\sup_{k\eq n}f_k 
+\]
+The right hand side is measurable by parts (v) and (vi)
+\item Similar to above
+\item Since $\lim_{n\to\oo}f_n(x)$ exists for all $x \in X,$ the $\limsup$ and $\liminf$ of the sequence both exist and are equal to the limit. So by (vii) this is measurable.
+\end{enumerate}
+
+\qed
+
+\rem 
+
+What about the composition of measurable functions? For example, if $f:\R\to\R$, $g:\R\to\R$ are both Borel measurable, then $f \circ g$ is Borel measurable. 
+
+What if $f$, $g$ are Lebesgue measurable? No, because a function being ``Lebesgue measurable" means it is measurable when the domain has the Lebesgue $\sigma$-algebra, and the codomain has the Borel $\sigma$-algebra. In other words, it is ``Lebesgue Measurable" if the preimage of any Borel set is a Lebesgue set.
+
+\subsection*{\underline{Only The Things Above Here Are On Midterm 1}}
+
+\subsubsection*{Simple functions}
+
+\defn
+
+For any $A \subseteq \mc{X}$, the \underline{indicator function} of $A$ is the function 
+\[
+1_A(x) \eqdef \begin{cases} 1 & x \in A \\ 0 & \text{otherwise} \\ \end{cases}
+\]
+
+In the book, the notation $\chi_A$ is also used. Katy will not do this because, in her opinion, the notation ``$\chi_A$" is overloaded. 
+
+\defn 
+
+A $(\mc{M}, \ms{B}_\R)$-measurable function $f:\mc{X}\to\R$ is a \underline{simple function} if its image is a finite subset of $\R$. The \underline{standard representation} of a simple function is 
+\[
+f(x) = \sum_{i=1}^nc_i1_{E_i}(x)
+\]
+where $f(\mc{X}) = \{c_1, \dots, c_n\}$, and $E_i = f^{-1}(c_i)$. 
+
+\rem
+
+$\{E_i\}_{i=1}^n\subseteq\mc{M}$ is a disjoint partition of $\mc{X}$. 
+
+\exm
+
+There are many ways a simple function can be expressed as a linear combination of indicator functions: 
+\begin{align*}
+f(x) & \equiv 2 \\
+& = 2\cdot1_{\R} \\
+& = 2\cdot1_{[0, +\oo)} + 2\cdot1_{(-\oo, 0)} \\
+& = etc. \\
+\end{align*}
+
+The last two are not in standard representation. 
+
+It is ``easy" to define the integral of a simple function. 
+
+\defn
+
+For any measure space $(\mc{X}, \mc{M}, \mu)$, we can define the integral of a simple function to be
+\[
+\int f\,d\mu \eqdef \sum_{i=1}^nc_i\mu(E_i)
+\]
+Again, we use the convention $0\times\pm\oo = 0$. 
+
+For $A \in \mc{M}$, define 
+\[
+\int_Af\,d\mu \eqdef \int f\cdot1_A\,d\mu
+\]
+$f \cdot 1_A$ is the simple function $\sum_{i=1}^nc_i1_{E_i \cap A}$. Note that $E_i \cap A$ could have zero measure, or even be empty. Recall that $\mu(\varnothing) = 0$. 
+
+\rem 
+
+Sometimes we will write
+\[
+\int_Af\,d\mu = \int_Af
+\]
+and suppress the $d\mu$ in the notation. 
+
+Next, we will show that we can approximate any nonnegative measurable functions. 
+
+\thm Given $f:\mc{X}\to[0,\oo]$ measurable, there exists a sequence $f_n$ of simple functions so that $f_n$ converges up to $f$ pointwise. To be clear: for each $x \in \mc{X}$, $f_n(x)$ is an increasing sequence which converges to $f(x)$. 
+
+\proof
+
+For $n \in \{0\} \cup \N$, $0 \leq k \leq 2^{2^n} - 1$, define
+\[
+E_n^k \eqdef f^{-1}((k2^{-n}, (k + 1)2^{-n}])
+\]
+and
+\[
+F_n \eqdef f^{-1}((2^n, +\oo])
+\]
+Now, let
+\[
+f_n \eqdef \sum_{k=0}^{2^{2^n} - 1}k2^{-n}1_{E_n^k} + 2^n1_{F_n}
+\]
+
+Key properties of this construction:
+\begin{itemize}
+\item $f_1 \leq f_2 \leq f_3 \leq \cdots$
+\item $0 \leq f - f_n\leq2^{-n}$ on $F_n^c$. 
+\end{itemize}
+
+Thus, $f_n$ increases to $f$ pointwise. 
+
+\qed
+
+In order to apply this to integrate general nonnegative functions,  we will use the following properties of integrating simple functions. 
+
+\prop
+
+On simple functions, the integral is linear, and preserves order. That is, if $f \leq g$, then $\int f \leq \int g$. 
+
+Further, $\nu(A) \eqdef \int_Af\,d\mu$ is a measure on $\mc{M}$. 
 
 
+\section*{Lecture 9}
+
+\proof
+
+Let $f = \sum_{i=1}^na_i1_{E_i}, g = \sum_{j=1}^nb_j1_{F_j}$ be the standard representations of simple functions. 
+
+\begin{enumerate}[label=(\alph*)]
+\item Suppose $c \neq0$. Then, 
+\[
+c\int f = c\sum_{i=1}^na_i\mu(E_i) = \sum_{i=1}^nca_i\mu(E_i) = \int cf
+\]
+since $\sum_{i=1}^nca_i1_{E_i} = cf$ is the standard representation. 
+\item $\{E_i\}_{i=1}^n, \{F_j\}_{j=1}^n$ are partitions of $X$. So 
+\[
+E_i = \coprod_{j=1}^mE_i\cap F_j,\, F_j = \coprod_{i=1}^nF_j\cap E_i
+\]
+By definition, 
+\begin{align*}
+\int f + \int g & =\sum_i a_i\mu(E_i) + \sum_jb_i\mu(F_j) \\
+					 & = \sum_{i, j}\left(a_i\mu(E_i\cap F_j) + b_j\mu(E_i \cap F_j) \right) \\
+					 & = \sum_{i, j}(a_i + b_j)\mu(E_i \cap F_j)\\
+\end{align*}
+Let $h = \sum_{i,j}(a_i + b_j)1_{E_i\cap F_j} = f + g$. But this is not necessarily the standard representation of $h$. 
+
+Let $\{c_\ell\}_{\ell=1}^k$ be the distinct values of $\{a_i + b_j\}_{i, j}$. 
+
+Likewise, let $G_\ell = h^{-1}(c_\ell) = \cup_{i, j, a_i + b_j = c}(E_i \cap F_j)$.
+
+Then
+\begin{align*}
+\sum_{i, j}(a_i + b_j)\mu(E_i \cap F_j) & = \sum_{\ell=1}^k\sum_{i, j, a_i + b_j = c_\ell}(a_i + b_j)\mu(E_i \cap F_j) \\
+												     & = \sum_{\ell=1}^kc_\ell\mu(G_\ell) \\
+												     & = \int (f + g) \\
+\end{align*}
+\item If $f \leq g$, then $a_i \leq b_j$ whenever $E_i \cap F_j \neq\varnothing$. So
+\[
+\int f  = \sum_{i, j}a_i\mu(E_i \cap F_j) \leq \sum_{i, j}b_j\mu(E_i\cap F_j) = \int g
+\]
+\item Let $\nu(A) \eqdef \int_Af$. This is a nonnegative function on $\mc{M}$. Now,
+\[
+\nu(\varnothing) = \int_{\varnothing}f = \int f1_{\varnothing} = \int f 0 = 0\int f = 0
+\]
+Finally, given a disjoint sequence of sets $\{A_k\}\seq{k}, A = \cup\seq{k}A_k$, then
+\begin{align*}
+\nu(A) = & \int_Af = \int f1_A = \sum_{i, E_i \cap A \neq\varnothing,c_i\neq0}c_i\mu(E_i \cap A) \\
+			& = \sum_{i=1}^na_i\mu(E_i\cap A) = \sum_{i, k}a_i\mu(E_i \cap A_k) \\
+			& = \sum\seq{k}\sum_{i, E_i \cap A_k \neq0, a_i\neq0}\mu(E_i \cap A_k) \\
+			& = \sum\seq{k}\int f1_{A_k} = \sum\seq{k}\nu(A_k)\\
+\end{align*}
+\end{enumerate}
+\qed
+
+\rem Parts (a) and (b) ensure we no longer have to worry about standard representations.
+
+Suppose $f = \sum_{i=1}^nc_i1_{E_i} = \sum_{j=1}^nd_j1_{F_j}$. Then
+\[
+\sum_jd_j\mu(F_j) = \sum_jd_j\int1_{F_j} = \int\sum_jd_j1_{F_j} = \int f
+\]
+
+\subsection*{\underline{Integration of nonnegative measurable functions}}
+
+Let $(X, \mc{M}, \mu)$ be a measure space. 
+
+\defn
+
+Given $f:X\to[0,\oo]$ measurable, define \underline{the integral of f} by
+\[
+\int fd\mu \eqdef \sup\{\int\phi\,d\mu \mid 0 \leq \phi \leq f, \phi\text{ simple}\}
+\]
+
+\rem 
+\begin{enumerate}[label=(\roman*)]
+\item If $f$ is simple, this agrees with our previous definition.
+\item For $c \geq 0$,
+\begin{align*}
+\int cf\,d\mu & \eqdef \sup\{\int\phi\,d\mu \mid 0 \leq \phi \leq cf, \phi\text{ simple}\} \\
+				  & = \sup\{\int\phi\,d\mu \mid 0 \leq \frac{\phi}{c} \leq f, \phi\text{ simple} \}\\
+				  & = \sup\{\int c\psi\,d\mu \mid 0 \leq \psi \leq f, \psi\text{ simple} \} \\
+				  & = c\sup\{\int\psi\,d\mu\mid0\leq\psi\leq f, \psi\text{ simple} \} \\
+				  & = c\int f\,d\mu\\
+\end{align*}
+Likewise, if $c = 0$, we see $\int cf\,d\mu = 0$. 
+\item If $f \leq g$, then $\int f \leq \int g$. This follows immediately from the definition. 
+\end{enumerate}
+
+Recall: A major deficiency of the Riemann integral is that it was difficult to develope minimal criteria to ensure
+\[
+\lim_{n\to\oo}\int f_n\,d\mu = \int\lim_{n\to\oo}f_n\,d\mu
+\]
+
+We are now ready for our second major theorem (the first being the characterization of all finite measures on $\R$ as Lebesgue-Stieljes measures)
+
+\thm (Monotonce Convergence Theorem)
+
+Given $\{f_n\}\seq{n}$ nonnegative measurable functions such that $f_n\leq f_{n + 1}$, then
+\[
+\lim_{n\to\oo}\int f_n\,d\mu = \int\lim_{n\to\oo}f_n\,d\mu
+\]
+
+\proof
+
+``$\leq$" is easy - we know by monotonicity of $f_n$, $f_n \leq \lim_{n\to\oo}f_n$, so
+\[
+\int f_n \leq \int\lim_{n\to\oo}f_n
+\]
+Thus
+\[
+\lim_{n\to\oo}\int f_n = \limsup_{n\to\oo}\int f_n \leq \int \lim_{n\to\oo}f_n
+\]
+
+Now for ``$\geq$". 
+
+Let $\phi$ be a simple function such that $0 \leq \phi \leq \lim_{n\to\oo}f_n$. 
+
+Then, for any $a \in (0, 1)$, if $\phi(x)\neq0$, 
+\[
+a\phi(x)<\lim_{n\to\oo}f_n(x)
+\]
+Definte $E_n = \{x \mid f_n(x) \geq a\phi(x)\} \in \mc{M}$.
+
+Since $f_n$ is increasing, $E_1\subseteq E_2 \subseteq E_3 \subseteq \cdots$.
+
+Furthermore,$\cup\seq{n}E_n = X$, since if $\phi(x) = 0$, then $x\in E_n$ for all $x$, and if $\phi(x)\neq0$, the above ensures that for all $x \in X$, there is some $N$ such that $n \geq N$ implies $f_n(x) > a\phi(x)$.  
+
+We have 
+\[
+\int f_n \geq \int_{E_n}f_n \geq \int_{E_n}a\phi
+\]
+Since $\nu(A) = \int_A\phi$ is a measure, by continuity from below, $\lim_{n\to\oo}\int_{E_n}\phi = \int_{\cup_nE_n} = \int \phi$. 
+
+Thus, taking limits in the above expression, 
+\[
+\lim_{n\to\oo}\int f_n \geq a\int \phi
+\]
+Since $\phi$ was arbitrary, taking the supremum over $\phi$,
+\[
+\lim_{n\to\oo}\int f_n \geq a \int\lim_{n\to\oo}f_n
+\]
+
+Sending $a\to 1$ gives the result. 
+
+\qed
+
+\thm (Beppo-Levi)
+
+Given $\{f_n\}\seq{n}$ a sequence of nonnegative measurable functions, 
+\[
+\sum\seq{n}\int f_nd\mu = \int\sum\seq{n}f_n\,d\mu
+\]
+
+\proof
+
+First, fix $f, g$ nonnegative, measurable. There exist sequences $\{\phi_i\}\seq{i}, \{\psi_j\}\seq{j}$ simple, with $\phi_i\uparrow f, \psi_j\uparrow g$ pointwise. 
+
+In particular, $\phi_i + \psi_i \uparrow f + g$. 
+
+\begin{align*}
+\int f + g & = \int\lim_{i\to\oo}\phi_i + \psi_i = \lim_{i\to\oo}\int\phi_i + \psi_i \\
+			  & = \lim_{i\to\oo}\int\phi_i + \lim_{i\to\oo}\int\psi_i \\
+			  & = \int\lim_{i\to\oo}\phi_i + \int\lim_{i\to\oo}\psi_i \\
+			  & = \int f + \int g 
+\end{align*}
+
+By induction, for all $N \in \N$,
+\[
+\int\sum_{n=1}^Nf_n = \sum_{n=1}^N\int f_n
+\]
 
 
 
