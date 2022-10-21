@@ -19,6 +19,8 @@
 }
 \newcommand{\oo}{{\infty}}
 \newcommand{\bigt}{\bigtriangleup}
+\DeclareMathOperator{\ind}{ind}
+\DeclareMathOperator{\res}{res}
 
 
 
@@ -946,6 +948,304 @@ Then $u \in L^1(\Omega)$ and
 for all $\phi \in \ms{D}(\Omega)$. 
 
 So for a differential operator with constant coefficients, we can define a distribution of solutions to a PDE, such as $\bigtriangleup u = f$. 
+
+\section*{Lecture 5}
+
+Let $\alpha, \beta:I\to X$ be two loops in an open, connected subset of $\C$. When may we ``continuously deform" these loops into each other? 
+
+What even is a ``continuous deformation"?
+
+\defn
+
+If $\alpha, \beta$ are two loops in $X$, we say that $\alpha, \beta$ are \underline{freely homotopic}, or $\alpha\overset{\circ}{\simeq}\beta$, if there exists a continuous $F:I \times I \to X$, such that
+
+\begin{align*}
+F(t, 0) & = \alpha(t), t \in I \\
+F(t, 1) & = \beta(t), t \in I\\
+F(0, s) & = F(1, s), s \in I \\
+\end{align*}
+
+\thm (Homotopy Cauchy Formula)
+
+Let $X \subseteq\C$ be connected and open, and $f:X\to\C$ is holomorphic. Let $\gamma_0, \gamma_1:I\to X$ be two piecewise smooth loops. If $\gamma_0, \gamma_1$ are freely homotopic in $X$, then
+\[
+\int_{\gamma_0}f\,dz = \int_{\gamma_1}f\,dz
+\]
+
+\proof
+
+\subsubsection*{\underline{Step 1}}
+
+\claim
+
+By assumption, there is a homotopy $H\in C(I\times I, X)$ between $\gamma_0, \gamma_1$. This function can be approximated for any $\varepsilon>0$ by $H_{\varepsilon}:I\times I \to X$ in the following sense: 
+
+\begin{enumerate}
+\item $H_\varepsilon$ is continuous. 
+\item We can chop $I\times I$ into squares. Every $[t_j, t_{j + 1}]\times[s_k, s_{k + 1}]$ is mapped into some $B_{\rho}(a) \subseteq X$, where $a, \rho$ depend on $j, k$, where, $t_i, s_i$ are elements of two partitions of $I$. 
+\item For all $s$, $H_{\varepsilon}(-, s_j)$ is linear on $[t_k, t_{k + 1}]$, and for all $t$, $H_\varepsilon(t_j, -)$ is linear on $[s_k, s_{k + 1}]$
+\item $H_\varepsilon(0, s) = H_\varepsilon(1, s)$ for all $s \in I$. 
+\item 
+\begin{align*}
+\int_{\gamma_0}f\,dz - \int_{H_\varepsilon(-, s)}f\,dt & \leq \varepsilon \\
+\int_{\gamma_1}f\,dz - \int_{H_\varepsilon(t, -)}f\,ds & \leq \varepsilon
+\end{align*}
+\end{enumerate}
+
+\proof of claim. 
+
+The proof of the existence of $H_\varepsilon$ follows the same idea as the proof of: 
+
+\claim
+
+Let $\phi:I\to\R$ be continuous. Then, for every $\varepsilon>0$, there is an $N$ such that there exists a piecewise linear $\phi_\varepsilon$, with 
+\[
+\sup_I|\phi - \phi_\varepsilon|\leq\varepsilon
+\]
+And, if $\phi'$ exists and is continuous, then $\phi_\varepsilon'$ exists and is continuous, and further 
+\[
+\sup_I|\phi' - \phi'_\varepsilon|\leq \varepsilon
+\]
+
+\proof
+
+On homework.
+
+\subsubsection*{\underline{Step 2}}
+
+Let $\tilde{\gamma_0} = H_\varepsilon(-, 0)$, and $\tilde{\gamma_1} = H_\varepsilon(-, 1)$ be piecewise linear loops. 
+
+We want to show that $\int_{\tilde{\gamma_0}}f\,dz = \int_{\tilde{\gamma_1}}f\,dz$, and then by part 5 of step 1, we would be finished. Let's do that now. 
+
+Dennis has drawn a picture of the unit square, with the bottom $\frac{1}{N}$ of it noted. This box, of length 1 and height $\frac{1}{N}$, he integrates over the boundary.
+
+Goal: 
+\[
+\int_{\tilde{\gamma_0}}f\,dz = \int_{H_\varepsilon(-, \frac{1}{N})}f\,dz
+\]
+
+The integrals of the left and right side of the box are equal, but have opposite orientation, so they cancel. If we can show the integral over the entire boundary of the small box is 0, we would be done. 
+
+We can chop up $[0, 1]\times[0,\frac{1}{N}]$ into a bunch of boxes. The integral over each of the small boxes is zero, because each small box is mapped into $B_\rho(a)$. The sum of these integrals, which is the integral over the box, is zero. 
+
+\qed
+
+\subsection*{\underline{Index of a curve}}
+
+\defn
+
+Let $\gamma:I\to\C\setminus\{0\}$ be a piecewise smooth loop. We define the \underline{index} as follows.
+\[
+\operatorname{ind}(\gamma, \rho) = \frac{1}{2\pi i}\int_\gamma\frac{dz}{z}
+\]
+
+If you expand this out, things will cancel and this will always be an integer. 
+
+By the theorem we just proved, we can show that the index of two freely homotopic loops is the same. 
+
+Ahlfor's computation: 
+
+Let $h(t) = \int_0^t\frac{\gamma'(s)}{\gamma(s)}\,ds$. This function is piecewise smooth by the fundamental theorem of calculus. $h(0) = 0$, $h(1) = \int_{\gamma}\frac{dz}{z}$. Ahlfors observes that if we consider $g(t) = e^{-h(t)}\gamma(t)$ is a nice, continuous, piecewise smooth function, so it has derivative 
+
+\begin{align*}
+g' & = e^{-h}(-h')\gamma + e^{-h}\gamma'\\
+& = e^{-h}\frac{\gamma'}{\gamma}\gamma + -e^{-h}\gamma' = 0
+\end{align*}
+
+The derivative being zero tells us $g(0) = g(1)$. So $\gamma(0) = e^{-h(1)}\gamma(1)$, so $h(1) = 2i \pi N$ for some integer $N$. 
+
+\thm
+
+Let $\lambda$ be a piecewise smooth loop in $\C$, such that $p \not\in\lambda(I)$. Then
+\begin{enumerate}
+\item The index $\operatorname{ind}(\gamma, p)$ is an integer (we already proved this)
+\item $\operatorname{ind}(\gamma, -):\C\setminus\lambda(I)\to\Z$ is continuous. That is, it is locally constant (constant on every connected component).  
+\item Suppose $\lambda\overset{\circ}{\simeq} \nu$ in $\C\setminus\{p\}$. Then $\operatorname{ind}(\lambda, p) = \operatorname{ind}(\nu, p)$.
+\item If $\gamma(I) \subseteq B_\rho(a)$, with $p\not\in B_\rho(a)$, then $\ind(\lambda,p) = 0$.
+\end{enumerate}
+
+Let $X = \C\setminus\{0\}$, also called $\C^\times$. Let $\gamma$ be a loop around 0, and $\beta$ be a loop not around zero. How do we show $\alpha\not\overset{\circ}{\simeq}\beta$ ?
+
+First, you show that $\C\setminus\{0\} \cong S^1$ is a homotopy equivalence. 
+
+Then you life $\alpha,\beta$ into the cover of $S^1$, etc. 
+
+Alternatively, if $\alpha\overset{\circ}{\simeq}\beta$, then $\ind(\alpha,0) = \ind(\beta,0)$. We can thus clearly see that $\alpha\not\overset{\circ}{\simeq}\beta$. 
+
+\section*{Lecture 6}
+
+\thm
+
+Suppose $f \in \ms{H}(\{z \mid r_0 - \varepsilon<  |a - z| < r + \varepsilon\}$
+
+Then
+\begin{enumerate}[label=(\roman*)]
+\item 
+\[
+f(z) = \frac{1}{2\pi i}\int_{C_{r_1}(a)}\frac{f(w)}{w - z}\,dw - \frac{1}{2\pi i}\int_{C_{r_0}(a)}\frac{f(w)}{w - z}\,dw
+\] 
+\item There exists $g_1(z) = \sum_{n=0}^\oo (z - a)^nc_n$ which converges in $|z - a| < r_1$, and $g_2(z) = \sum_{n=1}^\oo\frac{d_n}{(z - a)^n}$ which converges in $|z - a| > r_0$, such that $f(z) \equiv g_1(z) + g_2(z)$ for $r_0 < |z - a| < r_1$. 
+\item $c_n, d_n$ are unique. 
+\item For all piecewise smooth loops $\lambda:S^1\to\{r_0\leq|z - a|\leq r_1\}$, 
+\begin{align*}
+\ind(\lambda, a)c_n & = \frac{1}{2\pi i}\int_{\lambda}\frac{f(w)}{(w - a)^{n + 1}}\, dw,\, n \geq 0 \\
+\ind(\lambda, a)d_n & = \frac{1}{2\pi i}\int_{\lambda}(w - a)^{n - 1}f(w)\,dw,\, n \geq 1 \\
+\end{align*}
+\end{enumerate}
+
+\cor
+
+Suppose $f:B_R(a)\setminus\{a\}\to\C$ is holomorphic, and $\lambda:S^1\to B_R(a)\setminus\{a\}$ is piecewise smooth. Then
+\[
+\int_{\lambda}f(w)\,dw = \ind(\lambda, a)d_1
+\]
+$f(z) = \frac{d_1}{z - a} + \sum_{n\neq -1}d_n(z - a)^n$. 
+
+\defn
+The coefficient $d_1$ is called the \underline{residue of $f$ at $a$}, denoted $\res_a f$. 
+
+\proof
+
+\begin{enumerate}[label=(\roman*)]
+\item Fix $z$ with $r_0 < |z - a| < r_1$, and consider the function
+\[
+F(w) = \frac{f(w) - f(z)}{w - z}
+\]
+This is holomorphic in the annulus $\{r_0 \leq |w - a| \leq r_1 \}\setminus\{z\}$. Notice that $\lim_{w\to z}F(w) = f'(z)$, so $F$ is bounded in a neighborhood of the singularity at $z$, so this singularity is removable. 
+
+Now, we have $r_0e^{it} \overset{\circ}{\simeq} r_1e^{it}$, with $H(s, t) = (1 - s)e^{ir_0t} + se^{ir_1t}$. So
+\[
+\int_{C_{r_0}(a)}F(w)\,dw = \int_{C_{r_1}(a)}F(w)\,dw
+\]
+So
+\[
+-f(z)\int_{C_{r_1}(a)}\int\frac{dw}{w - z} + \int_{C_{r_0}(a)}\frac{f(w)}{w - z}\,dw
+\]
+Which is equal to 
+\[
+-f(z)\int_{C_{r_1}(a)}\frac{dw}{w - z} + \int_{C_{r_1}(a)}\frac{f(w)}{w - z}\,dw
+\]
+\end{enumerate}
+
+Details of the rest of the proof posted by Denis on The Gauchu. 
+
+\rem In the proof of $(iv)$ you use the fact that if $f$ is holomorphic and $\gamma:I\to\C$ smooth, then $\frac{d}{dt}(f \circ \gamma(t)) = f'(\gamma(t))\dot{\gamma}(t)$. 
+
+$d(f\circ \gamma) = df\circ d\gamma = \del f \circ (\dot{\gamma}dt) = f'dz\circ(\dot{\gamma}dt) = (f'\dot{\gamma})dt$
+
+We now study isolated singularities. 
+
+\defn
+
+Let $f:B_{\delta}(a)\setminus\{a\}\to\C$ be holomorphic. The \underline{order of $f$ at $a$}, denoted $\omega(f, a)$, is the minimal power in Laurent's expansion of $f$ in $0 < |z - a| < \delta$. 
+\[
+\omega(f, a) = N <=> f(z) = \sum_{n=N}^\oo b_n(z - a)^n, b_N\neq0
+\]
+
+\[
+\omega(f, a) = -\oo <=>f(z) = \sum_{n=-\oo}^\oo b_n(z - a)^n, b_n\neq0\text{ for infinitely many }n
+\]
+
+\thm
+
+Let $f:B_{\delta}(a)\setminus\{a\}\to\C$ be holomorphic. 
+\begin{enumerate}[label=(\roman*)]
+\item $\omega(f, a) = -N$ for a finite $N > 0$ if and only if $f(z) = \frac{\phi(z)}{(z - a)^N}$, $N > 0$ finite, with $\phi$ holomorphic in $B_{\delta}(a)$, $\phi(a)\neq0$, which happens if and only if $|f(z)|\to\oo$ as $z\to a$. 
+\item If $\omega(f, a) = -\oo$, then for all $\varepsilon>0$, $\bar{f(B_{\varepsilon}(a)\setminus\{a\})} = \C$.
+\end{enumerate}
+
+\proof of (ii)
+Assume for the sake of contradiction that for some $\varepsilon>0$, $\bar{f(\cdots)}\neq\C$. That means there exists a point $w_0 \in \C$ and a real $\rho>0$, such that $\bar{B_{\rho}(w_0)}\cap f(\cdots) = \varnothing$. 
+
+So for all $0 < |z - a| < \delta$, $|f(z) - w_0| \geq \rho$. 
+
+Now, consider $F(z) =\frac{1}{f(z) - w_0}$. This is holomorphic in $B_{\varepsilon}(a)\setminus\{a\}$, and $|F(z)| \leq \frac{1}{\rho}<\oo$.
+
+So we can remove the singularity at $a$ to make $F$ holomorphic in $B_{\varepsilon}(a)$. We can factorize it as 
+\[
+F(z) = (z - a)^N\phi(z),\,\phi\in\ms{H}(B_{\varepsilon}(a)),\,\phi(a)\neq0
+\]
+Then
+\[
+F = \frac{1}{f - w_0}
+\]
+which is equivalent to 
+\[
+f(z) = w_0 + \frac{1}{F} = w_0 + \frac{\frac{1}{\phi(z)}}{(z - a)^N} = w_0 + \frac{1}{(z - a)^N}\psi(z) = \frac{1}{(z - a)^N}\sum_{n=0}^\oo c_n(z - a)^n
+\]
+But then $\omega(f, a)\neq -\oo$, a contradiction. 
+
+\proof of (i)
+
+(i) is a string of 3 equivalent statements. You show $1 \implies 2\implies 3 \implies 1$. This is easy, and for the final implication, you use part (ii). 
+
+Let $\hat{\C}$ denote the Riemann sphere, which is topologically the one point compactification of $\C$. 
+
+\defn
+
+Let $a \in X \subset \hat{\C}$, $X$ open in $\ms{T}_{\oo}$, and consider $f:X\to\hat{\C}$. 
+
+$f$ is holomorphic in a neighborhood of $a$ if
+\begin{enumerate}
+\item $a \in \C$, $f(a) \in \C$, with $f$ holomorphic in the old sense. 
+\item $a \in \C$, $f(a) = \oo$ if and only if $F(z) = \begin{cases} \frac{1}{f(z)} & z\neq a\\ 0 & z = a \\ \end{cases}$ is holomorphic in a neighborhood of $0$. 
+\item $a = \oo$, $f(a) \in \C$ is holomorphic if and only if $F(z) = \begin{cases} f(\frac{1}{z}) & z \neq0\\ f(a) & z = 0 \\ \end{cases}$ is holomorphic
+\item $a = \oo, f(a) = \oo$ is holomorphic if and only if $F(z) = \begin{cases} \frac{1}{f(\frac{1}{z})} & z\neq0 \\ 0 & z = 0 \\ \end{cases}$ is holomorphic near 0 in the old sense. 
+\end{enumerate}
+
+In case 2, $a$ is a pole of $f$, meaning $\omega(f, a) = N < 0$ is finite. 
+
+\thm
+
+Let $f:\hat{\C}\to\hat{\C}$ be holomorphic in a neighborhood of $\oo$. Then 
+\begin{enumerate}[label=(\roman*)]
+\item $f(\oo) = 0$ if and only if $f(z) = \frac{1}{z^N}\phi(z)$ for $|z| > R$, $0<N < \oo$, $\phi$ holomorphic on $|z|>R$, and $\phi\to A\neq0, \neq\oo$ as $|z|\to\oo$. 
+\item $f(\oo)=\oo$ if and only if $f(z) = z^N\phi(z), |z| > R, 0 < N < \oo, \phi\to A\neq0,\neq\oo$ as $|z|\to\oo$. 
+\end{enumerate}
+
+\underline{Exercise:}
+
+Suppose $f:\hat{\C}\to\hat{\C}$ is holomorphic on $\hat{\C}$. Show that this is equivalent to $f$ being a rational function. 
+
+\defn
+
+Let $X \subset \C$ be open, connected. A map $f:X\to\hat{\C}$ is \underline{meromorphic} if it is holomorphic in a neighborhood of every point of $X$ in the extended sense.   
+
+The set of meromorphic functions is called $\ms{M}$. This is equivalent to a function $f:\C\to\C$ being holomorphic everywhere except an at most countable family of isolated poles. 
+
+\prop
+
+Let $X \subset \C$ be open. 
+\begin{enumerate}[label=(\roman*)]
+\item $\ms{M}(X)$ is a field
+\item $f \in \ms{M}(X)$ if and only if $\frac{1}{f} \in \ms{M}(X)$. 
+\item $S_{\frac{1}{f}} = Z_fZ_{\frac{1}{f}} = S_f$
+\end{enumerate}
+
+All of the above can be proven using the factorization theorem. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
