@@ -19,6 +19,7 @@
 }
 \newcommand*{\oo}{\infty}
 \newcommand{\seq}[1]{_{#1 = 1}^\oo}
+\newcommand{\barr}{{\bar{\R}}}
 \title{220A - Groups}
 \author{John White}
 \date{Fall 2022}
@@ -1603,17 +1604,478 @@ By induction, for all $N \in \N$,
 \int\sum_{n=1}^Nf_n = \sum_{n=1}^N\int f_n
 \]
 
+\section*{Lecture 10}
 
+So, for all $N \in N$ 
+\[
+\int\sum_{n=1}^Nf_n = \sum_{n=1}^N\int f_n
+\]
+Thus, by the monotone convergence theorem, 
+\[
+\sum\seq{n}\int f_n = \lim_{n\to\oo}\sum_{n=1}^N\int f_n = \int\lim_{n\to\oo}\sum_{n=1}^N f_n = \int \sum\seq{n} f_n
+\]
 
+Without monootnicity of the sequence $f_n$, you can still get an inequality for liminfs. 
 
+\lem (Fatou's Lemma)
 
+Given $\{f_n\}\seq{n}$, nonnegative, measurable, 
+\[
+\liminf_{n\to\oo}\int f_n\,d\mu \geq \int \liminf_{n\to\oo}f_n\,d\mu
+\]
 
+\proof
 
+By definition, $\liminf_{n\to\oo}f_n = \lim_{n\to\oo}\underbrace{\inf_{k\geq n}(f_k)}_{= g(n)}$. Further, $g_n \leq g_{n + 1}$ for all $n \in \N$. 
 
+Thus, by the monotone convergence theorem, 
+\[
+\lim_{n\to\oo}\int g_n = \int\lim_{n\to\oo} = \int \liminf_{n\to\oo}f_n
+\]
 
+By definition, $g_n \leq f_n$ for all $n \in \N$, so $\int g_n \leq \int f_n$. Taking the liminf of both sides, 
+\[
+\liminf_{n\to\oo}\int f_n \geq \liminf_{n\to\oo}\int g_n = \lim_{n\to\oo}\int g_n = \int \liminf_{n\to\oo}f_n
+\]
 
+\qed
 
+\exm 
 
+Here are two important examples where strict inequality occurs. We sill use $(X, \mc{M}, \mu) = (\R, \mc{M}_{\lambda^*}, \lambda)$.
+
+\begin{enumerate}
+\item The ``runs away to infinity" example. Consider $f_n = 1_{[n, n + 1]}$. It is clear that $\lim_{n\to\oo}f_n = 0$. However, $\int f_n = 1$ for all $n$. So
+\[
+\liminf_{n\to\oo}\int f_n = 1 > 0 = \int \liminf_{n\to\oo}f_n
+\]
+\item The ``goes up the spout" example. Let $f_n = n1_{[0, \frac{1}{n}]}$. We see $\lim_{n\to\oo}f_n = \begin{cases} 0 & x \neq 0 \\ +\oo & x = 0 \\ \end{cases}$ But, for each $f_n$, $\int f_n = 1$. So
+\[
+\liminf_{n\to\oo}\int f_n = 1 > 0 = \int \liminf_{n\to\oo}f_n
+\]
+\end{enumerate}
+
+In the second example, we accept on faith that the integral of a function which is zero almost everywhere is zero. If we don't want to do that, we can prove it using the simple functions $g_n(x) = \begin{cases} 0 & x \neq 0 \\ n & x = 0 \\ \end{cases}$. 
+
+\prop
+
+Given $f:X\to[0, +\oo]$ measurable, then if $\int f\,d\mu < +\oo$, we know 
+\begin{enumerate}[label=(\roman*)]
+\item $\{x \mid f(x) = +\oo\}$ is a null set.
+\item $\{x \mid f(x) > 0\}$ is $\sigma$-finite (i.e. a countable union of measurable sets of finite measure). 
+\end{enumerate}
+
+\proof
+
+Homework 6
+
+\prop
+
+Given $f:X\to[0, +\oo]$ measurable, then $\int f\,d\mu = 0$ if and only if $f = 0$ $\mu$-almost everywhere. 
+
+\proof
+
+First, suppose $f$ is a simple function, so
+\[
+f = \sum_{i=1}^na_i1_{E_i}
+\]
+Then $\int f.\,d\mu = 0$ is equivalent to $\sum_{i=1}^na_i\mu(E_i)$. By hypothesis, $f$ is nonnegative, so we are forced to conclude that, for every $i$, either $a_i = 0$ or $\mu(E_i) = 0$. If $a_i = 0$, then $f|_{E_i} \equiv 0$, and if $\mu(E_i) = 0$, $f$ achieves the value $a_i$ only on a measure zero set. 
+
+Now for more general $f$. 
+
+Suppose $f = 0$ $\mu$-almost everywhere. Then, 
+\[
+\int f\,d\mu = \sup\{\int\phi\,d\mu \mid 0 \leq \phi \leq f, \phi \text{ simple}\}
+\]
+But for every such $\phi$, $\int \phi = 0$. So the supremum of $f$ over this set is $0$. 
+
+Conversely, if $\int f\,d\mu = 0$, then by definition, we must have that $\int \phi \,d\mu = 0$ for all $0\leq \phi \leq f$. Assume for the sake of contradiction that $f = 0$ $\mu$-almost everywhere fails. That is, there exists a set $A$ with $\mu(A) = 0$ so that $f|_{A} > 0$.
+
+Note that $\{x \mid f(x) > 0 \} = \cup\seq{i}\underbrace{\{x \mid f(x) > \frac{1}{n}\}}_{E_n}$. 
+
+Then $\mu(A) \leq \mu(\{x \mid f(x) > 0 \}) \leq \sum\seq{i}\mu(E_n)$ by subadditivity. Thus $\mu(E_n) > 0$ for some $n \in\N$. Let $\phi = \frac{1}{n}1_{E_n}$. Then $0 \leq \phi \leq f$, but $\int\phi\,d\mu = \frac{1}{n}\mu(E_n) > 0$, a contradiction. 
+
+\qed
+
+\subsection*{\underline{Integration of Real Functions}}
+
+Let $(X, \mc{M}, \mu)$ be a measure space. Given $f:X\to\barr$, 
+\begin{align*}
+\overbrace{f_+}^{``\text{positive part}"} & = f \vee 0 \\
+\underbrace{f_-}_{``\text{negative part}"} & = (-f)\vee 0 \\
+\end{align*}
+
+Note that the negative part is a positive function. Note $f = f_+ - f_-, |f| = f_+ + f_-$.
+
+\defn
+
+Given $f:\R\to\barr$ measurable, if one of $\int f_+, \int f_-$ is finite, then we define
+\[
+\int f\,d\mu \eqdef \int f_+\,d\mu - \int f_-\,d\mu
+\]
+If both $\int f_+\,d\mu, \int f_-\,d\mu$ are finite, then $\int|f|\,d\mu$ is finite. 
+
+In the case that $\int f$ is finite, we say that $f$ is \underline{integrable}, and we write $f \in L^1(\mu)$. 
+
+\prop
+
+$L^1(\mu)$, the space of integrable functions, is a real vector space, and $\int\,d\mu$ is a linear functional on it. 
+
+\proof
+
+Fix $f, g\in L^1(\mu), a, b \in \R$. Note $af + bg \in L^1(\mu)$ and 
+\[
+|af + bg| \leq |a||f| + |b||g|
+\]
+So
+\begin{align*}
+\int|af + bg|\,d\mu & \leq \int|a||f|\,d\mu + \int|b||g|\,d\mu \\ & = |a|\int|f|\,d\mu + |b|\int|g|\,d\mu \\ & < \oo
+\end{align*}
+Thus, $af + bg \in L^1(\mu)$, which proves that it is a real vector space. 
+
+Now, let $f \in L^1(\mu)$, $a \geq 0$, 
+\[
+\int af = \int af_+ - \int af_- = a\int f_+ - a\int f_- = a\int f
+\]
+
+For $a \leq 0$, the result follows by replacing $f$ with $-f$. Thus, $\forall f\in L^1\mu, a, \in \R$, $\int af = a\int f$. 
+
+We just now have to check that it behaves well under sums. 
+
+We'll come back to this proof. It boils down to a bunch of boring cases, and Katy will fill this in later. In broad strokes,
+\begin{align*}
+\int f + g & = \text{stuff} \\ & = \text{stuff} \\ & = \text{stuff}\\ & = \int f_+ + \int g_+ - \left(\int f_- + \int g_-\right) \\ & = \int f + \int g \\
+\end{align*}
+
+\qed
+
+\prop
+
+If $f \in L^1(\mu)$, then 
+\[
+\abs*{\int f\,d\mu} \leq \int|f|\,d\mu
+\]
+
+\proof
+\begin{align*}
+\abs*{\int f\,d\mu} & = \abs*{\int f_+ - \int f_- } \\ & \leq \abs*{\int f_+} + \abs*{\int f_-} \\ & = \int f_+ + \int f_- \\ & = \int f_+ + f_- = \int |f| \\
+\end{align*}
+
+\qed
+
+\prop
+
+If $f, g \in L^1(\mu)$, then $\int|f - g|\,d\mu = 0$ if and only if $f = g$ $\mu$-almost everywhere. 
+
+\proof 
+
+This is an immediate corollary of previous proposition about nonnegative measurable functions, taking $h = |f - g|$. 
+
+\qed
+
+The moral is that if you modify a function on a null set, it does not change the integral. 
+
+Consequently, even if a function $f$ is only \underline{defined} almost everywhere, $\int f$ is still well-defined, since we may take $f$ to be equal to \underline{any particular element of $\barr$} where it is not defined, and it won't affect $\int f$. 
+
+We have already shown $L^1(\mu)$ is a vector space... is it a metric space?
+
+What if we define $d_{L^1}(f, g) = \int|f - g|\,d\mu$? Well, if $f$ and $g$ agree almost everywhere, but not everywhere, then $\int|f - g|\,d\mu = 0$, but $f\neq g$. 
+
+We see that, when $d_{L^1}$ is defined on all integrable functions, it fails to be nondegenerate. The solution is to slightly modify our definition of $L^1$. 
+
+\defn
+
+$L^1(\mu) \eqdef \{f:X\to\barr$ measurable, $\int|f|\,d\mu < +\oo\}/\sim$, where $f \sim g$ if and only if $f = g$ $\mu$-almost everywhere. 
+
+\rem
+
+By abuse of notation, let $f \in L^1(\mu)$ denote
+\begin{enumerate}
+\item The equivalence class $[f]$ under $\sim$
+\item A representative of this equivalence class
+\item A representative which is only defined $\mu$-almost everywhere. 
+\end{enumerate}
+
+\prop
+
+We can define a norm, $\norm{f}_{L^1(\mu)} = \int|f|\,d\mu$ on $L^1(\mu)$. 
+
+\proof
+
+The triangle inequality follows directly from the fact that
+\[
+\abs*{\int f} \leq \int |f|
+\]
+Absolute homogeneity is a consequence of the linearity of the integral, and nondegeneracy is a consequence of the fact that a $\int |f|\,d\mu = 0$ if and only if $f = 0$ $\mu$-almost everywhere. 
+
+\qed
+
+Recall that a hypothesis of Fatou's lemma is that the functions $f_n$ are nonnegative. Is this necessary? It turns out yes, and here is an example of why.
+
+\exm
+
+This is the ``goes down the spout" example. Let $(X, \mc{M}, \mu) = (\R, \mc{M}_{\lambda^*}, \lambda)$. 
+
+Let $f_n = -n1_{[0, \frac{1}{n}]}$. Then $\lim_{n\to\oo}f_n = \begin{cases} 0 & x\neq0 \\ -\oo & x = 0 \\ \end{cases}$. 
+
+So
+\[
+\liminf_{n\to\oo}\int f_n = -1\not\geq 0 = \int\liminf_{n\to\oo}f_n
+\]
+
+Is there a theorem that will allow us to interchange the limit and the integral of a wider class of sequences of functions? Tune in next time...
+
+\section*{Lecture 11}
+
+The following is the 4th major theorem of the course.
+
+\thm (Dominated Convergence Theorem)
+
+Given a $\{f_n\}\seq{n} \in (L^1(\mu))^\N$ such that $\lim_{n\to\oo}f_n$ exists $\mu$-almost everywhere, then if there exists $g \in L^1(\mu)$ such that $|f_n| \leq g$ $\mu$-almost everywhere for all $n \in \N$, then
+\[
+\lim_{n\to\oo}\int f_n\,d\mu = \int\lim_{n\to\oo}f_n\,d\mu
+\]
+
+\proof 
+
+\rem 
+
+$g$ does \underline{not} need to be bounded. For example, if we take $g = \frac{1}{\sqrt{x}}1_{[-1, 1]}(x)$, then $\int g(x)d\lambda(x) = \int_{-1}^1\frac{dx}{\sqrt{|x|}} = 4 < \oo$. 
+
+\rem
+
+Recall Fatou's lemma for nonnegative, measurable functions:
+\[
+\liminf_{n\to\oo}\int f_n\,d\mu \geq \int \liminf_{n\to\oo}f_n\,d\mu
+\]
+
+No dominating function can exist for the ``run off to infinity" example (i.e. $f_n = 1_{[n, n + 1)}$).
+
+\proof
+
+Since $\lim_{n\to\oo}f_n$ exists $\mu$-almost everywhere and $|f_n| \leq g$ $\mu$-almost everywhere for all $n \in \N$, we have
+\[
+\abs*{\lim_{n\to\oo} f_n} \leq g, \,\mu-\text{almost everywhere}
+\]
+
+Thus $\lim_{n\to\oo}f_n\in L^1(\mu)$. Since $g - f_n \geq 0$ and $g + f_n \geq 0$ $\mu$-almost everywhere for all $n \in \N$, Fatou's lemma ensures
+\begin{align*}
+\liminf_{n\to\oo}\int g + f_n & \geq \int \liminf_{n\to\oo}g + f_n \\ & = \int g + \lim_{n\to\oo}f_n \\ & = \int g + \int\lim_{n\to\oo}f_n \\ 
+\end{align*}
+
+and
+
+\begin{align*}
+\limsup_{n\to\oo}\int g - f_n & \geq \int \limsup_{n\to\oo}g - f_n \\ & = \int g - \lim_{n\to\oo}f_n \\ & = \int g - \int\lim_{n\to\oo}f_n \\ 
+\end{align*}
+
+Because $\int g < \oo$, we may subtract $\int g$ on both sides, so 
+\begin{align*}
+\liminf_{n\to\oo}\int f_n & \geq \int \lim_{n\to\oo}f_n \\ & \geq \limsup_{n\to\oo}\int f_n \\
+\end{align*}
+
+Thus, equality holds throughout, which gives the result. 
+
+\qed
+
+Using the dominated convergence theorem, we can identify the useful subsets of functions that are \underline{dense} in $L^1(\mu)$. 
+
+The following can be considered the 5th major theorem of the course. 
+
+\thm
+
+For any measure space $(X, \mc{M}, \mu)$, 
+\begin{itemize}
+\item Simple functions are dense in $L^1(\mu)$
+\end{itemize}
+
+If $\mu$ is a Lebesgue-Stieltjes measure on $\R$, 
+\begin{itemize}
+\item Simple functions of the form
+\[
+\xi = \sum_{j=1}^na_j1_{I_j},\, I_j = \cup_{i=1}^mU_{ij}
+\]
+For any $U_{ij}$ open, are dense in $L^1(\mu)$.
+\item $C_c(\R)$ (the continuous, compactly supported real functions) is dense in $L^1(\mu)$. We define the support of a function as $\operatorname{supp} f = \bar{\{x \in \R \mid f(x) \neq0\}}$
+\end{itemize}
+
+Our proof of this theorem relies on the following lemma, whose proof will be assigned on HW6
+
+\lem
+
+If $\mu$ is a Lebesgue-Stieltjes measure and $E \in \mc{M}_{\mu^*}$ with $\mu(E)<\oo$, then for all $\varepsilon>0$, there exist open intervals $\{I_i\}_{i=1}^n$ so that 
+\[
+\mu\left(E \bigtriangleup \left(\bigcup_{i=1}^nI_i\right)\right) < \varepsilon
+\]
+
+\proof
+
+Fix $f \in L^1(\mu)$. Since $f_+, f_-$ are nonnegative, measurable functions, there exist simple functions $\psi_n\uparrow f_+$ and $\zeta_n\uparrow f_-$ pointwise. 
+
+Thus, $\psi_n - \zeta_n \to f_+ - f_- = f$ pointwise. Furthermore, $\abs*{(\psi_n - \zeta_n)} \leq \psi_n + \zeta_n + |f| \leq f_+ + f_- + |f| = 2|f|$. Because $f \in L^1(\mu)$, $2|f| \in L^1(\mu)$. So we can use the Dominated Convergence Theorem, which ensures 
+\[
+\lim_{n\to\oo}\int|(\psi_n - \zeta_n) - f| = \int\lim_{n\to\oo}|(\psi_n - \zeta_n) - f| = 0 
+\]
+
+Thus, for all $\varepsilon>0$, there exists a simple function $\phi$ such that $\norm{\phi - f}_{L^1(\mu)} < \varepsilon$. 
+
+This shows simple functions are dense in $L^1(\mu)$. 
+
+Now, suppose $\mu$ is a Lebesgue-Stieltjes measure on $\R$. Fix $\varepsilon>0$, and let $\phi$ be a simple function as above such that
+\[
+\norm{\phi - f}_{L^1(\mu)} < \frac{\varepsilon}{2}, \, |\phi|\leq|f|
+\]
+
+Let $\phi = \sum_{j=1}^na_j1_{E_j}$. Without loss of generality, we may suppose $a_j \neq0$ for all $j$ and $\{E_j\}_{j=1}^n$ are disjoint. 
+
+By construction, for any $j$,
+\[
+|a_j|\mu(E_j) \leq \int|\phi|\,d\mu \leq \int |f|\,d\mu < +\oo
+\]
+
+Thus, $\mu(E_j) < +\oo$. So, by the lemma, there exist open intervals 
+\[
+\{I_i^j\}_{i=1}^m
+\]
+so that $\mu(E_j \bigtriangleup (\cup_{i=1}^mI_i^j)) < \frac{\varepsilon}{2\max_j |a_j|n}$. 
+Thus, 
+\begin{align*}
+\norm{\phi - \sum_{j=1}^na_j1_{\cup_{i=1}^mI_i^j}}_{L^1(\mu)} & = \norm{\sum_{j=1}^na_j1_{E_j} - \sum_{j=1}^na_j1_{\cup_{i=1}^mI_i^j}}_{L^1(\mu)} \\
+& \leq \sum_{j=1}^n|a_j|\norm{1_{E_j} - 1_{\cup_{i=1}^nI_i^j}}_{L^1(\mu))} \\
+& = \sum_{j=1}^n|a_j|\mu(E_j \bigtriangleup (\cup_{i=1}^nI_i^j)) \\
+& < \frac{\varepsilon}{2}
+\end{align*}
+
+Since $\varepsilon>0$ was arbitrary, this gives the result. To show $C_c(\R)$ is dense in $L^1(\mu)$, it suffices to show that for any 
+\[
+\psi = \sum_{j=1}^na_j1_{\cup_{i=1}^n I_i^j}
+\]
+and $\varepsilon>0$, there is an $f \in C_c(\R)$ such that
+\[
+\norm{f - \psi}_{L^1(\mu)}<\varepsilon
+\]
+
+Note that, for any open interval $I_i^j$, there exists $f_{ij}\in C_c(\R)$ so that 
+\[
+\norm{1_{I_i^j} - f_{ij}}_{L^1(\mu)} < \varepsilon
+\]
+We can accomplish this via something like continuous bump functions. 
+
+We will finish the proof next time. 
+
+\section*{Lecture 12}
+
+For any interval $I_i^j$, there exists a $f_{ij} \in C_c(\R)$ such that
+\begin{align*}
+\norm{1_{I_i^j} - f_{ij}}_{L^1(\mu)} & < \int_{(a_j - \frac{1}{k}, a_{ij}) \cup (b_{ij}, b_{ij} + \frac{1}{k})}f_{ij}\,d\mu \\
+						& \leq \mu((a_{ij} - \frac{1}{k}, a_{ij})) + \mu((b_{ij}, b_{ij} + \frac{1}{k})) \to 0
+\end{align*}
+
+As $k\to\oo$, the above goes to $0$ by continuity from above. So, in particular, for each $I_i^j$, there is some $f_{ij} \in C_c(\R)$ so that $\norm{1_{I_i^j} - f_{ij}}_{L^1(\mu)} < \frac{\varepsilon}{(\max_ja_j)nm}$, where $n, m$ are the upper bounds of the indexing sets that $i, j$ come from. 
+
+Without loss of generality, we may assume that $I_i^j \cap I_{i'}^{j'} = \varnothing$ unless $\delta_{ii'}\delta_{jj'} = 1$. 
+
+Thus, 
+\begin{align*}
+\norm{\sum_{j=1}^na_j1_{\cup_{i=1}^mI_j^i} - \overbrace{\sum_{i, j}a_jf_{ij}}^{\in C_c(\R)}}_{L^1(\mu)} & \leq \sum_{j=1}^n|a_j|\norm{1_{\cup_{i=1}^mI_j^i} - \sum_{i = 1}^mf_{ij}}_{L^1(\mu)} \\
+					& \leq \sum_{i, j}|a_j|\norm{1_{I_j^i} - f_{ij}}_{L^1(\mu)} \\
+& < \varepsilon
+\end{align*}
+
+\qed
+
+\rem
+
+We showed it suffices to consider simple functions of the form $\xi = \sum_{j=1}^na_j1_{\cup_{i=1}^mI_j^i}$ for $I_i^j$ open intervals. 
+
+\thm (Differentiation under the integral)
+
+Consider $f:X\times[a, b]\to\R$ so that $(x, t)\mapsto f(x, t)$. Suppose that $f$ satisfies the following properties:
+\begin{enumerate}[label=(\roman*)]
+\item For all $t \in [a, b]$, $f(\cdot, t)\in L^1(\mu)$. 
+\item For all $(x, t) \in X\times[a, b]$, $\frac{\del f}{\del t}(x, t)$ exists. 
+\item There exists a $g\in L^1(\mu)$ such that $\abs*{\frac{\del f}{\del t}(x, t)} \leq g(x)$ for all $(x, t) \in X\times[a, b]$. 
+\end{enumerate}
+Then $t\mapsto \int_Xf(x, t)\,d\mu$ is differentiable, and 
+\[
+\frac{d}{dt}\int_Xf(x, t)\,d\mu(x) = \int_X\frac{\del f}{\del t}(x, t)\,d\mu(x)
+\]
+
+\proof
+
+Fix $t_0 \in [a, b]$ and let $\{t_n\}\seq{n}$ be any sequence converging to $t_0$. By $(ii)$, 
+\[
+\lim_{n\to\oo}\underbrace{\frac{f(x, t_n) - f(x, t_0)}{t_n - t_0}}_{\eqdef h_n(x)} = \frac{\del f}{\del t}(x, t_0)
+\]
+Thus, $x\mapsto \frac{\del f}{\del t}(x, t_0)$ is measurable. By the Mean Value Theorem and $(iii)$, 
+\[
+|h_n(x)| \leq \sup_{t\in[a, b]}\abs*{\frac{\del f}{\del t}(x, t)} \leq g(x)
+\]
+
+Thus, by the Dominated Convergence Theorem, 
+\begin{align*}
+\lim_{n\to\oo}\frac{\int f(x, t)\,d\mu(x) - \int f(x, t_0)\,d\mu(x)}{t_n - t_0} & = \lim_{n\to\oo}\int h_n(x)\,d\mu(x)\\
+& = \int\frac{\del f}{\del t}(x, t_0)\,d\mu(x) \\
+\end{align*}
+
+\subsection*{\underline{Modes of Convergence}}
+
+Let $(X, \mc{M}, \mu)$ be some measure space, and $f_n, f:X\to\barr$ measurable. We know the following senses in which $f_n$ ``converges" to $f$:
+\begin{enumerate}
+\item Uniform convergence: $\sup_{x\in X}|f_n(x) = f(x)|\to 0$ as $n\to\oo$
+\item Pointwise convergence: $f_n(x) \to f(x)$ for all $x \in X$. 
+\item Pointwise $\mu$-almost everywhere convergence: $f_n(x)\to f(x)$ for $\mu$-almost every $x \in X$. 
+\item $L^1$-convergence: $\norm{f_n - f}_{L^1(\mu)} \to 0$
+\end{enumerate}
+
+Clearly, $1\implies2\implies3$
+
+The main goal of this section of the course is to figure out how $3$ and $4$ are related. 
+
+\exm
+
+Of the above, $1$ does not necessarily imply $4$. An example of something that converges uniformly but not in $L^1$ is the ``splat" example: $f_n = \frac{1}{n}1_[0, n]$, and $f = 0$. Clearly $f_n \to f$ uniformly, but $\norm{f_n - f}_{L^1(\mu)} = 1$, which does not go to zero. 
+
+\exm
+
+$4$ does not necessarily imply $3$. This is the ``refining wave" example. 
+
+Define $f_1 = 1_{[0, 1]}$, $f_2 = 1_{[0, \frac{1}{2}]}$, $f_3 = 1_{[\frac{1}{2}, 1]}$, $f_4 = 1_{[0, \frac{1}{4}]}$, $f_5 = 1_{[\frac{1}{4}, \frac{1}{2}]}$, and so on. This is also sometimes called the ``typewriter sequence". We can see that it converges in $L^1$ to $f = 0$, because the integral will get smaller than any negative power of $2$, but $f_n(x)$ does not converge to $f(x)$ for \underline{any} $x \in [0, 1]$. 
+
+From these it would seem to be pretty hopeless that we could actually say anything about the relationship between these notions. But with additional assumptions/lower expectations, something can still be salvaged. 
+
+\exm
+
+If we have $3$ and a dominating function, then this implies $4$. Given $f_n \to f$ $\mu$-almost everywhere and $|f_n| \leq g$ $\mu$-almost everywhere, then $|f_n - f| \to 0$ $\mu$-almost everywhere and $|f_n - f| \leq 2g$, so by the Dominated Convergence Theorem, 
+\[
+\norm{f_n - f}_{L^1(\mu)} = \int|f_n - f|\,d\mu \to 0
+\]
+
+Lots of time in the next few lectures will be spent wondering when we can go from $4$ to $3$. 
+
+\defn
+
+A sequence of measurable functions $f_n:X\to\R$ \underline{converges in measure} to a meaasurable function $f$ if for all $\varepsilon>0$, 
+\[
+\lim_{n\to\oo}\mu(\{x : |f_n(x) - f(x)| \geq \varepsilon\}) = 0
+\]
+
+Similarly, a sequence $f_n$ is \underline{Cauchy in measure} if, for all $\varepsilon>0$, 
+\[
+\lim_{m, n\to\oo}\mu(\{x : |f_n(x) - f_m(x)|\}) = 0
+\]
+
+\rem
+
+We will show in homework that this topology is metrizable (i.e. a set is closed if it contains all its limit points, and this uniquely specifies a topology). 
+
+\ex
+
+Recall the ``splat" example, $f_n = \frac{1}{n}1_{[0, n]}$. This converges uniformly, but not in $L^1$. Does it converge in measure? 
+
+For any $\varepsilon > 0$, $\frac{1}{n} < \varepsilon$ for $n$ large enough. So for large enough $n$, $\{x : |\frac{1}{n}1_{[0, n]}(x)| \geq \varepsilon\} = \varnothing$, so this converges in measure. 
+
+The ``refining wave" example converges to 0 in measure. However, the ``run away to infinity" examples does not converge to zero in measure. 
 
 
 
