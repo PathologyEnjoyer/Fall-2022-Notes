@@ -873,19 +873,559 @@ If $X \times Y$ is connected, then $p_X:X\times Y \to X$ is continuous, so by th
 
 Now, suppose $X, Y$ are connected. Let $f:X\times Y\to\{0,1\}$ be continuous. $X\times\{y\}$ is connected for any $y \in Y$, $f(X\times\{y\}) = \{0\}$ without loss of generality. 
 
+\section*{Lecture 13}
 
+\lem
 
+$S \subseteq (\R, \ms{T}_{MK})$ is an interval if and only if it satisfies the inbetweenness (sp?) property: if $x, y \in S$, and $x < u < y$, then $u \in S$. 
 
+\proof
 
+One direction is easy.
 
+Now, suppose that $S$ has the inbetweenness property. We will abuse notation somewhat by using square brackets for any interval, even if one of the bounds is $\pm\oo$. 
 
+Let $\lambda = \inf S$, and $\nu = \sup S$. 
 
+\claim
 
+$[\lambda, \nu] \subseteq S \subseteq [\lambda, \nu]$. 
 
+\proof
 
+This is immediate. $S$ is certainly contained inside $[\lambda, \nu]$. For containment the other way, pick $u \in [\lambda, \nu]$. Then there exists an $x \in S$ such that $x < u$. Similarly, there is a $y \in S$ with $u < y$. So $u \in S$. 
 
+To correctly interpret this proof, simply replace the brackets with either $($ or $[$. Make sure to pick the ones which make the statements correct. 
 
+\qed
 
+\thm
+
+The connected subsets of $\R$ are precisely the intervals. 
+
+\proof
+
+Let $S \subset \R$. If $S$ is not an interval, then there is some $x, y, z \in \R$, with $x < y < z$, with $x, z \in S$,  $y \not\in S$. Then $(-\oo, y) \coprod (y, \oo)$ is a disconnection of $S$. So if $S$ is connected, it is an interval. 
+
+Now, suppose that $S$ is an interval that is disconnected. That is, $S = A \coprod B$, $A, B$ open, nonempty, disjoint, etc. There is some $x \in A$ and $y \in B$, as by assumption they are nonempty. 
+
+It will suffice to reduce to the case of $[x, y]$. So $(A \cap [x, y]) \coprod (B \cap [x, y])$ is a disconnection of $[x, y]$. Consider $d:(A\cap[x, y])\times(B\cap[x, y])\to \R$ which gives the distance between a point in $A \cap [x, y]$ and a point in $B \cap [x, y]$. This is the product of compact spaces, and thus compact. Therefore, the infimum is achieved, and must be greater than $0$. 
+
+So there exist $\alpha \in A\cap[x, y], \beta \in B\cap[x, y]$, such that $d(\alpha,\beta) \leq d(a, b)$ for any $a \in A\cap[x, y], b \in B\cap[x,y]$. But $d(l, r) = |l - r|$ for any $l, r$. 
+
+Take $\xi = \frac{1}{2}(\alpha + \beta)$. Then
+\[
+|\beta - \frac{1}{2}(\alpha + \beta)| = \frac{1}{2}|\beta - \alpha| < |\alpha - \beta|
+\]
+So $\frac{1}{2}(\alpha + \beta)\not\in B$. Similarly, $\frac{1}{2}(\alpha + \beta) \not\in A$, a contradiction. 
+
+\qed
+
+\thm
+
+Suppose $A$ is connected, with $A \subseteq K \subseteq\bar{A}$. Then $K$ is connected. 
+
+\proof
+
+Suppose $K$ is not connected. Then there is a continuous, surjective function $f:K\to\{0, 1\}$. Because $A$ is connected, $f|_A:A\to\{0, 1\}$ is not surjective. Suppose there is a $k \in K$ such that $f(k) = 1$. Then $f^{-1}(1)$ is an open neighborhood of $k$. But, by the definition of the closure, $k$ $f^{-1}(1) \cap A \neq\varnothing$. But $f$ is identically $0$ on $A$, a contradiction. Thus, there is no such $f$. 
+
+\qed
+
+\exm
+
+Time for a classic example. Consider $g:(0, \oo)\to\R^2$ given by $t \mapsto (t, \sin(1/t))$. This is the so-called ``topologists sine curve". This is continuous, so its image is connected as a subset of $\R^2$. Then, by the theorem, $\bar{\im g}$ is connected. Look at a picture. 
+
+\section*{Lecture 14}
+
+\defn
+
+Let $(X, \ms{T})$ be a topological space. Define the equivalence relation $x \sim y$ if, for all $f:X\to\{0, 1\}$ continuous and onto, $f(x) = f(y)$. 
+
+The equivalence classes are called \underline{connected components} of $X$. 
+
+\exm
+
+\begin{enumerate}
+\item $[0, 1] \cup [2, 3]$ has two connected components. 
+\item In $\Q$ the only connected components are singletons. A space with this property is said to be \underline{totally disconnected}.
+\item By the lemma from last time (closure of connected set is connected), components are closed. 
+\end{enumerate}
+
+\prop
+
+Let $\ms{C}(X, \ms{T})$ denote the components of $f$. Suppose that $f:X\to Y$ is a homeomorphism. Then there is a bijection $f_*:\ms{C}(X)\to\ms{C}(Y)$. 
+
+\proof
+
+For a point $x \in X$, define $C_x\in\ms{C}(X)$ as the component containing $x$. Then we define $f_*(C_x) = C_{f(x)}$. 
+
+We need to show this is well defined. Suppose $x' \in C_x$. Then $f(x') \in f(C_x)$, which is a connected set that contains $f(x)$ and $f(x')$. So $f_*(C_x) = f_*(C_{x'})$. So this is well defined. 
+
+\[
+\begin{tikzcd}
+\ms{C}(X) \ar[r, "f_*"] \ar[rd, "(g \circ f)_*"' ] & \ms{C}(Y) \ar[d, "g_*"] \\ & \ms{C}(Z) \\
+\end{tikzcd} 
+\]
+
+I claim this commutes. 
+\[
+g_*f_*C_x = g_*C_{f(x)} = C_{g(f(x))} = (gf)_*(C_x)
+\]
+
+Further, $I_*$ is the identity, so we are done. 
+
+\defn
+
+Let $(X, \ms{T})$ be a topological space. We say it is \underline{path connected} if, for any $x, y \in X$, there exists a continuous $\sigma:[0, 1]\to X$ such that $\sigma(0) = x, \sigma(1) = y$. 
+
+\lem
+
+Suppose $X$ is a path connected topological space, and $f:X\to Y$ is a continuous function. Then $f(X) \subseteq Y$ is path connected.
+
+\proof
+
+Let $\xi, \eta \in f(X)$. Then there exist $x_\xi, x_\eta \in X$ such that $f(x_\xi) = \xi, f(x_\eta) = \eta$. By hypothesis, there is a continuous $\sigma:[0, 1]\to X$ such that $\sigma(0) = x_\xi, \sigma(1) = x_\eta$. Then $f\circ \sigma:[0, 1]\to f(X)$ is continuous, and $(f\circ \sigma)(0) = \xi, (f\circ \sigma)(1) = \eta$. 
+
+\qed
+
+\cor
+
+Path connectedness is invariant under homeomorphism. 
+
+\prop
+
+Suppose $X$ is path connected. Then $X$ is connected. 
+
+\proof
+
+If $X$ is not connected, then $X = A\coprod B$, for $A, B \subseteq X$ open, disjoint, nonempty. Let $\alpha \in A, \beta \in B$. 
+
+If there exists a path $\sigma:[0, 1]\to X$ with $\sigma(0) = a, \sigma(1) = \beta$, then $\sigma^{-1}(A) \coprod \sigma^{-1}(B)$ is a partition of $[0, 1]$. But we know this space is connected. 
+
+\qed
+
+The converse of the above proposition is false. 
+
+Let $g:(0, \oo)\to\R^2$ be defined by 
+\[
+t\mapsto (t, \sin(\frac{1}{t}))
+\]
+%% This is a graph of the curve. It makes it take too long to compile, so I've commented it out, but here it is. 
+%\begin{center}
+%\begin{tikzpicture}[x=7cm]
+%    \draw[xstep=.2,ystep=.5,lightgray,ultra thin] (-0.1,-1.5) grid %(1.1,1.5);
+%    \draw[->] (0,0) -- (1.1,0) node[right] {$x$};
+%    \draw[->] (0,-1) -- (0,1.1);
+%  \draw[blue,domain=0.01:1,samples=5000] plot (\x, %. {sin((1/\x)r)});
+% \end{tikzpicture}
+% \end{center}
+
+\claim
+
+$\bar{\im(g)}$ is not path connected. 
+
+\proof
+
+Let $A$ be a point on the graph, and $(0, 0)$ the origin (which lies not in $\im(g)$, but in its closure). 
+
+Suppose there is a continuous $\sigma[0, 1]\to \bar{\im(g)}$ with $\sigma(0) = A, \sigma(1) = (0, 0)$, and consider the projection onto the $y$-axis, $\rho_y$. $\rho_y \circ \sigma$ is uniformly continuous. 
+
+Given $\delta = \frac{1}{3}$, there is a $\varepsilon = \frac{1}{n}$ such that $|x - x'| < \frac{1}{n}$, and $|\rho_y\sigma(x) - \rho_y\sigma(x')|$. 
+
+To traverse between to zeroes of this function, you need to travel $\frac{6}{n}$. 
+
+Alternatively, consider the sequence $x_n = \frac{1}{\frac{\pi}{2} + 2\pi n}$. We have
+\[
+\lim_{n\to\oo}\sigma(x_n) = (1, 1) \neq(0, 0) = \sigma(0) = \sigma(\lim_{n\to\oo}x_n)
+\]
+
+\thm
+
+Let $U \subseteq (\R^n, \ms{T}_{mk})$ be open and connected. Then $U$ is path connected. 
+
+\proof
+
+Pick $\xi \in U$. Consider $A = \{\alpha\in U \mid \alpha$ can be connected to $\beta$ by a path$\}$, and let $B = A^c$.
+
+\claim
+
+$A, B$ are both open.
+
+\proof
+
+ Suppose $\alpha \in A$. Then there is an open ball around $\alpha$ lying entirely inside $U$, and these balls are path connected. So we must conclude that one of $A, B$ is empty. $A$ is not, so $A = U$. 
+
+\section*{Lecture 15}
+
+\subsection*{\underline{Completeness}}
+
+Let $(X, d)$ be a metric space. Suppose $x_n\to x$. This means that given $\varepsilon>0$, there is an $N\in\N$ such that, for all $k \geq N$, $d(x_k, x) < \varepsilon$. 
+
+\defn
+
+A sequence $(x_n)_{n=1}^\oo$ in a metric space is said to be \underline{Cauchy} if, given $\varepsilon>0$, there is an $N \in \N$ such that for $k, \ell \geq N$, $d(x_k, x_\ell) < \varepsilon$.
+
+It is an easy consequence of definitions that if $(x_n)$ converges, then it is Cauchy. The converse is not true in general. 
+
+\exm
+
+In $(\Q, \abs*{\cdot}_{MK})$, we can find a sequence of rationals which is Cauchy, and converges to $\sqrt{2}$, which is not rational.
+
+\defn
+
+A metric space $(X, d)$ is said to be \underline{complete} if every Cauchy sequence $(x_n)$ converges to some $x \in X$. 
+
+\thm
+
+$(\R,\abs*{\cdot}_{MK})$ is complete. 
+
+\proof
+
+Let $(x_n)$ be a Cauchy sequence in $\R$. 
+
+Then $(x_n) \subset \R$ is bounded. So, there exists an $A \in \N$ such that $[-A, A] \supseteq \{x_n\}$. But $[-A, A]$ is compact, and therefore sequentially compact. So, $(x_n)$ has a convergent subsequence $\{x_{n_k}\}_{k=1}^\oo$. 
+
+Because $(x_n)$ is Cauchy, it can be shown (as an exercise!) that if a Cauchy sequence has a convergent subsequence, then the whole sequence converges. 
+
+\qed
+
+\rem
+
+Completeness is \underline{not} a topological invariant. For example, $(\R, \abs*{\cdot}_{MK})$ and $((0, 1), \abs*{\cdot}_{MK})$ are homeomorphic, but one is complete and the other is not. 
+
+\prop
+
+Let $(X, d_X), (Y, d_Y)$ be complete metric spaces. Then $(X \times Y,d_{X\times Y} = \max(d_X, d_Y)$. That is, $d_{X\times Y}((x_1, y_1), (x_2, y_2)) = \max(d_X(x_1, x_2), d_Y(y_1, y_2))$.
+
+\proof
+
+Think
+
+\qed
+
+\cor
+
+$(\R, \abs*{\cdot}_{MK})$ is complete. 
+
+\thm
+
+Let $(X, d)$ be complete. Then if $Y \subseteq X$ is closed, then $(Y, d)$ is complete. 
+
+\proof
+
+Let $(y_n)$ be a Cauchy sequence in $Y$. By hypothesis, this converges to some $\lambda \in X$. So, for any open $U \ni \lambda$, $U$ contains points in $Y$. Thus, $\lambda \in \bar{Y}$. However, $Y$ is closed, so $Y = \bar{Y}$, so $\lambda \in Y$. 
+
+\qed
+
+\thm
+
+Let $(X, d)$ be a metric space, and $Y$ is a complete subset of $X$. Then $Y$ is closed. 
+
+\proof
+
+Pick $y^\star \in \bar{Y}$. We will show $y^\star \in Y$. For any open ball containing $y^\star$, this ball intersects $Y$ nontrivially by the definition of $\bar{Y}$. So for each $n \in \N, B_{\frac{1}{n}}(y^\star)$ contains a point in $Y$. Let $y_n \in Y \cap B_{\frac{1}{n}}(y^\star)$. 
+
+The sequence $y_n \to y^\star$, so it is Cauchy. But $Y$ is complete, so $\lim_{n\to\oo}y_n = y^* \in Y$. $y^\star$ was arbitrary, so $Y = \bar{Y}$, so $Y$ is closed. 
+
+\qed
+
+\thm
+
+Let $(X, d)$ be compact. Then $(X, d)$ is complete. 
+
+\proof
+
+Let $(x_n)$ be a Cauchy sequence in $X$. In metric spaces, compactness is equivalent to sequential compactness, so this has a convergent subsequence. But the limit of this subsequence must be the limit of $(x_n)$, because $(x_n)$ is Cauchy. Thus, $(x_n)$ converges. $(x_n)$ was an arbitrary Cauchy sequence, so every Cauchy sequence in $X$ converges. Thus, $X$ is complete. 
+
+\qed
+
+\defn (Old definition)
+
+A metric space $(X, d)$ is \underline{totally bounded} if given $\varepsilon>0$, there exist $x_1, \dot, x_k \in X$ such that 
+\[
+X = \cup_{1\leq i\leq k}B_\varepsilon(x_i)
+\]
+
+Recall that in a metric space, compactness implies total boundedness. 
+
+\thm
+
+If $(X, d)$ is complete and totally bounded, then it is compact. 
+
+Proof will be next time.
+
+\section*{Lecture 16}
+
+\proof
+
+We will show that $X$ is sequentially compact. Let $(x_n)$ be a sequence in $X$. Fix $\varepsilon=\frac{1}{2}$. By hypothesis, there exists a finite $\frac{1}{2}$-net $B_{\frac{1}{2}}(c_1) \cup \cdots \cup B_{\frac{1}{2}}(c_k) = X$. 
+
+Wew can extract a subsequence $x^{(1)}_1, x^{(1)}_2, \dots$, such that one of these $\frac{1}{2}$-balls contains $x^{(1)}_i$ for all $i$.
+
+Now, let $\varepsilon = \frac{1}{4}$. By hypothesis, there exists a subsequence of $(x^{(1)}_n)$, $x^{(2)}_1, x^{(2)}_2, \cdots$, with $x^{(2)}_i$ contained in the same $\frac{1}{4}$-ball. 
+
+We continue this construction inductively, with $x^{(i)}_j$ being the $j$th element of a subsequence of $x$ lying entirely in the intersection of balls. 
+
+Then $x^{(i)}_i$ is a Cauchy subsequence: $x^{(i)}_i, x^{(j)}_j$ lie in the same ball of radius $\frac{1}{2^{\max(i, j)}}$. That is, $d(x^{(i)}_i, x^{(j)}_j) \leq \frac{1}{2^{\min(i, j)}}$. So this sequence is a Cauchy subsequence of $(x_n)$. But $(x_n)$ was arbitrary, so we are done with the proof. 
+
+\qed
+
+\thm
+
+Any metric space $(X, d)$ has a canonical completion $(\tilde{X}, \tilde{d})$. In other words, there exists an isometry $i:X\to\tilde{X}$ such that $\bar{i(X)} = \tilde{X}$ (i.e. $i(X)$ is \underline{dense} in $\tilde{X}$). We also stipulate that $\tilde{X}$ is complete. 
+
+That is, if $Y \supset X$ is a complete metric space, then there is an injective $f:\tilde{X}\to Y$ which makes the following diagram commutative: 
+
+\[
+\begin{tikzcd}
+& Y \\
+X \ar[ur, "\iota"] \ar[r, "\iota_X"] & \ar[u, "f"] \tilde{X} \\
+\end{tikzcd}
+\]
+
+\proof
+
+\prop
+
+Let $\ms{B}(X, \R) \eqdef \{f:X\to\R \mid f\text{ is bounded}\}$. This is a metric space, with metric $d(f, g) = \sup_{x\in X}|f(x) - g(x)|$. 
+
+Then $\ms{B}(X, \R)$ is complete. 
+
+\rem 
+
+In this definition, we can replace $\R$ with any metric space, and $\sup_{x\in X}|f(x) - g(x)|$ with $\sup_{x\in X}d(f(x), g(x))$, and this remains true.
+
+\proof of proposition.
+
+Let $(f_k)$ be a Cauchy sequence of functions in $\ms{B}(X, \R)$. Fix $x \in X$. Then $\{f_k(x)\}$ is a Cauchy sequence in $\R$, and so converges to a point we will call $f(x)$. We need to show that $f(x)$ is a bounded function, and we need to show that $f_k \to f$ (we know this happens pointwise). 
+
+To show that $f$ is bounded, take $\varepsilon = 1$. Then there is an $N \in \N$ such that $d(f_k, f_\ell)< 1$ for $k, \ell \geq N$. Therefore, $|f_k(x) - f_\ell(x)| < 1$ for all $x \in X$ by definition. 
+
+In particular, $\sup_{x\in X}|f_N(x) - f_\ell(x)| < 1$ for all $\ell$. For a fixed $x\in X$, we can see $|f_N(x), f_\ell(x)| \leq 1$. Letting $\ell\to\oo$, we have $|f(x)| \leq 1 + $the bound for $f_N(x)$. So, $f$ is bounded. 
+
+Now for the second part. We will show $f_n \to f$ in the sup metric. Darren will leave this as an exercise, but it is easy if you use the fact $d(f, g) = 0$ if and only if $f = g$ everywhere. 
+
+\qed
+
+Now we have proven the proposition, we can prove the theorem. 
+
+We will isometrically embed $(X, d)\to(\ms{B}(X, \R), \sup$ metric). Our first guess is to map $x\mapsto f_x$, where $f_x(\xi) = d(x, \xi)$. The problem is that this is not necessarily a bounded function. 
+
+Fix a base point $x^\star \in X$. Then we map $x\mapsto f_x$, where $f_x(\xi) = d(x, \xi) - d(\xi, x^\star)$. This is a bounded function (by triangle inequality, this is bounded above in magnitude by $d(x, x^\star)$). 
+
+We will now show that $x \mapsto f_x$ is isometric. Let $x, y \in X$. What is $d(f_x, f_y)$ under the sup metric? By definition, it is given by 
+\[
+\sup_{\xi\in X}|f_x(\xi) - f_y(\xi)| = \sup_{\xi\in X}|d(x, \xi) - d(y, \xi)| 
+\]
+This last term is bounded above by $d(x, y)$. This supremum can be achieved by letting $\xi = x$ or $\xi = y$. So, $d(f_x, f_y) = d(x, y)$. So $x\mapsto f_x$ is an isometry, so we are done. 
+
+\qed
+
+\section*{Lecture 17}
+
+\thm (Banach Fixed Point Theorem)
+
+Let $(X, d)$ be a complete metric space, and let $f:X\to X$ be complete, with $d(f(x), f(y)) \leq kd(x, y)$ for all $x, y$, where $0 \leq k < 1$ (such an $f$ is called a $k$-contraction). Then $f$ has a unique fixed point, i.e. a point $p\in X$ such that $f(p) = p$. 
+
+\proof
+
+Let $x_0 \in X$, and let $x_n = f^{(n)}(x_0)$. 
+
+\claim $\{x_n\}$ is Cauchy
+
+\proof
+
+Indeed, for $n \leq m$, 
+\begin{align*}
+d(x_n, x_m) & = d(x_n, x_{n + 1}) + d(x_{n + 1}, x_{n + 2}) + \cdots + d(x_{m - 1}, x_m) \\
+			   & \leq kd(x_{n - 1}, x_n) + \cdots  \\
+			   & \leq k^nd(x_0, x_1) + k^{n + 1}d(x_0, x_1) + \cdots + k^{m - 1}d(x_0, x) \\
+				& = k^nd(x_0, x_1)(1 + k + \cdots + k^{m - 1 - n}) < \frac{k^n}{1 - k}d(x_0, x_1) \\
+\end{align*}
+$k < 1$, so as $n\to\oo$, this gets arbitrarily small, so $\{x_n\}$ is Cauchy, proving the claim. 
+
+Because $(X, d)$ is complete, $x_n\to x$. Because of $d(f(x), f(y)) \leq kd(x, y)$ for all $x, y$, $f$ is uniformly continuous. So, $\lim_{n\to\oo}f(x_n) = f(\lim_{n\to\oo}x_n) = f(x)$. So, $f(x) = x$. 
+
+The uniqueness comes from the fact that if $x, y$ are both fixed points, then the distance between them is multiplied by $k$. This can only happen if $k = 0$, or $d(x, y) = 0$, implying $x = y$. 
+
+\qed
+
+\cor
+
+If $f:X\to X$ is a continuous function such that $f^{(t)}$ is a $k$-contraction for some $t$, then $f$ has a unique fixed point. 
+
+\proof
+
+By Banach, $f^{(t)}$ has a fixed point $x^\star$. But then $f^{(t)}\circ f(x^\star) = f^{(t + 1)}(x^\star) = f \circ f^{(t)}(x^\star) = f(x^\star)$. So $f(x^\star)$ is a fixed point of $f^{(t)}$. But the above theorem gives us that the fixed point of $f^{(t)}$ is unique, so $x^\star = f(x^\star)$, so $x^\star$ is a fixed point of $f$. 
+
+\thm (Cantor)
+
+Let $(X, d)$ be a metric space. Then $X$ is complete if for every sequence of nonempty closed sets $V_1\supseteq V_2 \supseteq V_3 \supseteq \cdots$, such that $\operatorname{diam}(V_j)\to 0$, there exists a point $x^\star \in \cap_{k\geq1}V_k$. 
+
+\rem
+
+The point $x^\star$ (if it exists) is unique, which is immediate from the condition that the diameter of $V_j$ goes to 0.
+
+\proof
+
+\underline{$<=$}
+
+Suppose $(X, d)$ is not complete. Let $(x_n)$ be a Cauchy sequence which does not converge. Because it does not converge, it has no limit points, and hence the image of the sequence is closed. So, $V_k \eqdef \{x_k, x_{k + 1}, \dots \}$ is closed for any $k$. 
+
+We can see that $V_k \supseteq V_{k + 1}$ for all $k$ easily, and the diameter goes to zero because it is Cauchy. 
+
+However, the intersection of all these sets is empty. So, $X$ does not satisfy the given condition. 
+
+\underline{$=>$}
+
+Suppose $(X, d)$ is complete. Pick $x_k \in V_k$. Then $(x_k)$ is a Cauchy sequence, because the diameter of $V_j$ goes to zero. $X$ is complete, so $x_k$ converges to some $x$. 
+
+\claim 
+
+$x^\star \in \cap_{k\geq 1}V_k$. 
+
+\proof
+
+Each $V_k$ is closed, so, because $(x_k)$ eventually lies completely in any $V_j$, we must conclude that each $V_k$ contains $x^\star$. 
+
+This completes the proof. 
+
+\qed
+
+\defn
+
+Let $(X, d)$ be a metric space (although this definition doesn't require the metric). A subset $H\subseteq X$ is called \underline{nowhere dense} if $\operatorname{int}(\cl(H)) = \varnothing$. 
+
+\thm (Baire)
+
+Let $(X, d)$ be a complete metric space, and suppose $\{H_n\}_{n\geq1}$ is a countable collection of nowhere dense sets. Then $X\setminus\left(\cup_{k\geq1}V_k\right)$ is dense. 
+
+We will prove this next time. 
+
+\section*{Lecture 18}
+
+\lem
+
+Let $(X, d)$ be a metric space. Then a subset $H$ is nowhere dense if and only if for all nonempty open $U \subset X$, $U$ contains a ball disjoint from $H$. 
+
+\proof
+
+\subsubsection*{\underline{$<=$}}
+
+We want to show that $\operatorname{int}(\cl(H)) = \varnothing$.
+
+Let $y \in U$, $\delta>0$. By hypothesis, there is some $z \in B_{\delta}(y)$, and $\varepsilon>0$, such that $B_{\varepsilon}(z) \subset B_{\delta}(y)$, and $B_{\varepsilon}(z) \cap H = \varnothing$. Thus, $z \not\in \cl(H)$. But $z$ was chosen to be an interior point of $B_{\varepsilon}(y)$, so the interior of $\cl(H)$ does not contain any open set. 
+
+\subsubsection*{\underline{$=>$}}
+
+Pick $x \in U$ and $\varepsilon > 0$ so that $B_{\varepsilon}(x) \subset U$. By hypothesis, $\operatorname{int}(\cl(H)) = \varnothing$. So $B_\varepsilon(x)$ is not contained in $\cl(H)$, and so $z \in \underbrace{(X \setminus \cl(H))}_{\text{open}} \cap \overbrace{B_{\varepsilon}(x)}^{\text{open}}$. So this set is open, and so $z$ admits a ball which is entirely contained in that set. 
+
+\qed
+
+We are now ready to prove Baire's Theorem. 
+
+\proof of Baire's Theorem
+
+We will make use of Cantor's Theorem.
+
+Pick a nonempty open $U \subseteq X$. By the lemma, there exists a ball $B_{r_1}(x_1) \subseteq U$, such that $B_{r_1}(x) \cap H_1 = \varnothing$. 
+
+Let $V_1 \eqdef \{x \mid d(x, x_1) \leq \frac{r_1}{2}\}$. This is a closed subset of $B_{r_1}(x)$. Now, $B_{\frac{r_1}{3}}(x_1)$ is open. So, by the lemma, there exists a $B_{r_2}(x_2) \subset B_{\frac{r_1}{3}}(x_1)$ which is disjoint from $H_2$. Let $V_2 = \{x \mid d(x, x_2) \leq \frac{r_2}{2^2}\}$. 
+
+Continuing in this manner, we have a decreasing collection $V_1 \supset V_2 \supset \cdots $, with $\operatorname{diam}V_i \to 0$ as $n\to\oo$, so their intersection contains a point. But by construction $V_k \cap H_k = \varnothing$ for all $k$, so this point does not intersect any of the $H_k$. This means the point is in $X \setminus \cup_{k\geq1}H_k$. $U$ was arbitrary, so we have shown that any open set intersects $X \setminus \cup_{k\geq1}H_k$, and so this set is dense. 
+
+\qed
+
+\section*{Lecture 19}
+
+\subsection*{\underline{Fundamental Group}}
+
+Suppose $X$ is a topological space. We want a way to associate with $X$ some algebraic object, $G(X)$. We want to do this so that if $f:X\to Y$ is continuous, it ``descends" to some homomorphism $f_\star:G(X)\to G(Y)$. Further, in analogy with the fact that the composition of continuous maps is continuous, we want the commutative diagram 
+\[
+\begin{tikzcd}
+X \ar[rd, "g \circ f"'] \ar[r, "f"] & Y \ar[d, "g"] \\
+& Z \\
+\end{tikzcd}
+\]
+
+to become
+
+\[
+\begin{tikzcd}
+G(X) \ar[rd, "(g \circ f)_\star"'] \ar[r, "f_\star"] & G(Y) \ar[d, "g_\star"] \\
+& G(Z)
+\end{tikzcd}
+\]
+
+We also want the identity homeomorphism on $X$ to be sent to the identity isomorphism on $G(X)$. 
+
+\thm 
+
+Suppose we have some way of doing the above. Then if $X$ is homeomorphic to $Y$, then $G(X)$ is isomorphic to $G(Y)$. 
+
+\proof
+
+Suppose $f:X\to Y$, $g:Y\to X$ are inverse homeomorphisms. Then the commutative diagram
+\[
+\begin{tikzcd}
+X \ar[rd, "\Id"'] \ar[r, "f"] & Y \ar[d, "g"] \\
+& X \\
+\end{tikzcd}
+\]
+
+becomes
+\[
+\begin{tikzcd}
+G(X) \ar[rd, "\Id"'] \ar[r, "f_\star"] & G(Y) \ar[d, "g_\star"] \\
+& G(X)
+\end{tikzcd}
+\]
+But this means $g_\star f_\star = \Id_{G(X)}$. A similar argument gives $f_\star g_\star = \Id_{G(Y)}$. 
+
+\qed
+
+Why might we want to do this? The above theorem shows that we can use such a group as a way of distinguishing spaces. If we can show $G(X)\not\simeq G(Y)$, then we may assume $X\not\cong Y$. 
+
+We will begin this construction by defining a weaker equivalence relation than homeomorphism, which will preserve the fundamental group (which we will later construct). 
+
+For the rest of time, $X, Y$ will be topological spaces, and $f, g$ continuous. 
+
+\defn
+
+Consider $f, g:X\to Y$. We say that \underline{$f$ is homotopic to $g$}, which we write as $f \simeq g$, if there exists a continuous $F:X\times\underbrace{[0, 1]}_{``I"}\to Y$, such that for all $x \in X$
+\[
+F(x, t) = \begin{cases} f(x) & t = 0 \\ g(x) & t = 1 \\ \end{cases}
+\]
+We sometimes write $F(\cdot, t)$ as $f_t$ or $F_t$, depending on convience. 
+
+\lem
+
+Homotopy, as defined above, is an equivalence relation between elements of $\Hom(X, Y)$. 
+
+\proof
+
+It is trivial to verify that $f \simeq f$. 
+
+Next, suppose $f \simeq g$. If $F:X\times [0,1]\to Y$ is a homotopy between $f, g$, then $G:X\times[0, 1]\to Y$ given by $G(x, t) = F(x, 1 - t)$ is a homotopy which shows $g \simeq f$. 
+
+Finally, suppose $f \simeq g$ and $g \simeq h$. Then there are homotopies $F_t, G_t$. We can define $H_t$ by 
+\[
+H_t(x) = \begin{cases} F_{2t}(x) & t \in [0, \frac{1}{2}] \\ G_{2t - 1}(x) & t \in [\frac{1}{2}, 1] \end{cases}
+\]
+We have to check this is continuous at $t = \frac{1}{2}$. Indeed, $F_{2\frac{1}{2}}(x) = G_{2\frac{1}{2} - 1}(x)$, so $H$ is continuous. 
+
+\qed
+
+\exm
+
+\begin{enumerate}
+\item $f, g:X\to Y\subseteq \R^n$ with $Y$ convex, then $F(x, t) = (1 - t)f(x) + tg(x)$ is a homotopy between $f, g$, so $f \simeq g$. We are using the convexity hypothesis when we assert that $(1 - t)f(x) + tg(x) \in Y$. 
+\item $f, g:X\to S^{n - 1}\subset \R^n$. If $f(x) \neq -g(x)$ for all $x, \in x$, then $f\simeq g$. How can we see this? We will prove it in the special case of $S^2 \subset \R^3$. Consider $f(x), g(x) \in S^2$. There is a line going between these two points, and this line misses the origin. We can normalize every point on this line, and we get a path between $f(x)$ and $g(x)$. Explicitly, 
+\[
+F(x, t) = \frac{(1 - t)f(x) + tg(x)}{\norm{(1 - t)f(x) + tg(x)}}
+\]
+Note this is a sufficient but not necessary condition. 
+\end{enumerate}
 
 
 
