@@ -1224,11 +1224,598 @@ Let $X \subset \C$ be open.
 
 All of the above can be proven using the factorization theorem. 
 
+\section*{Lecture 7}
+
+\section*{Lecture 8}
+
+Let $X, \tilde{X}, \dots \subset \C$ be domains. We say a map $p:X\to\tilde{X}$ is a cover if $p$ is
+\begin{enumerate}
+\item $p(\tilde{X}) \supseteq X$ ($p$ is onto)
+\item For all $a \in X$, there is an open $a \in V \subset X$, such that $p^{-1}(V) = \coprod_{\alpha}\mc{O}_\alpha$, where the $\mc{O}_\alpha$ are open, disjoint, connected sets such that $p|_{\mc{O}_\alpha}:\mc{O}_\alpha \to V$ is a homeomorphism for all $\alpha$. 
+\end{enumerate}
+
+\exm
+
+The basic example is the exponential map $\C\to\C^\times$. We defined $V_a = \C\setminus\{ta \mid t\leq 0 \}$. The preimage of $V_a$ under the exponential map will be disjoint strips in $\C$, with width depending on the argument of $a$. 
+
+A lift of the exponential function would be an $F$ making this diagram commute
+\[
+\begin{tikzcd}
+& \C \ar[d, "exp"]\\
+X\ar[ur, "F"] \ar[r, "f"] & \C^\times
+\end{tikzcd}
+\]
+
+\thm (Uniqueness of lift)
+
+Let $\begin{tikzcd}\tilde{X}\ar[r, "p"] & X \end{tikzcd}$ be a cover. Let $B$ be a domain, and let $\phi:B\to X$ be continuous. 
+
+Lt $f_1, f_2:B\to X$ satisfy $\phi = p \circ f_i$. If there exists a $b_0 \in B$ such that $f_1(b_0) = f_2(b_0)$, then $f_1 \equiv f_2$ on $B$. 
+
+\[
+\begin{tikzcd}
+& \tilde{X} \ar[d, "p"] \\
+B\ar[ur, "f_i"] \ar[r, "\phi"] & X \\ 
+\end{tikzcd}
+\]
+
+\thm (Existence of lift)
+
+Let $\begin{tikzcd} \tilde{X} \ar[r, "p"] & X \end{tikzcd}$ be a cover. Let $B$ be a domain, and $\phi:B\to X$ continuous. For any $b_0 \in B$, fix $\tilde{x}_0 \in p^{-1}(\{\phi(B_0)\})$
+\[
+\begin{tikzcd}
+& \tilde{X} \ar[d, "p"] \\ B \ar[r, "\phi"] & X \\ 
+\end{tikzcd}
+\]
+\[
+\begin{tikzcd}
+& \tilde{x}_0 \ar[d, "p"] \\
+b_0 \ar[r, "\phi"] & \phi(b_0) \\
+\end{tikzcd}
+\]
+
+Then there exists continuous $f:B\to\tilde{X}$ such that $f(b_0) = x_0, p \circ f = \phi$ on $B$ if and only if $\phi_*(\pi_1(B, b_0)) = (p \circ f)_*(\pi_1(B, b_0)) = p_* \circ f_*(\pi_1(B, b_0) \lhd p_*(\pi_1(\tilde{X}, \tilde{x}_0))$
+\[
+\begin{tikzcd}
+& \tilde{X} \ar[d, "p"] \\ B \ar[ur, "f"] \ar[r, "\phi"] & X \\
+\end{tikzcd}
+\]
+
+\cor
+
+For 
+\[
+\begin{tikzcd}
+& \C \ar[d, "\exp"] \\ X \ar[r, "f"] & C^\times \\
+\end{tikzcd}
+\]
+with $f$ holomorphic, fix any $z_0 \in X$, fix any $\tilde{w}_0 \in \{\ln f(z_0)\}$ (so $e^{\tilde{w}_0} = f(z_0)$). Then
+\begin{enumerate}[label=(\roman*)]
+\item There is a unique holomorphic $F$ such that $f = e^F$ in $X$, $F(z_0) = \tilde{w}_0$ IF AND ONLY IF $f_*(\pi_1(X, z_0)) = \{1\}$.
+\item If $X$ is simply connected, then $F$ always exists. 
+\item If $f(X)$ is a simply connected subset of a domain, then $F$ always exists. 
+\end{enumerate}
+
+\thm
+
+Let $f:X\to \C^\times$ be holomorphic (i.e. $f(z)\neq0$ for all $z \in X$)
+
+Fix any $z_0 \in X$ and any $w_0$ such that $e^{w_0} = f(z_0)$ (i.e $w_0 \in \{\ln f(z_0)\}$). 
+
+Then
+\begin{enumerate}[label=(\roman*)]
+\item If $X$ is simply connected, then there is a unique $F \in \ms{H}(X)$ such that $e^F = f$ in $X$, and $F(z_0) = w_0$. $F$ is given by
+\[
+F(z) = w_0 + \int_{z_0}^z\frac{f'(w)}{f(w)}\,dw
+\]
+The notation above makes sense because the integral doesn't depend on the curve between $z$ and $z_0$.
+\item If $f(X) \subset \mc{D} \subset \C^\times$, with $\mc{D}$ a simply connected domain, then there is a unique $F \in \ms{H}(X)$ such that $e^F = f$ in $X, F(z_0) = w_0$ given by
+\[
+F(z) = w_0 + \int_{f(z_0)}^{f(z)}\frac{dw}{w}
+\]
+Again, this makes sense because $\mc{D}$ is a simply connected domain on which $\frac{1}{z}$ is holomorphic, so the integral doesn't depend on the curve between $z_0$ and $z$. 
+\end{enumerate}
+
+\proof
+
+\begin{enumerate}[label=(\alph*)]
+\item We have
+\[
+F(z_0) = w_0 + \int_{z_0}^{z_0}\,dw = w_0
+\]
+Here, we have used the fact that we are on a simply connected set to say $\int_{z_0}^{z_0} \,dw = 0$.  We want $\frac{e^F}{f}|_{z_0} = \frac{e^{w_0}}{f(z_0)} = 1$. Let's compute the derivative. We have
+\[
+\left(\frac{e^F}{f}\right)' = \frac{e^FF'f - e^Ff'}{f^2}
+\]
+$F' = \frac{f'}{f}$, so the above is identically zero. 
+\item You can prove yourself .
+\end{enumerate}
+
+\qed
+
+We will consider the situation
+%%%LEET%%%
+\[
+\begin{tikzcd}
+& \C \ar[d, "\exp"] \\ X \ar[r, "\iota"] & \C^\times \\ 
+\end{tikzcd}
+\]
+where $\iota$ is an inclusion. We want to think about branches of $\ln$. 
+
+The standard branch is the one given by $X = \C\setminus\{t \mid t \in \R, t \leq0 \}$. Let $z_0 = 1$. Then $0 = w_0\in \exp^{-1}(\{1\})$
+
+So $\underbrace{\ln z}_{\text{in standard branch}} = \underbrace{\int_1^z\frac{dw}{w}}_{\ln \text{ in }\R} = \underbrace{\ln|z|}_{\text{in real analysis sense}} + i\phi$, with $-\pi < \phi < \pi$.
+
+What about $\{\sqrt{z}\}$. Unfortunately, for the function $z\mapsto z^n$, this is a surjection from $\C^\times\to\C^\times$, so we don't have simply connectedness. That is $p_*(\pi_1(\C^\times)) \not\cong \{1\}$. Luckily, the definition of roots can be expressed using logs:
+
+\thm
+
+Let $X$ be simply connected, $f:X\to\C^\times$ holomorphic, $z_0 \in X$, $w_0$ such that $w_0^n = f(z_0)$. Then there exists a unique $g \in \ms{H}(X)$ such that $g^n = f$ in $X$, $g(z_0) = w_0$, given by
+\[
+g(z_0) = w_0e^{\frac{1}{n}\int_{z_0}^z\frac{f'(w)}{f(w)}\,dw}
+\] 
+
+\proof
+
+$\cdot\smile\cdot$
+
+\qed
+
+Denis would like to solve some problems now. 
+
+Suppose we have a domain consisting of the complement of of the boundary of a semicircle of radius 1 at 1, and the line $\{x + iy \mid x = 2, y \geq 0\}$. That is, we want $F \in\ms{H}(X)$ such that $e^{F(z)} = z$ in $X$. $F(1) = 0$. 
+\[
+F(3) = ``\ln_* 3" = 0 + \underbrace{\int_1^3\frac{dz}{z}}_{\text{needs to be in }X}
+\]
+A line from $1$ to $3$ is not entirely in $X$. We take the integral over a semicircle from $1$ to $-1$, and get
+\[
+F(3) =i\pi + \int_0^1\frac{-2dt}{-1 - 2t} = \underbrace{2\int_0^1}_{=\ln(3)} + i\pi = \ln 3 + 2i\pi
+\]
+
+Of course in the homework we have to compute more complicated things.
+
+Let $f$ be holomorphic in an open $X\ni a$, with $f'(a)\neq0$. Then there is a small neighbourhood of $a$ which is mapped biholomorphically onto its image by the inverse funtion theorem. What if $f'(a) = 0?$
+
+\thm
+
+Let $f$ be holomorphic in an open $X\ni a$. Let $f'$ have a zero of order $m$ at a. We know then that $f'(z) = (z - a)^m\phi(z)$, with $\phi(a) = 0$. Then
+\[
+f(z) - f(a) = (\phi(z))^{m + 1}
+\]
+for some holomorphic $\phi,$ with $\phi(a)= 0, \phi'(a)\neq0$. 
+
+\proof
+
+\qed
+
+\section*{Lecture 9}
+
+Last time, we showed that if $\Omega\subseteq \C$ is a simply connected domain, then for any $f$, there is a $g$, defined by
+\[
+g(z) = w_0 + \int_{z_0}^z\frac{f'(w)}{f(w)}\,dw
+\]
+So that $e^g = f$ in $\Omega$. In the above, $w_0$ is such that $e^{w_0} = z_0$. 
+
+Now let $w_0$ be such that $w_0^n = f(z_0)$. Let 
+\[
+g(z) = w_0e^{\frac{1}{n}\int_{z_0}^z\frac{f'(w)}{f(w)}\,dw}
+\]
+Then $g^n(z) = f(z)$. 
+
+If we are on a domain $f(\Omega)$ which lies in a simply connected domain, then we can define
+\[
+g(z) = w_0 + \int_{f(z_0)}^{f(z)}\frac{dw}{w}
+\]
+
+\thm
+
+Let $f$ be holomorphic, with $f(0) = 0$. Let $f'(0) = \cdots = f^{(N - 1)}(0) = 0$, $f^{(N)}(0)\neq0$. 
+
+Then there exists an open $V \subseteq \C$ containing $0$ such that 
+\begin{enumerate}
+\item There exists a biholomorphism $g$ between $V$ and $B_{\varepsilon}(0)$ for some $\varepsilon>0$. 
+\item $f(z) = (g(z))^N$ for $z \in V$. That is, the following diagram commutes
+\[
+\begin{tikzcd}
+V \ar[d, "g"] \ar[r, "f"] & B_{\varepsilon^N} \\
+B_{\varepsilon}\ar[ur, "z\mapsto z^N"'] & \\
+\end{tikzcd}
+\]
+\item For all $w \in B_{\varepsilon^N}$, $w\neq0$, there exist distinct $z_1, \dots, z_n \in V$ such that $f(z_j) = w$ for all $j$. 
+
+\end{enumerate}
+
+\cor (Open Mapping Theorem)
+
+Let $X \subseteq \C$, be open $f \in \ms{H}(X)$. Then, unless $f$ is constant, $f(X)$ will be open. 
+
+\proof
+
+Let $w_0 \in f(X)$. Then there is a point $z_0 \in X$ with $f(z_0) = w_0$. By the theorem, $f(V) \supseteq B_{\varepsilon}$ for some $\varepsilon$. 
+
+\qed
+
+\cor (Maximum Principal)
+
+Let $X \subseteq \C$ be open, and let $f \in \ms{H}(X)$. Then for all $p \in X$, $|f(p)| < \sup_{p\in X}|f(p)|$. That is, $f$ does not achieve its sup on $X$. If $f$ can be continuously extended to the boundary of $X$, then $|f|$ achieves its maximum on this boundary. 
+
+\proof
+
+Let $p \in X$. Then there exists an open neighborhood $V$ of $p$ such that the image under $f$ is an open ball contained in $f(X)$, so there is a point in this ball which achieves a larger absolute value than $p$. 
+
+\qed
+
+We will now prove the theorem given at the beginning of this lecture. 
+
+\proof
+
+By our factorization theorem, $f(z) = z^N\phi(z)$, with $\phi$ holomorphic in a neighborhood of $0$, with $\phi'(0) \neq 0$, and $\phi\neq0$ in some neighborhood of $0$. 
+
+We can find a $\psi$ such that $\psi(z) = ``\sqrt[N]{\phi(z)}"$, meaning $\psi(z)^N = \phi(z)$ in $B_\rho(0)$ for some $\rho>0$. 
+
+So then $f(z) = (z\psi)^N = z^N\psi^N = g(z)^N$. Taking the derivative, 
+\[
+g(z)' = (z\psi(z))' = \psi(z) + z\psi'(z)
+\]
+So $g(z)'|_{z = 0} = \phi(0)\neq0$, allowing us to apply a previous theorem.
+
+\qed
+
+Here's an example of a typical problem: 
+
+\exm
+
+Find a regular branch of $\ln(iz + \sqrt{1 - z^2})$ in $\Omega = \C\setminus((-\oo, -1]\cup[1, +\oo))$. 
+
+We want a $g(z)$ such that $e^g = \ln(iz + \sqrt{1 -z^2})$ in this domain, which satisfies $g(0) = 0$. In the homework, all the branches you can find will be unique, although we do not need to prove this. 
+
+Let $f:\Omega\to \C^\times$ be given by $z\mapsto 1- z^2$. We want  $g_1 \in \ms{H}(\Omega)$ such that $g_1(z)^2 = 1 - z^2$ in $\Omega$, and $g_1(0) = 1$. By a theorem, we have
+\[
+g_1(z) = ie^{\frac{1}{2}\int_0^z\frac{f'}{f}dw} = e^{\frac{1}{2}\int_0^z-\frac{w}{1 - w^2}dw}
+\]
+
+Let $g_2$ be defined on $\Omega$ by $z\mapsto iz + g_1(z)$. We can see $g_2(0) = 0\cdot0 + 1 = 1$. If $g_2(z) = 0$, then $iz = g_1(z)$, so $-z^2 = g_1(z)^2$, which implies $-z^2 = 1 - z^2$, and so $0 = 1$. So $g_2(z) \neq0$ for all $z \in \Omega$, so $g_2:\Omega\to\C^\times$. 
 
 
+Now, $0 \in \{\ln(1)\}$, so by a theorem we can define
+\[
+g(z) = 0 + \int_0^z\frac{g_2'(w)}{g_2(w)}\,dw = \frac{i + g_1'(z)}{iz + g_1(z)}, z \in \Omega
+\]
 
+Let's solve a problem like this from the homework.
 
+In $\Omega = \C\setminus[0, +\oo)$, find a regular branch $g(z)$ of $\ln(1 + \sqrt{z})$ such that $g(-1) \in \{\ln(1 \pm i)\} = \ln(\sqrt{2})\pm i \frac{\pi}{4} + i2\pi \Z$. Let's pick $\ln(\sqrt{2}) + \frac{i\pi}{4}$ and compute the limit
+\[
+\lim_{\varepsilon\to0^+}g(4 - i\varepsilon) = ?
+\]
 
+Let's denote by $f$ a branch of $\{1 + \sqrt{z}\}$ which is holomorphic in $\Omega$ such that $f(-1) = 1 + i$. We have $f(-1) = 1 + i$, $i\in \{\sqrt{-1}\}$, so by a previous theorem, we can define
+\[
+f = 1 + ie^{\frac{1}{2}\int_{-1}^z\frac{1}{w}\,dw}
+\]
+So $f(z) \in \{1 + \sqrt{\Z}\}$ for all $z \in \Omega$. Because $\ln(\sqrt{2}) + \frac{i\pi}{4} \in \{\ln(1 + i)\}$, the same theorem then allows us to define
+\[
+g(z) = \ln(\sqrt{2}) + \frac{i\pi}{4} + \int_{-1}^z\frac{f'(w)}{f(w)}\,dw
+\]
+This is a valid branch, but it makes solving for $\lim_{\varepsilon\to0^+}g(4 - 1\varepsilon)$ a pain in the neck. So let's use the statement from earlier about $f(\Omega)$. What is the range of $f$? 
+
+For $0<\varphi_z<2\pi$, $z = |z|e^{i\varphi_z}$. Consider the curve $t\mapsto e^{i[(1 - t)\pi + t\varphi_\zeta]}$. If $|\zeta| = 1$, then 
+\[
+ie^{\frac{1}{2}\int_{-1}^\zeta\frac{dw}{w}} = e^{\frac{i\pi}{2}}e^{i\frac{\varphi_\zeta - \pi}{2}} =  e^{i\frac{\varphi_\zeta}{2}}
+\]
+
+Anyways, the punchline is $f:\Omega\to \{\Im z > 0\}$. 
+
+So we use the formula $g = ``\ln f" = \ln(\sqrt{2}) +\frac{i\pi}{2} + \int_{f(-1)}^{f(z)}\frac{dw}{w}$. We calculate $f(-1) = i + i$, so we integrate over a curve starting at $1 + i$ and going to $f(z)$. 
+
+We have $f(4 - i0^+) = -1 + i0^+ $. There are several curves we could integrate over, but Denis says the final answer will be the result of plugging in $\ln(\sqrt{2}) + \frac{i\pi}{2} - \ln(\sqrt{2}) + i\left(\frac{\pi}{4} + \frac{\pi}{2}\right) = i\pi$.
+
+\section*{Lecture 9}
+
+Let $f \in \ms{H}(B_r(a)\setminus\{a\})$. Then $f(z) = \sum_{n=0}^\oo c_n(z - a)^n + \sum_{n=1}^\oo \frac{dn}{(z - a)^n}$, and we call $d_1 = \res_a f$ the residue of $f$ at $a$. 
+
+$\gamma \overset{\circ}{\simeq} C_\rho(a)$ in $B_r(a)\setminus\{a\}$ implies $\int_\gamma f\,dz = \int_{C_\rho(a)}\,dz = 2\pi id_1$. 
+
+\thm (Residue Theorem)
+
+Let $\Omega\subseteq \C$ be simply connected. Let $(a_n)$ be a sequence of isolated points in $\Omega$. Let $S = \cup_n\{a_n\}$, and let $f \in \ms{H}(\Omega\setminus S)$. Then for any $\gamma:S^1\to\Omega\setminus S$ which is piecewise smooth, we have 
+\[
+\int_\gamma f\,dz = 2\pi i \sum_n\ind(\gamma, a_n)\res_{a_n}f
+\]
+
+\proof 
+
+A proof goes something like this: if $\gamma \overset{\circ}{\simeq} p$ for some $p \in \Omega$, then there is a homotopy $\phi:S^1\times I \to \Omega$. $\phi(S^1\times I) = M$ which is compact. Let $P = \bar{\{z \in \Omega \mid \ind(\gamma, z) \neq0\}}$. This is a compact subset of $\Omega$. Take $(M \cup P) \cap S$. This is a finite set $\{a_1, \dots, a_n\}$. 
+
+So, $f \to \tilde{f} = f - \sum_{n=1}^\oo\frac{dn}{(z - a_1)^n} - \sum_{n=1}^\oo\frac{d_{2n}}{(z - a_2)^n} - \cdots - \sum_{n=1}^\oo\frac{d_{Nn}}{(z - a)^n}$. We've killed off the singularities, in the words of Denis, so the integral of $\tilde{f}$ is zero. This gives the result vaguely. 
+
+A careful proof can be found in the notes. 
+
+\thm (Rouche's Theorem)
+
+Let $\Omega\subseteq\C$ be simply connected, and suppose $f \in \ms{H}(\Omega)$, $r:S^1\to\Omega\setminus z_f$ a piecewise smooth loop, where $z_f$ is the set of points where $f$ is zero. Let $\Delta f \in \ms{H}(\Omega)$ be a perturbation, $|\Delta f|<|f|$ on $\im\gamma$. 
+
+Then $f + \Delta f \neq 0$ on $\im\gamma$ and 
+\[
+\sum_{a \in z_f}\ind(\gamma, a)\omega(a, f) = \sum_{b\in z_{f + \Delta f}}\ind(\gamma, b)\omega(b, f + \Delta f)
+\]
+
+\exm
+
+For all real $\lambda > 1$, $z = \lambda - e^{-z}$ has exactly one solution in $\{ \Re z \geq 0\}$ which is real
+
+We can rewrite $\underbrace{(z - \lambda)}_{f} + \underbrace{e^{-z}}_{\Delta f} = 0$. $f(z)$ is only zero at $z = \lambda$ if $\Re z \geq 0$. If we draw a box around $\lambda$ and make it larger, then something goes to zero. 
+
+$|\Delta f| \leq |f|$ on $\gamma$, and $|\Delta f| = |e^{iy}| = 1$. So
+\begin{align*}
+f(z) & = |iy - \lambda| \\
+& = \sqrt{\lambda^2 + y^2} \\
+& > 1
+\end{align*}
+
+Now
+
+\begin{align*}
+|\Delta f(z)| & = |e^{-N - iy}| \\ & = e^{-N} \\ & < 1 \\ 
+\end{align*}
+
+Detailed work in Denis' notes. 
+\thm (Argument Principle)
+
+Suppose $\Omega\subseteq\C$ is a simply connected domain, and suppose $f \in \ms{M}(\Omega)$ ($f$ is meromorphic on $\Omega$). Let $\gamma:S^1\to\Omega\setminus(S_f \cup Z_f)$ (the singular parts and zeroes) be piecewise smooth. 
+
+Then $f \circ \gamma$ is a piecewise smooth loop. Then 
+\[
+\ind(f\circ\gamma , 0) = \frac{1}{2\pi i}\int_{\gamma}\frac{f'}{f}\,dw = \sum_{a \in S_f \cup Z_f} \ind(\gamma, a) \omega(a, f)
+\]
+
+\rem
+
+$Z_f$ - zero set, $S_f$ - set of poles are discrete subsets of $\Omega$. 
+
+\proof
+
+The above is equal to $\frac{1}{2\pi i}\int_{f\circ \gamma}\frac{dw}{w}  = f'|_{\gamma(t)}^{\dot{\gamma}(t)}$. Idk I'm very lost and sleepy lol. 
+
+Denis writes $\frac{f'}{f} \in \ms{H}(\Omega\setminus(S_f \cup Z_f))$.
+
+By the residue theorem, 
+\[
+\frac{1}{2\pi i}\int_{\gamma}\frac{f'}{f}\,dz = \sum_{a\in S_f \cup Z_f}\ind(\gamma, a)\res_a\frac{f'}{f}
+\]
+If $a \in Z_f$, then $f(z) = (z - a)^N\phi(z)$, $\phi'(a)\neq0$. So $f'(z) = N(z - a)^{N - 1}\phi + (z - a)^N\phi'(z)$. So
+\[
+\frac{f'}{f} = \frac{N(z - a)^{N - 1}\phi + (z - a)^N\phi'(z)}{(z - a)^N\phi} = \frac{\omega(f, a)}{z - a} + \underbrace{\frac{\phi'}{\phi}}_{\text{holomorphic}}
+\]
+So $\res_a\frac{f'}{f} = \omega(f, a)$. 
+
+Now we can prove Rouche's theorem. 
+
+\proof of Rouche's Theorem
+
+We have $f \in \ms{H}(\Omega)$, $\gamma:S^1\to\Omega\setminus Z_f$, and $f + \Delta(f) \in \ms{H}(\Omega)$ a perturbation. $\gamma:S^1\to(\Omega\setminus Z_{f + \Delta f})$. We want to compare $\sum_{z\in Z_f}\ind(\gamma, a)\omega(a, f)$ with the same expression but with $f$ replaced by $f + \Delta f$. 
+
+It will be enough to show
+\[
+\int_{\gamma}\frac{f'}{f}\,dz = \int_{\gamma}\frac{f' + \Delta f'}{f + \Delta f}\,dz
+\]
+
+Let $h = \frac{f + \Delta f}{f}$. $S_h \subset Z_f$, $Z_h \subset Z_{f + \Delta f}$. $h$ is meromorphic, so $h$ is holomorphic in a neighborhood of $\im\gamma$. 
+
+Now
+\[
+\frac{f' + \Delta f'}{f + \Delta f} = \frac{f'}{f} + \frac{h'}{h}
+\]
+
+\section*{Lecture 10}
+
+Recap
+
+\begin{itemize}
+\item Let $X\subset\C$ be a simply connected domain, $f\in\ms{H}(X\setminus S)$, with $S = \cup_n \{a_n\}$ a discrete set and $\gamma:S^1\to X\setminus S$ piecewise smooth loop, then the residue theorem states
+\[
+\int_\gamma f\,dz = \sum_{a\in S}\operatorname{ind}(\gamma, a_n)\res_{a_n}f
+\]
+
+\item Let $f\in \ms{M}(X)$, and $\gamma:S^1\to X\setminus(S_f \cup Z_f)$. Then 
+\[
+\operatorname{ind}(f\circ \gamma, 0) = \frac{1}{2\pi i}\int_{\gamma}\frac{f'}{f}\,dz = \sum_{a\in S_f \cup Z_f}\operatorname{ind}(\gamma, a)\omega(a, f)
+\]
+\item Rouche: Let $X$ be simply connected, $f\in \ms{H}(X)$, $\gamma:S^1\to X\setminus Z_f$ piecewise smooth, and $\Delta f \in \ms{H}(X)$ such that $|\Delta f|<|f|$ on $\gamma(S^1)$. Then
+\[
+\sum_{a\in Z_f}\ind(\gamma, a)\omega(a, f) = \sum_{b\in Z_{f + \Delta f}}\ind(\gamma, b)\omega(b, f)
+\]
+\end{itemize}
+
+\proof (Of Roche's Theorem (continued))
+
+$\gamma:S^1\to X\setminus Z_{f + \Delta f}$. We need to show 
+\[
+\int_{\gamma}\frac{f'}{f}\,dz = \int_{\gamma}\frac{f' + \Delta f'}{f + \Delta f}\,dz
+\]
+Last time, we got to
+\[
+\frac{f' + \Delta f'}{f + \Delta f} = \frac{f'}{f} + \frac{h'}{h},\, h = \frac{f + \Delta f}{f}
+\]
+Comparing these two integrals, the only thing to verify is that indeed
+\[
+\int_{\gamma}\frac{h'}{h}\,dz = 0
+\]
+By definition, $Z_h = Z_{f + \Delta f}, S_h = Z_f$. $\gamma:S^1\to X\setminus(S_h \cup Z_f)$. We must compute $\ind(h\circ\gamma,0)$. This can be seen to be zero using certain geometric considerations, which can be found on the Gaucho. 
+
+\claim
+
+$\im(h\circ\gamma)$ is either in the upper or lower half plane, but not both. 
+
+\proof
+
+This follows from stuff on Gaucho I guess sorry.
+
+I guess this finishes the proof...
+
+\qed
+
+\subsection*{\underline{Conformal Maps}}
+
+Let $X\subset\C$ be a domain. 
+
+\defn
+
+We define the \underline{automorphism group of $X$} to be
+\[
+\Aut(X) \eqdef \{f \mid f:X\to X\text{ bijective, }f \in \ms{H}(X)\}
+\]
+
+It turns out that if $f \in \Aut(X)$, then $f^{-1}\in\ms{H}(X)$ as well, so $f^{-1}\in \Aut(X)$. This can be done using the inverse function theorem, and arguing by cases, as well as remembering that if $f'(a) = 0$ then $f(z) - f(a) = (\phi(z))^N$ for some reason? for some $\phi$ which is a bijection and $\phi'(a)\neq0$, and some $N > 1$. But then $f$ is not injective near $a$. 
+
+\thm (Riemann Mapping Theorem)
+
+Let $X \subset \C$ be a simply connected domain. Then there exists a biholomorphic $f:X\to B_1(0)$ which is bijective. Moreover, for all $f_1, f_2$ biholomorphic bijections between $X$ and $B_1(0)$ such that $f_1(p) = f_2(p) = 0$ for some fixed $p$, then $f_1 = e^{it_0}f_2$ for some $t_0 \in \R$. 
+
+\proof
+
+We will prove this later.
+
+\qed
+
+\thm 
+
+$\Aut(\C) = \{z \mapsto az + b\mid a, b \in \C, a \neq0\}$.
+
+\proof
+
+Take any $f \in \Aut(\C)$. Then $f = \sum_{n=0}^\oo c_nz^n$. If we can show that $c_n \equiv 0$ for all $n$ above a certain point, then $f$ will be a polynomial, so we must conclude it is linear by the fundamental theorem of algebra (due to $f$ being bijective). 
+
+Suppose $c_n \neq0$ for infinitely many $n$. Then 
+\[
+g(z) =f(\frac{1}{z}) = \sum_{n=0}^\oo\frac{c_n}{z^n}
+\]
+has the property that $g(B_\varepsilon)$ is dense in $\C$ for all $\varepsilon>0$. So $f(\C\setminus B_R)\cap f(B_R)\neq\varnothing$, which contradicts that $f$ is injective (remember $g(B_\varepsilon) = f(\C\setminus B_{\frac{1}{\varepsilon}})$.
+
+So we must conclude that $f(z) = c_n(z - a)^n$. If $n > 1$, then $f$ is not injective, hence $c_n = c_1\neq0$, and $n = 1$. 
+
+\qed
+
+\thm
+
+$\Aut(\hat{\C}) = Mob$, where
+\[
+Mob \eqdef \{z\mapsto\frac{az + b}{cz + d} \mid ad - bc \neq0\}
+\] 
+It is a good exercise to verify that $Mob \cong \GL_2(\R)$. 
+
+\proof
+
+Let $f \in \Aut(\hat{\C})$. 
+
+If $f(\oo) = \oo$, then $f \in \Aut(\C)$, and we're done. 
+
+Without loss of generality, suppose $f(a)=\oo$. Let $g(z) = a + \frac{1}{z}$. Then $f \circ g \in \Aut(\hat{\C})$. But then $(f\circ g)(\oo)=\oo$, so we're done. 
+
+\qed
+
+Let $\bigtriangleup = B_1(0)$, the open unit disk. 
+
+\lem (Schwartz Lemma)
+
+Let $f \in \ms{H}(\bigtriangleup), f(\bigtriangleup)\subseteq \bigtriangleup$. 
+\begin{enumerate}
+\item If $f(0) = 0$, then $|f(z)| \leq |z|$ for all $z$. Moreover, if $|f(z_0)| = |z_0|$ for some $z_0\neq0$, then $f$ is a rotation. 
+\item To be covered next time.
+\end{enumerate}
+
+\proof (Sketch)
+
+Consider $\phi(z) = \frac{f(z)}{z}$. If $f(0) = 0$ and $f$ is holomorphic, then $\frac{1}{z}\sum_{n=0}^\oo c_nz^n = \sum_{n=1}^\oo c_nz^{n - 1}\in\ms{H}(\bigtriangleup)$. What is the sup of $|\phi|$ over $\bigtriangleup$? This is $\lim _{r\to1^-}\max_{\del B_r}|\phi|$. This is equal to $\lim_{r\to1^-}\max_{|z| = r}\frac{|f(z)|}{|z|} = \lim_{r\to1^-}(\frac{1}{r}\max_{|z| = r}|f(z)|) \leq \lim_{r\to1^-}(\frac{1}{r}1) = 1$. 
+
+\section*{Lecture 11}
+
+We will now actually do the proof instead of just a sketch. 
+
+\proof
+
+The key idea will be using $f(z) + \sum_{n=1}^\oo c_nz^n$, and
+\[
+\begin{cases} \phi(z) = \frac{f(z)}{z} = \sum_{n=0}^\oo c_{n + 1}z^n \in \ms{H}(\bigtriangleup) \\
+\phi(0) = f'(0) \\ 
+\end{cases}
+\]
+
+We will proceed with the proof.
+
+We know that $\phi$ is holomorphic. So by the maximum principle, 
+\begin{align*}
+\sup_{\bigtriangleup}|\phi| & = \lim_{r\to1^-}\left(\max_{|z| = r}|\phi(z)|\right) \\
+& = \lim_{r\to1^-}\left(\frac{1}{r}\max_{|z|=r}|f(z)|\right) \\
+& \leq \lim_{r\to1^-}(\frac{1}{r}1) \\
+& = 1
+\end{align*}
+So for all $z \in \bigtriangleup$, $|f(z)| \leq |z|$. By the first part, $|\phi(0)| \leq 1 = \sup_{\bigtriangleup}|\phi|$. But $\phi(0) = f'(0)$, so $|f'(0)| \leq 1$, and $|f'(0)| = 1 \implies |\phi(0)| = 1$. So $\phi(z)$ is constant by the maximum principal, because it achieves it's max on an interior point. So $\phi(z) = e^{it_0}$ for some $t_0$, meaning $f(z) = ze^{it_0}$. 
+
+\qed
+
+Now, our goal is to figure out what $\Aut(\bigt)$ looks like. 
+
+\rem
+
+For any simply connected $X \subseteq \C$, with $X\neq\C$, then there is a biholomorphism between $X$ and $\bigt$. This is the Riemann mapping theorem. 
+
+However, there is NO biholomorphism between $\bigt$ and $\C$. To see this, suppose there is such a biholomorphism. But this is a bounded entire function, and so is constant. 
+
+There is a homeomorphism, and even a diffeomorphism between $\C$ and $\bigt$. But a biholomorphism is, morally, too much to ask for: holomorphic functions satisfy a system of PDEs, and any smooth function satisfying these systems must be highly exceptional. To ask for this map to also be bijective, it is too much. 
+
+\subsubsection*{\underline{Automorphisms of $\bigt$}}
+
+``And now exposition will get a little bit violent" - Denis.
+For any $|a| < 1$, consider 
+\[
+\varphi_a(z) = \frac{z - a}{1 - \bar{a}z}, \, |z| \leq 1
+\]
+We can see that 
+\begin{itemize}
+\item For all $|a| < 1$, $\varphi_a \in \ms{H}(B_{1 + \varepsilon_a})$, for some $\varepsilon_a > 0$. 
+\item $\varphi_0(z) = z, \varphi_a(a) = 0, \varphi_a(0) = - a$. 
+\item Moreover, we can quickly compute the derivative to get $\varphi_a'(0) = 1 - |a|^2$, $\varphi_a'(a) = \frac{1}{1 - |a|^2}$. 
+\end{itemize}
+
+Our goal will be to develop some sort of calculus or formalisms for this family of maps parameterized by $a$. We can see that
+\begin{itemize}
+\item $(\varphi_{-a} \circ \varphi_a)(z) \equiv z$ for $|z|\leq 1$. 
+\item $|\varphi_a(e^{it})| = \cdots = e^{-it}\frac{e^{it} - a}{\bar{(e^{it} - a)}}$, so $\varphi_a(S^1) \subseteq S^1$. 
+\item The above implies $\varphi_a:\bigt\to\bigt$ is bijective. In other words, $\varphi_a\in\Aut(\bigt)$ for all $|a| < 1$.  
+\end{itemize}
+
+What does $\Aut(\bigt)$ look like without these $\varphi_a$? It has to at least include rotations: each rotation fixes the origin, and only one $\varphi_a$ fixes the origin (namely $\varphi_0$). As it turns out, this is all of them. 
+
+\thm
+
+Let $f \in \Aut(\bigt)$, let $a \in \bigt$ satisfy $f(a) = 0$ (such a point exists because $f$ must be a biholomorphism, so in particular a bijection). Then
+\[
+f = e^{i\theta}\varphi_a
+\]
+for some $\theta\in \R$. 
+
+\proof
+
+First, note $(f\circ\varphi_{-a})(0) = f(\varphi_{-a}(0)) = f(a) = 0$. So $f\circ \varphi_{-a}$ fixes the origin, so we may apply the Schwartz lemma to get $\abs*{(f\circ\varphi_{-a})'} \leq 1$. 
+
+Further, 
+
+\begin{align*}
+(f\circ\varphi_{-a})'(0) & = f'(a)\varphi_{-a}'(0) \\
+								  & = f'(a)(1 - |a|^2) \\
+\end{align*}
+So $\abs*{f'(a)}(1 - |a|^2) \leq 1$. Consider $\varphi_a\circ f^{-1}$. This fixes the origin once again, so we may once again apply the Schwartz lemma. By a similar computation, 
+\[
+\abs*{(\varphi_a\circ f^{-1})'(0)} \leq 1
+\]
+So $(\varphi_a\circ f^{-1})'|_0 = \varphi_a'|_a(f^{-1})'|_0 = \frac{1}{1 - |a|^2}\frac{1}{f'(a)}$, and so $\abs*{(f\circ\varphi_{-a})'(0)} = 1$. But by the Schwartz lemma, this is just a rotation: 
+\[
+f(\varphi_{-a}(z)) \equiv e^{i\theta}z
+\]
+for some $\theta$. So $f(z) \equiv e^{i\theta}\varphi_a(z)$
+
+\qed
 
 
 
