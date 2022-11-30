@@ -2062,20 +2062,742 @@ A sequence of measurable functions $f_n:X\to\R$ \underline{converges in measure}
 
 Similarly, a sequence $f_n$ is \underline{Cauchy in measure} if, for all $\varepsilon>0$, 
 \[
-\lim_{m, n\to\oo}\mu(\{x : |f_n(x) - f_m(x)|\}) = 0
+\lim_{m, n\to\oo}\mu(\{x : |f_n(x) - f_m(x)|\geq\varepsilon\}) = 0
 \]
 
 \rem
 
 We will show in homework that this topology is metrizable (i.e. a set is closed if it contains all its limit points, and this uniquely specifies a topology). 
 
-\ex
+\exm
 
 Recall the ``splat" example, $f_n = \frac{1}{n}1_{[0, n]}$. This converges uniformly, but not in $L^1$. Does it converge in measure? 
 
 For any $\varepsilon > 0$, $\frac{1}{n} < \varepsilon$ for $n$ large enough. So for large enough $n$, $\{x : |\frac{1}{n}1_{[0, n]}(x)| \geq \varepsilon\} = \varnothing$, so this converges in measure. 
 
 The ``refining wave" example converges to 0 in measure. However, the ``run away to infinity" examples does not converge to zero in measure. 
+
+\section*{Lecture 13}
+
+The best way to improve your score on midterm 2 is to solve homework without help, and re-work old homework without help. 
+
+We will work up to showing that if a sequence $f_n$ converges in $L^1$ to $f$, then $f_n$ admits a subsequence which converges to $f$ almost everywhere. 
+
+\rem
+
+If we have a sequence $f_n$ which converges to $f$ in measure, then the sequence $f_n$ is Cauchy in measure. 
+
+\proof
+
+Fix $\varepsilon>0$. If $|f_n(x) - f(x)|< \frac{\varepsilon}{2}$ and $|f_m(x) - f(x)| < \frac{\varepsilon}{2}$, then by the triangle inequality, $|f_n(x) - f_m(x)| < \varepsilon$. 
+
+This implies the following containment of sets:
+\[
+\{x : |f_n(x) - f(x)| < \frac{\varepsilon}{2}\} \cap \{x: |f_m(x) - f(x)| < \frac{\varepsilon}{2}\} \subseteq \{x: |f_n(x) - f_m(x)| < \varepsilon\}
+\]
+Since $A \subseteq B \iff B^c \subseteq A^c$, 
+\[
+\{x: |f_n(x) - f_m(x)| \geq \frac{\varepsilon}{2}\} \subseteq\underbrace{\{x: |f_n(x) - f(x)| \geq \frac{\varepsilon}{2}\}}_{\mu(\text{this})\to0} \cup \overbrace{\{x: |f_m(x) - f(x)| \geq \frac{\varepsilon}{2}\}}^{\mu(\text{this})\to0}
+\]
+
+Thus, by subaddivity, 
+
+\[
+\mu(\{x: |f_n(x) - f_m(x)| \geq \frac{\varepsilon}{2}\}) \leq \underbrace{\mu(\{x: |f_n(x) - f(x)| \geq \frac{\varepsilon}{2}\})}_{\to0} + \overbrace{\mu(\{x: |f_m(x) - f(x)| \geq \frac{\varepsilon}{2}\})}^{\to0}
+\]
+
+so the measure of the left hand side goes to zero. 
+
+\thm
+
+Consider $f_n:X\to\R$ measurable. 
+\begin{enumerate}[label=(\roman*)]
+\item If $f_n$ is Cauchy in measure, 
+	\begin{enumerate}[label=(\alph*)]
+	\item There exists $f:X\to\R$ measurable such that $f_n\to f$ in measure
+	\item There is a subsequence $f_{n_k}$ such that $f_{n_k}\to f$ $\mu$-almost everywhere. 
+	\end{enumerate}
+\item If, in addition, $f_n \to g$ in measure, then $f = g$ $\mu$-almost everywhere.
+\end{enumerate}
+
+\proof
+
+We will start with $(i)(b)$. We begin by finding our guess for $f$. 
+
+By assumption, $f_n$ is Cauchy in measure. So, there exists a subsequence $f_{n_k}$ such that
+\[
+\mu(\overbrace{\{x : |\underbrace{f_{n_k}}_{g_k}(x) - \underbrace{f_{n_{k + 1}}}_{g_{k + 1}}(x)| \geq \frac{1}{2^k}\}}^{E_k}) \leq \frac{1}{2^k}
+\]
+
+$E_k$ will be our ``bad sets" that we want to avoid. 
+
+By countable subadditivity, 
+
+\[
+mu\underbrace{\left(\bigcup_{k=\ell}^\oo E_k\right)}_{F_\ell} \leq \sum_{k=\ell}^\oo\mu(E_k) \leq \frac{1}{2^{\ell - 1}}
+\]
+
+Note that, if $x \not\in F_\ell$, then $i \geq j \geq \ell$, so
+\[
+|g_i(x) - g_j(x) \leq \sum_{m=j}^{i - 1}|g_m(x) - g_{m + 1}(x)|
+\]
+
+Since $x\not\in F_\ell$, it ensures $x\not\in E_m$, so the right hand side of the above is less than or equal to $\sum_{m=j}^{i - 1}\frac{1}{2^m} \leq \frac{1}{2^{j - 1}}$. 
+
+Thus, $\{g_i(x)\}\seq{i}$ is a Cauchy sequence of real numbers. Note that $\ell\in\N$ was arbitrary. 
+
+Define $F = \cap\seq{\ell}F_\ell$, and note $\mu(F) \leq \mu(F_\ell)$ by montonicity, and $\mu(F_\ell) \leq \frac{1}{2^{\ell - 1}}$. 
+
+Taking $\ell\to\oo$, we are forced to conclude $\mu(F) = 0$. Note $x\not\in F$ ensures there is some $\ell$ such that $x\not\in F_\ell$.
+
+Define
+
+\[
+f(x) = \begin{cases} \lim_{k\to\oo}g_k(x) & x\not\in F_\ell \\ 0 & x\in F \end{cases}
+\]
+
+By the way $f(x)$ is defined, $g_k\to f$ $\mu$-almost everywhere. Now, we show $(i)(a)$. By our earlier estimation $|g_i(x) - g_j(x)| \leq \frac{1}{2^{j - 1}}$, we know that if $x\not\in F_\ell$, and $j\geq \ell$, then
+\[
+|f(x) - g_j(x)| = \lim_{i\to\oo}|g_i(x) - g_j(x)| \leq \frac{1}{2^{j - 1}}
+\]
+
+Thus for all $\varepsilon>0$ and $\ell \in \N$, we may choose $j$ sufficiently large so that
+
+\begin{align*}
+\mu(\{x: |f(x) - g_j(x)| \geq \varepsilon\} &  \leq \mu(\{x: |f(x) - g_j(x)| \geq \frac{1}{2^{j - 1}}\})\\
+& \leq \mu(F_\ell) \\
+& \leq \frac{1}{2^{\ell - 1}}
+\end{align*}
+
+In particular, this tells us $g_j\to f$ in measure. 
+
+Finally, for all $\varepsilon> 0$, $j \in \N$, 
+\[
+\{x: |f_n(x) - f(x)| > \varepsilon\} \subseteq \{x: |f_n(x) - g_n(x)| \geq \frac{\varepsilon}{2}\} \cup \{x: |g_j(x) - f(x)| \geq \frac{\varepsilon}{2}\}
+\]
+
+Since we may choose $n, j$ sufficiently large to make the right have arbitrarily small measure, this shows
+\[
+\lim_{n\to\oo}\mu(\{x: |f_n(x) - f(x)| > \varepsilon\}) = 0
+\]
+That is, $f_n\to f$ in measure. 
+
+It remains to show $(ii)$. Fix $\varepsilon>0$. Then, 
+\[
+\{x: |g(x) - f(x)| > \varepsilon\} \subseteq \{x: |f_n(x) - g(x)| > \frac{\varepsilon}{2}\} \cup \{x:|f_n(x) - f(x)| > \frac{\varepsilon}{2}\}
+\]
+
+Since we may choose $n$ sufficiently large so that the right hand side has arbitrarily small measure, 
+\[
+\mu(\{x: |g(x) - f(x)| > \varepsilon\})
+\]
+
+Taking $\varepsilon=\frac{1}{k}$ and letting
+
+\[
+E_k = \{x: |g(x) - f(x)| > \frac{1}{k}\},
+\]
+
+we have
+\begin{align*}
+\mu(\{x: |f(x) - g(x)| > 0 \}) & \leq \mu\left(\bigcup\seq{k}E_k\right)\\
+& \leq \sum\seq{k}\mu(E_k) = 0
+\end{align*}
+Thus $f = g$ $\mu$-almost everywhere. 
+
+\qed
+
+We now apply this to study convergence in $L^1(\mu)$. 
+
+\prop
+\begin{enumerate}[label=(\alph*)]
+\item If $f_n$ is Cauchy in $L^1(\mu)$, then it is Cauchy in measure.
+\item If $f_n\to f$ in $L^1(\mu)$, then $f_n\to f$ in measure.
+\end{enumerate}
+
+\proof
+
+Fix $\varepsilon>0$ and define 
+\[
+E_{n,m, \varepsilon} = \{x:|f_n(x) - f_m(x)| \geq \varepsilon\}
+\]
+
+Then 
+
+\begin{align*}
+\varepsilon\mu(E_{n, m, \varepsilon})& = \int_{E_{n, m, \varepsilon}}\varepsilon\,d\mu \\ & \leq \int_{E_{n, m, \varepsilon}}|f_n(x) - f_m(x)|\,d\mu \\ 
+& \leq \int_X|f_n(x) - f_m(x)|\,d\mu = \norm{f_n - f_m}_{L^1(\mu)}
+\end{align*}
+
+Thus $\lim_{m,n\to\oo}\mu(E_{n, m, \varepsilon}) = 0$, so $f_n$ is Cauchy in measure. The proof of $(b)$ is analagous. 
+
+\qed
+
+\section*{Lecture 14}
+
+\rem
+
+If $f_n$ is Cauchy in $L^1(\mu)$, then there exists some $M \in \N$ such that if $n, m \geq M$, then
+\[
+\norm{f_n}_{L^1(\mu)} - \norm{f_m}_{L^1(\mu)}\norm{f_n - f_m}_{L^1(\mu)} < 1
+\]
+In particular, 
+\[
+\sup_n\norm{f_n}_{L^1(\mu)} \leq \max_{k\leq M}\norm{f_k}_{L^1(\mu)}\norm{f_m}_{L^1(\mu)} + 1 < \oo
+\]
+
+The following corollary could be considered our sixth major theorem of the course. 
+
+\cor
+\begin{enumerate}[label=(\roman*)]
+\item If $f_n$ is Cauchy in $L^1(\mu)$, then there exists $f\in L^1(\mu)$ and a subsequence $f_{n_k}$ such that $f_{n_k}\to f$ $\mu$-almost everywhere. 
+\item If, in addition, $f_n\to g$ in $L^1(\mu)$, then $f = g$ $\mu$-almost everywhere. 
+\end{enumerate}
+
+\proof
+
+We will prove part $(i)$ first. 
+
+Since $f_n$ is Cauchy in $L^1$, it is Cauchy in measure by the previous proposition. By the most recent theorem, there exists a measurable $f:X\to \R$ and a subsequence $f_{n_k}$ such that $f_{n_k}\to f$ $\mu$-almost everywhere. 
+
+It remains to show $f \in L^1(\mu)$. By the remark, for $k$ sufficiently large, 
+\[
+\norm{f_{n_k}}_{L^1} < 1 + \norm{f_M}_{L^1}
+\]
+By Fatou's Lemma, 
+\begin{align*}
+\int |f|\,d\mu = \int\liminf_{n\to\oo}|f_{n_k}|\,d\mu & \leq \liminf_{n\to\oo}\int|f_{n_k}|\,d\mu < \oo, \\
+\end{align*}
+where the final inequality follows from our bound on $\norm{f_{n_k}}_{L^1}$ above. So $\int|f|\,d\mu < \oo$, so $f \in L^1(\mu)$. 
+
+It remains to prove part $(ii)$, which follows easily from the previous proposition and the theorem. 
+
+\qed
+
+\defn
+
+A normed vector space which is complete with respect to the metric induced by this norm is called a \underline{Banach Space}
+
+The following can be considered the seventh major theorem. 
+
+\cor
+
+$L^1(\mu)$ is a Banach Space. 
+
+\proof
+
+Let $f_n$ be Cauchy in $L^1(\mu)$. By the previous corollary, we know there exists $f\in L^1(\mu)$ and a subsequence $f_{n_k}$ such that $f_{n_k}\to f$ $\mu$-almost everywhere. 
+
+By Fatou's Lemma, 
+\begin{align*}
+\int|f_{n_k} - f|\,d\mu & = \int\lim_{j\to\oo}|f_{n_k} - f_j|\,d\mu \\
+& \leq \liminf_{j\to\oo}\int|f_{n_k} - f_j|\,d\mu \\
+\end{align*}
+
+Thus $\lim_{k\to\oo}\int|f_{n_k} - f|\,d\mu = 0$.
+
+Finally, since $f_n$ is Cauchy, $\norm{f_m - f}_{L^1(\mu)} \leq \norm{f_m - f_{n_k}}_{L^1(\mu)} + \norm{f_{n_k} - f}_{L^1(\mu)} \to 0$, so $lim_{n\to\oo}\int|f_n - |\,d\mu = 0$, so $f_n \to f$ in $L^1$. 
+
+\qed
+
+\subsection*{\underline{Summary of Different Modes of Convergence}}
+
+Let $f_n \to f$ in some sense. 
+\begin{itemize}
+\item If it converges in $L^1$, it converges in measure. The ``splat" example (i.e. $f_n = \frac{1}{n}1_{[0, n]}$) is a counterexample to the converse. 
+\item If it converges in measure, it converges up to a subsequence $\mu$-almost everywhere. The converse hold if $\mu(X)<\oo$.
+\end{itemize}
+
+The following can be considered the eighth major theorem.
+
+\thm (Egoroff)
+
+Suppose $\mu(X)<\oo$, and $f_n, f:X\to\R$ are measurable functions such that $f_n\to f$ $\mu$-almost everywhere. Then for all $\varepsilon>0$, there exists $E \in \mc{M}$ such that $\mu(E)<\varepsilon$, and $f_n\to f$ uniformly on $E^c$.
+
+\rem 
+
+The ``run away to infinity" example (i.e. $f_n = 1_{[n, n + 1)}$) shows the necessity of the hypothesis that $\mu(X) < \oo$. 
+
+Note also that we can \underline{NOT} necessarily get a null-set $E$ such that $f_n\to f$ uniformly on $E^c$. A witness to this is the sequence $f_n(x) = x^n|_{[0, 1]}$. $f_n\not\to0$ uniformly, and will not converge uniformly on any set which has 1 as a limit point. But the complement of any null subset of $[0, 1]$ is dense, so has 1 as a limit point. 
+
+\proof
+
+We will prove it by cases. 
+\subsubsection*{\underline{Case 1}}
+
+In case 1, suppose $f_n \to f$ pointwise. Define $E_{n, k} = \cup_{m=n}^\oo\{x: |f_m(x) - f(x)| \geq \frac{1}{k}\}$. We can see that $E_{n, k} \supseteq E_{n + 1, k}$. Because $\mu(X) < \oo$, we can use continuity from above. $\cap\seq{n}E_{n, k} = \varnothing$, because $f_n \to f$ pointwise, so $\lim_{n\to\oo}\mu(E_{n, k}) = 0$. 
+
+Fix $\varepsilon>0$. For all $k \in \N$, there exists a subsequence $n_k$ such that $\mu(E_{n_k, k}) < \frac{\varepsilon}{2^k}$. 
+
+Define $E = \cup\seq{k}E_{n_k, k}$. It is clear that $E$ is measurable. By subadditivity, 
+\[
+\mu(E) \leq \sum\seq{k}\mu(E_{n, k}) = \sum\seq{k}\frac{\varepsilon}{2^k} = \varepsilon
+\]
+So $\mu(E) < \varepsilon$. 
+
+If $x \in E^c$, then $x\not\in E_{n_k, k}$ for any $k\in\N$. 
+
+Thus, $x\not\in E_{n_k, k}$ for all $k \in \N, n \geq n_k$. That is, 
+\[
+x\not\in\{x: |f_n(x) - f(x) | \geq \frac{1}{k}\}
+\]
+Thus, $|f_n(x) - f(x)| < \frac{1}{k}$. This shows $f_n\to f$ uniformly on $E^c$. 
+
+\subsubsection*{\underline{Case 2}}
+Suppose $f_n\to f$ pointwise $\mu$-almost everywhere. We will reduce to case 1 by defining
+\[
+N = \{x: f_n(x)\not\to f(x)\}
+\]
+By assumption, this is a null set. Define
+\[
+g_n = f_n1_{N^c},\, g = f1_{N^c}
+\]
+Since $g_n \to g$ pointwise, there exists $E \in \mc{M}$ with arbitrarily small measure such that $g_n\to g$ uniformly on $E^c$. 
+
+Let $F = E \cup N$. Then $\mu(F) < \varepsilon$ and $f_n \to f$ uniformly on $F^c$. 
+
+\qed
+
+\cor
+
+Suppose $\mu(X) < \oo$ and $f_n, f:X\to\R$ are measurable such that $f_n\to f$ $\mu$-almost everywhere. Then $f_n \to f$ in measure. 
+
+\proof
+
+Fix $\varepsilon> 0$. By Egeroff's theorem, for all $\delta>0$, there exists $E \in \mc{M}$ such that $\mu(E)<\delta$, and $f_n \to f$ uniformly on $E^c$. 
+
+Thus, 
+\[
+\mu(\{x: |f_n(x) - f(x)| \geq \varepsilon\}) \leq \underbrace{\mu(E)}_{\delta} + \mu(\{x\in E^c: |f_n(x) - f(x)| \geq \varepsilon\})
+\]
+This shows that, for $n$ sufficiently large, 
+\[
+\mu(\{x: |f_n(x) - f(x)| \geq \varepsilon\}) \leq \delta
+\]
+This shows $f_n \to f$ in measure. 
+
+\section*{Lecture 15}
+
+Recall our 6th major theorem: 
+
+\cor
+
+\begin{itemize}
+\item If $f_n$ is Cauchy in $L^1(\mu)$, then $\exists f \in L^1(\mu)$ and a subsequence $f_{n_k}\to f$ $\mu$-almost everywhere. 
+\item If, in addition, $f_n\to g$ in $L^1(\mu)$, then $f = g$ $\mu$-almost everywhere. 
+\end{itemize}
+
+The following is our 7th major theorem:
+
+\cor 
+
+$L^1(\mu)$ is a Banach Space.
+
+Our 8th major theorem is Egoroff's:
+
+\thm (Egoroff)
+
+Suppose $\mu(X)<\oo$ and $f_n, f:X\to\R$ measurable such that $f_n\to f$ $\mu$-almost everywhere. Then for all $\varepsilon>0$, $\exists E \in \mc{M}$ such that $\mu(E)<\oo$ and $f_n \to f$ uniformly on $E^c$. 
+
+\cor
+
+Suppose $\mu(X)<\oo$ and $f_n, f:X\to\R$ are measurable such that $f_n \to f$ $\mu$-almost everywhere. Then $f_n \to f$ in measure. 
+
+\subsection*{\underline{Summary of Different Modes of Convergence}}
+\begin{center}
+\begin{tikzcd}
+f_n\to f\text{ in }L^1(\mu) \ar[d, Rightarrow, bend right = 50,  ""] \\
+f_n\to f\text{ in measure} \ar[u, Rightarrow, red, bend right = 50, "f_n = \frac{1}{n}1_{[0, n]}"'] \ar[d, Rightarrow, bend right = 50, "\text{up to a subsequence}"']\\
+f_n\to f\,\,\mu-\text{almost everywhere} \ar[u, Rightarrow, green, bend right = 50, "\text{if }\mu(X)<\oo"'] \\
+\end{tikzcd}
+\end{center}
+
+\subsection*{\underline{Product Measures}}
+
+Let $(X, \mc{M}, \mu), (Y, \mc{N}, \nu)$ be measure spaces. We call any set of the form $A \times B$, for $A\in\mc{M}$ and $B \in \mc{B}$ a \underline{rectangle}.
+
+Recall: 
+\defn
+
+The product $\sigma$-algebra is defined by 
+\[
+\mc{M}\otimes\mc{N}\eqdef \ms{M}(\{A\times B: A\in\mc{M}, B \in \mc{N}\})
+\]
+\underline{Goal:} We want to prove the existence of a unique measure $\mu\otimes\nu$ on the measurable space $(X\times Y, \mc{M}\otimes\mc{N})$ so that 
+\[
+\mu\otimes\nu(A\times B) = \mu(A)\nu(B)
+\]
+for all rectangles. 
+
+Our construction of the prodcut measure will rely on the \underline{Monotone Class Theorem}
+
+Recall:
+\defn 
+$\mc{A}$ is an \underline{algebra} of subsets of $X$ if it is a nonempty collection of subsets of $X$ such that
+\begin{enumerate}[label=(\roman*)]
+\item $E_1, \dots, E_n \in \mc{A} \implies \cup_{i=1}^nE_i\in\mc{A}$ 
+\item $E\in \mc{A} \implies E^c\in\mc{A}$
+\end{enumerate}
+\rem We usually want $\varnothing, X \in \mc{A}$. 
+\defn
+
+$\mc{C}$ is a \underline{monotone class} of subsets of $X$ if it is a nonempty collection of subsets of $X$ such that 
+\begin{enumerate}[label=(\roman*)]
+\item Closed under countable increasing unions. That is, if $\{E_i\}\seq{i}\subseteq\mc{C}$, with $E_1\subseteq E_2\subseteq \cdots$, then $\cup\seq{i}E_i\in\mc{C}$. 
+\item Closed under countable decreasing intersections. That is, if $\{E_i\}\seq{i}\subseteq\mc{C}$ with $E_1\supseteq E_2\supseteq \cdots$, then $\cap\seq{i}E_i\in\mc{C}$. 
+\end{enumerate} 
+
+The slogan is that ``A monotone class is closed under countable monotone unions and intersections"
+
+\exm
+
+Any $\sigma$-algebra is a monotone class. 
+
+\exm
+
+Let $X = \{1, 2, 3\} $ (i.e. $X = 4$), and $\mc{C} = \{\{1\}, \{1, 2\}, \{1, 2, 3\}\}$. This is a monotone class on $X$ but not a $\sigma$-algebra. 
+
+Recall that given any family $\mc{E}\subseteq2^X$ of subsets of $X$, there is a smallest $\sigma$-algebra containing $\mc{E}$, denoted $\ms{E}$. Likewise, 
+
+\prop
+
+Given $\mc{E}\subseteq 2^X$, there is a smallest montone class $\mc{C}(\mc{E})$ containing $\mc{E}$, known as the montone class generated by $\mc{E}$. 
+
+\proof
+
+\claim 
+
+Given any nonempty collection $\ms{F}$ of monotone classes on $X$, $\cap \ms{F}\eqdef \{E\subseteq X : E\in\mc{C}\forall\mc{C}\in\ms{F}\}$
+
+\proof Homework 7
+
+Now, let $\ms{F} = \{\mc{C}:\mc{C}\text{ is a monotone class}, \mc{E}\subseteq\mc{C}\}$. $\ms{F}$ is nonempty because $2^X\in\ms{F}$. By the previous claim, $\cap\ms{F}$ is a monotone class. 
+
+By construction $\mc{E}\subseteq\cap\ms{F}$. Further, for any monotone class $\ms{D}$ such that $\mc{E}\subseteq\ms{D}$, $\cap\ms{F}\subseteq\ms{D}$. Thus, $\mc{C}(\mc{E}) = \cap\ms{F}$ is the smallest monotone class containing $\mc{E}$. 
+
+\qed
+
+\thm (Monotone Class Theorem)
+
+Given an algebra $\mc{A}\subseteq2^X$, 
+\[
+\mc{C}(\mc{A}) = \ms{M}(\mc{A})
+\]
+
+\rem 
+
+It is clear that $\mc{C}(\mc{A}) \subseteq \ms{M}(\mc{A})$, since $\ms{M}(\mc{A})$ is a monotone class. 
+ 
+\proof
+
+It suffices to show that $\mc{C} = \mc{C}(\mc{A})$ is a $\sigma$-algebra. 
+
+For any $E\in\mc{C}$, define
+\[
+\mc{E}_E \eqdef \overbrace{\{F\in\mc{C}: E\setminus F, F \setminus E, E \cap F \in \mc{C}\}}^{\text{``sets that play nicely with }E"}
+\]
+Note that $\varnothing, E \in \mc{E}_E$, and 
+\[
+F\in\mc{E}_E \iff E \in \mc{E}_F
+\]
+Next, note that if $E \in \mc{A}$, then the fact that $\mc{A}$ is an algebra ensures
+\[
+F\in\mc{E}_E,\,\forall F\in\mc{A}
+\]
+Furthermore, for any $E \in \mc{C}, \mc{E}_E$ is a monotone class. 
+
+If $\{E_i\}\seq{i}\subseteq\mc{E}_E$, with $E_1\subseteq E_2\subseteq\cdots$, then
+\begin{enumerate}[label=(\roman*)]
+\item $E\setminus(\cup\seq{i}E_i) = E\cap (\cap\seq{i}E_i^c) = \cap\seq{i}(E\cap E_i^c) $
+
+belongs to $\mc{C}$, since it's a countable decreasing intersection and the fact that $E_i\in\mc{E}_E$ ensures $E\setminus E_i\in\mc{C}$. 
+\item $(\cup\seq{i}E_i)\setminus E = \cup\seq{i}(E_i \cap E^c)$
+
+belongs to $\mc{C}$, since it's a countable increasing union, and the fact that $E_i \in \mc{E}_E$ ensures $E_i\setminus E\in\mc{C}$. 
+\item $E \cap (\cup\seq{i}E_i) = \cup\seq{i}(E\cap E_i) \in \mc{C}$
+
+\end{enumerate}
+
+Thus $\mc{E}_E$ is closed under increasing unions. Similarly, it is closed under decreasing intersections. Thus, it is a monotone class. 
+
+For any $E \in \mc{A}, \mc{A}\in\mc{E}_E$ and $\mc{E}_E$ is a monotone class, so $\mc{C}\subset\mc{E}_E$. That is, for all $E \in \mc{A}, F\in\mc{C}$, we have
+\[
+F\in\mc{E}_E\iff E\in\mc{E}_F
+\]
+Hencce, for all $F\in\mc{C}, \mc{A}\subseteq\mc{E}_F$. Thus $\mc{C}\subseteq\mc{E}_F$ for all $F\in\mc{C}$. Therefore for all $E, F \in \mc{C}$, 
+\begin{align*}
+(\star) \,\,& \,\, E\setminus F, F\setminus E, E \cap F \in \mc{C}
+\end{align*}
+Since $X \in \mc{A}\subseteq\mc{C}$, $(\star)$ ensures that $\mc{C}$ is closed under complements and finite unions. 
+
+Finally, note that, for any $\{E_i\}\seq{i}\subseteq\mc{C},$ since $\cup_{i=1}^nE_i\in\mc{C}$ for all $n \in \N$ and $\mc{C}$ is closed under countable increasing unions, we have $\cup\seq{i}E_i = \cup\seq{i}(\cup_{i=1}^nE_i)\in\ms{D}$. 
+
+Thus $\mc{C}$ is a $\sigma$-algebra. 
+
+\qed
+
+Using the monotne class theorem, we can now prove the following result on uniqueness of measures. 
+
+\thm
+
+Suppose that
+\begin{itemize}
+\item $\mc{A}$ is an algebra on a nonempty set $X$
+\item $\mu$ and $\nu$ are measures on $\ms{M}(\mc{A})$
+\item $\exists\{A_i\}\seq{i}\subseteq\mc{A}$, $X = \cup\seq{i}A_i, \mu(A_i)<\oo$ for all $i$ (i.e. $\mu$ is $\sigma$-finite).
+\end{itemize}
+
+Then if $\mu(A) = \nu(A)$ for all $A \in \mc{A}$, we have $\mu(E) = \nu(E)$ for all $E \in \ms{M}(\mc{A})$. 
+
+\proof
+
+\subsubsection*{\underline{Case 1:}} Suppose $\mu(X)<\oo$ (so $\nu(X)<\oo$. 
+
+Consider $\mc{E} = \{\mc{A}\in\ms{A}(\mc{A}): \mu(A) = \nu(A)\}$. Since $\mc{A}\subseteq\mc{E}$, it suffices to show taht $\mc{E}$ is a monotone class to conclude that $\ms{M}(\mc{A})\subseteq\mc{E}$. 
+
+If $B_1 \subseteq B_2 \subseteq \cdots$ is a countable increasing sequence in $\mc{C}$, by continuity from below, we have
+\[
+\mu\left(\bigcup\seq{n}B_n\right) = \lim_{n\to\oo}\mu(B_n) = \lim_{n\to\oo}\nu(B_n) = \nu\left(\bigcup\seq{n}B_n\right)
+\]
+Thus $\cup\seq{n}B_n\in\mc{E}$. If $B_1\supseteq B_2\supseteq\cdots$ is a countable decreasing sequence in $\mc{E}$, by continuity from above, since $\mu(X)<\oo$ (and hence $\nu(X)<\oo$), 
+\[
+\mu\left(\bigcap\seq{n}B_n\right)=\lim_{n\to\oo}\mu(B_n) = \lim_{n\to\oo}\nu(B_n) = \nu\left(\bigcap\seq{n}B_n\right)
+\]
+Thus $\cap\seq{n}B_n\in\mc{E}$, so $\mc{E}$ is a monotone class. 
+
+\subsubsection*{\underline{Case 2:}} $\mu(X) = \oo$. 
+
+We may assume without loss of generality that $\mc{A_i}\seq{i}$ are disjoint (other than $B_1 = A_1, B_2 = A_2\setminus A_1)$, define
+\begin{align*}
+\mu_i(E) & = \mu(A_i \cap E) \\
+\nu_i(E) & = \nu(A_i \cap E) \\
+\end{align*}
+Then $\mu_i(X)<\oo$ and $\nu_i(X)<\oo$ and $\mu_i, \nu_i$ are finite measures on $\ms{M}(\mc{A})$. 
+
+\underline{Fact:} Given a measure space $(X,\mc{M},\mu)$, then for any $A\in\mc{M}$, the funciton 
+\[
+\mu_A(E) = \mu(E \cap A)
+\]
+is a measure on $(X, \mc{M})$. 
+
+Note that, for all $A \in \mc{A}$, 
+\[
+\mu_i(A) = \mu(A_i \cap A) = \nu(A_i \cap A) = \nu_i(A)
+\]
+By Case 1, $\mu_i(E) = \nu_i(E)$ for all $E \in \ms{M}(\mc{A})$. Thus, for all $E \in \ms{M}(\mc{A})$, 
+\begin{align*}
+\mu(E) & = \mu\left(\bigcup\seq{i}(E\cap A_i) \right) = \sum_i\mu(E \cap A_i) \\
+& = \sum_i \mu_i(E) = \sum_i\nu_i(E) = \nu(E) \\
+\end{align*}
+\qed
+
+\rem (John's note) Recall at the beginning, one of our assumptions was that there exists a countable cover $\{A_i\}$ of $X$, such that $\mu(A_i) < \oo$ for each $i$. Measures satisfying this are called $\sigma$-finite. We can weaken this hypothesis:
+
+\defn
+
+We say that a measure $\mu$ on a $\sigma$-algebra $\mc{M}$ is \underline{$s$-finite} if there is a sequence $\{\mu_i\}\seq{i}$ of finite measures on $\mc{M}$ such that
+\[
+\mu=\sum_i\mu_i
+\]
+
+Case 2 of our proof ends with showing that being $\sigma$-finite implies being $s$-finite. But, the last line of the proof still goes through if $\mu, \nu$ are $s$-finite, and $\{\nu_i\}, \{\mu_i\}$ are finite measures such that $\mu = \sum_i\mu_i$ and $\nu = \sum_i\nu_i$. 
+
+\rem A measure being $s$-finite is strictly weaker than being $\sigma$-finite. 
+
+\exm
+
+We can cook up examples of measures which are $s$-finite but not $\sigma$-finite by doing shenanigans like this (thank you Wikipedia for this example): Let $X = \{a\}$, and let $\mc{M} = \{\mc{A}, \varnothing\}$. Let $\nu_n$ be the counting measure on $\mc{M}$ for all $n$, and let 
+\[
+\mu = \sum_n\nu_n
+\]
+Then $\mu$ is $s$-finite, because it is the sum of countably many finite measures. However, $\mu$ is not $\sigma$-finite, because $\mu(\{a\}) = \oo$. 
+
+\section*{Lecture 16}
+
+We can now return to our main goal, which was, given $(X, \mc{M}, \mu), (Y, \mc{N}, \nu)$ measure spaces, to prove the existence of a unique measure $\mu\times\nu$ on $(X\times Y, \mc{M}\otimes\mc{N})$ so that
+\[
+\mu\otimes\nu(A\times B) = \mu(A)\nu(B)
+\]
+for all rectangles $A\times B$. 
+
+\defn
+
+For any $E \in \mc{M}\otimes\mc{N}$, for a fixed $x \in X$ the \underline{$x$-section} is $E_x \eqdef \{y: (x, y) \in E\}$, and for a fixed $y \in Y$ the \underline{$y$-section} is $E^y\eqdef\{x: (x, y) \in E\}$. 
+Note that: 
+\begin{enumerate}[label=(\alph*)]
+\item  If $E = A\times B$, $A \in \mc{M}, B \in \mc{N}$, 
+\[
+E_x = \begin{cases} B &\text{if }x\in A \\ \varnothing & x\not\in A \\ \end{cases}, \, E^y = \begin{cases} A &\text{if } y\in B \\ \varnothing & y\not\in B \\ \end{cases}
+\]
+\item 
+\begin{align*}
+\left(\bigcup\seq{i}E_i\right)_x & = \{y: (x, y) \in \bigcup\seq{i}E_i\} \\
+& = \bigcup\seq{i}\{y: (x, y) \in E_i\} \\
+& = \bigcup\seq{i}(E_i)_x \\
+\end{align*}
+\item 
+\[
+(E^c)_x = \{y: (x, y) \in E^c\} = \{y: (x, y) \in E\}^c = (E_x)^c
+\]
+\item
+\[
+\nu(E_x) = \int_Y1_{\underbrace{E_x}_{E_x\subseteq Y}}(y)\,d\nu(y) = \int_Y1_{\underbrace{E}_{E\subseteq X\times Y}}\,d\nu(y)
+\]
+\end{enumerate}
+
+\prop
+
+If $E \in \mc{M}\otimes\mc{N}$, then $E_x \in \mc{N}$ and $E^y \in \mc{M}$ for all $x \in X, y \in Y$. 
+
+\proof
+
+Let $\mc{R} = \{E\in\mc{M}\otimes\mc{N}: E_x \in \mc{N}, E^c\in\mc{M}\forall x, y\}$. 
+
+Our goal is to show $\mc{M}\otimes\mc{N}\subseteq\mc{R}$. 
+
+Note that by $(a)$, all rectangles belong to $\mc{R}$, so it suffices to show $\mc{R}$ is a $\sigma$-algebra. 
+
+If $\{E_i\}\seq{i}\subseteq\mc{R}$, then $(b)$ ensures
+\[
+\left(\bigcup\seq{i}E_i\right)_x = \bigcup\seq{i}(E_i)_x \in \mc{N}, \,\, \left(\bigcup\seq{i}E_i\right)^y \in \mc{M},
+\]
+so $\cup\seq{i}E_i\in\mc{R}$, and $\mc{R}$ is closed under countable unions. 
+
+Finally, $E \in \mc{R}$, then
+\[
+(E^c)_x = (E_x)^c \in \mc{N}\text{ and }(E^c)^c\in\mc{N}
+\]
+So $E^c \in \mc{R}$ and $\mc{R}$ is closed under complements. 
+
+\qed
+
+\thm Consider $\sigma$-finite measurable spaces $(X, \mc{M}, \mu)$ and $(Y, \mc{N}, \nu)$. 
+
+For any $E \in \mc{M}\otimes\mc{N}$, 
+\begin{enumerate}[label=(\roman*)]
+\item The functions $x\mapsto\nu(E_x)$ and $y\mapsto\mu(E^y)$ are $(\mc{M},\mc{B}_{\R})$-measurable and $(\mc{N}, \mc{B}_{\R})$-measurable. 
+\item 
+\[
+\int_X\nu(E_x)\,d\mu(x) = \int_Y\mu(E^y)\,d\nu(y)
+\]
+\underline{Spoiler:} This is equivalent to showing that 
+\[
+(\star) = \int_X\left(\int_Y1_E(x, y)\,d\nu(y)\right)\,d\mu(x) = \int_Y\left(\int_X1_E(x, y)\,d\mu(x)\right)\,d\nu(y) 
+\]
+This will ultimately allow us to \underline{define} the product measure by 
+\[
+\mu\otimes\nu(E)\eqdef\iint1_Ed\nu\otimes\nu = (\star)
+\]
+\end{enumerate}
+
+\proof
+
+\subsection*{\underline{Case 1:}} Suppose $\mu(X)<\oo,\nu(Y)<\oo$. 
+
+Let
+\[
+\mc{A} = \underbrace{\{\coprod_{i=1}^nE_i: \{E_i\}_{i=1}^n\text{ are disjoint rectangles for all }n\in\N\}}_{\text{``all finite disjoint unions of rectangles"}}
+\]
+
+\underline{Fact from homework 8:} $\mc{A}$ is an algebra. 
+
+Note that
+
+\[
+\mc{M}\otimes\mc{N} = \ms{M}(\{E:E\text{ is a rectangle }\}){?\atop=} \ms{M}(\mc{A})
+\]
+\begin{itemize}
+\item Since all rectangles belong to $\mc{A}$, we have ``$\subseteq$" 
+\item Since $\mc{A}\subseteq\mc{M}\otimes\mc{N}$ and $\mc{M}\otimes\mc{N}$ is a $\sigma$-algebra, $\ms{M}(\mc{A}\subseteq\mc{M}\otimes\mc{N}$. 
+\item Thus, ``$=$" holds.
+\end{itemize}
+
+Let $\mc{C}$ be the set of $E \in\mc{M}\otimes\mc{N}$ which satisfy the hypotheses of this theorem. Our goal is to show $\mc{M}\otimes\mc{N}\subseteq\mc{C}$. We will accomplish this by showing $\mc{A}\subseteq\mc{C}$ and $\mc{C}$ is a monotone class. Then, the monotone class theorem will imply 
+\[
+\mc{M}\otimes\mc{N} = \ms{M}(\mc{A}) = \mc{C}(\mc{A}) \subseteq \mc{C}
+\]
+First, we will show $\mc{A}\subseteq\mc{C}$, beginning by showing all rectangles belong to $\mc{C}$. 
+
+If $E = A\times B$ is a rectangle, then
+\begin{align*}
+\nu(E_x) & = 1_A(x)\nu(B) \\
+\mu(E^y) & = 1_B(y)\mu(A)
+\end{align*}
+These are clearly measurable, so the hypotheses of the theorem hold. Part $(ii)$ follows because 
+\[
+\int_X\nu(E_x)\,d\mu(x) = \nu(B)\mu(A) = \int_Y\mu(E^y)\,d\nu(y)
+\]
+Thus, $E \in \mc{C}$. 
+
+Now, suppose $E \in \mc{A}$, such that $E = \coprod_{i=1}^nE_i$, where $E_i = A_i \times B_i$. Then by part (b) of our earlier remark, 
+\[
+E_x = \coprod_{i=1}^n(E_i)_x \implies\nu(E_x) = \sum_{i=1}^n\nu((E_i)_x) = \sum_{i=1}^n1_{A_i(x)}\nu(B_i)
+\]
+Similarly, $\mu(E^y) = \sum_{i=1}^n1_{B_i(y)}\mu(A_i)$. Thus, $E$ clearly satisfies the hypotheses of this theorem. Part $(ii)$ follows because
+\[
+\int_X\nu(E_x)\,d\mu(x) = \sum_{i=1}^n\mu(A_i)\nu(B_i) = \int_Y\mu(E^y)\,d\nu(y)
+\]
+That is, $E \in \mc{C}$. 
+
+Now, we will show that $\mc{C}$ is a monotone class. 
+
+Let $\{E_n\}\seq{n}\subseteq\mc{C}$, with $E_1\subseteq E_2 \subseteq \cdots$, and define $E = \cup\seq{n}E_n$. Then $E_1^y \subseteq E_2^y \subseteq \cdots$ and 
+\begin{align*}
+f_n(y) & \eqdef \mu(E_n^y) \\
+g_n(x) = \nu((E_n)_x) \\
+\end{align*}
+
+are sequences of measurable functions that (by continuity from below) satisfy
+\begin{align*}
+f_n(y) &\uparrow \mu(E^y) \\
+g_n(x) &\uparrow \nu(E_x) \\
+\end{align*}
+pointwise for all $x \in X, y \in Y$. So, $E$ satisfies hypothesis $(i)$ of the theorem. Furthermore, by the Monotone Convergence Theorem, 
+\begin{align*}
+\int_Y\mu(E^y)\,d\nu(y) & = \lim_{n\to\oo}\int_Y\mu(E_n^y)\,d\nu(y) \\
+& = \lim_{n\to\oo}\int_X\nu((E_n)_x)\,d\mu(x) \\
+& = \int_X\nu(E_x)\,d\mu(x), \\
+\end{align*}
+
+so $E$ satisfies part $(ii)$. So, $E \in \mc{C}$. 
+
+Now, let $\{E_n\}\seq{n}\subseteq\mc{C}$, with $E_1\supseteq E_2 \supseteq \cdots$, and define $E = \cap\seq{n}E_n$. Then, if we define $f_n(y), g_n(x)$ as before, we see that these satisfy $f_n(y)\downarrow\mu(E^y)$ and $g_n(x)\downarrow\nu(E_x)$, where we are able to use continuity from above, since $\mu$ and $\nu$ are finite measures. So $E$ satisfies $(i)$. Furthermore, 
+\begin{align*}
+f_1(y) & = \mu(E_1^y)  \leq \mu(X)<\oo \\
+g_1(x) & = \nu((E_1)_x)  \leq \nu(Y) < \oo \\
+\end{align*}
+
+Thus, the constant functions $\varphi(y) \equiv \mu(X$ and $\psi(x) \equiv \nu(Y)$ are dominating functions for our sequences. 
+
+Thus, we may use the dominated convergence theorem to finish the above calculation and see that $E$ satisfies $(ii)$, so indeed $E \in \mc{C}$. 
+
+Therefore, $\mc{C}$ is a monotone class. 
+
+Next time: case 2 of $\sigma$-finite. 
+
+\qed
+
+\rem (John's note)
+
+I believe that in the proof to come, it will once again be the case that we can replace $\sigma$-finite with $s$-finite. Maybe I'm wrong tho idk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
