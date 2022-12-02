@@ -2779,14 +2779,198 @@ Next time: case 2 of $\sigma$-finite.
 
 \rem (John's note)
 
-I believe that in the proof to come, it will once again be the case that we can replace $\sigma$-finite with $s$-finite. Maybe I'm wrong tho idk
+I believe that in the proof to come, it will once again be the case that we can replace $\sigma$-finite with $s$-finite. Maybe I'm wrong tho idk.
 
+\section*{Lecture 17}
 
+\subsection*{\underline{Case 2:}}
 
+Suppose $\mu,\nu$ are $\sigma$-finite, that is there exist sequences $\{A_i\}\seq{i}\in\mc{M}^\N, \{B_i\}\seq{i}\in\mc{N}^\N$, such that $\mu(A_i), \mu(B_i) < \oo$ for all $i$, and $\cup_iA_i = X, \cup_iB_i = Y$. 
 
+Without loss of generality, we may assume $A_i, B_i$ increasing (let $A'_i = \cup_{j=1}^i A_i$. Then $\{A'_i\}\seq{i}$ is an increasing sequence of finite sets whose union is $X$, and similarly for $B_i$). 
 
+Because they are increasing, $\cup\seq{i}(A_i\times B_i) = X\times Y$. 
 
+For all $i$, define
+\begin{align*}
+\mu_i(A) & \eqdef \mu(A\cap A_i) \\
+\nu_i(B) & \eqdef \nu(B\cap B_i) \\
+\end{align*}
+For all $i$, $\mu_i,\nu_i$ are finite measures on $\mc{M}, \mc{N}$, respectively. 
 
+Note that
+\begin{center}
+\begin{tikzcd}
+\ar[d, Rightarrow] \int1_A\,d\mu_i = \int1_A1_{A_i}\,d\mu & \forall A \in \mc{M} \\
+\ar[d, Rightarrow, "MCT"]\int\varphi\,d\mu_i = \int \varphi1_{A_i}\,d\mu & \forall \varphi\text{ simple } \\
+\int f\,d\mu_i = \int f1_{A_i}\,d\mu & \forall f\text{ nonnegative, measurable} \\
+\end{tikzcd}
+\end{center}
+
+Case 1 ensures that for any $E \in \mc{M}\otimes\mc{N}$, 
+\begin{enumerate}[label=(\roman*)]
+\item The functions $x\mapsto \nu(E_x)$ and $y\mapsto \mu(E^y)$ are $(\mc{M},\mc{B}_\R)$-measurable and $(\mc{N},\mc{B}_\R)$-measurable. 
+\item $\int_X\nu_i(E_x)\,d\mu_i(x) = \int_Y\mu_i(E^y)d\,\nu_i(y)$ 
+\end{enumerate}
+By definition of $\mu_i, \nu_i$ and continuity from below, 
+\[
+\nu_i(E_x)\uparrow\nu(E_x),\, \mu_i(E^y)\uparrow\mu(E^y) 
+\]
+Finally, 
+\begin{align*}
+\int_X\nu(E_x)\,d\mu(x) & = \lim_{i\to\oo}\int_X\nu_i(E_x)1_{A_i}(x)\,d\mu(x) \\
+& = \lim_{i\to\oo}\int_X\nu_i(E_x)\,d\mu_i(x) \\
+& = \lim_{i\to\oo}\int_Y\mu_i(E^y)\,d\nu_i(y) \\
+& = \lim_{i\to\oo}\int_Y\mu_i(E^y)1_{B_i}(y)\,d\nu(y) \\
+& = \int_Y\mu(E^y)\,d\nu(y) \\
+\end{align*}
+where the first and last equalities are by MCT. So, we are done. 
+\qed
+
+\rem (John's note) As before, note that we may weaken $\sigma$-finiteness to $s$-finiteness: if we have that $\mu = \sum\seq{i}\mu_i$ for a sequence $\{\mu_i\}\seq{i}$ of finite measures, then the proof above goes thru without having to use $\sigma$-finiteness, because the only thing we use $\sigma$-finiteness for is constructing the $\mu_i$. 
+
+\thm Consider $\sigma$-finite (John: or $s$-finite!) measure spaces $(X,\mc{M},\mu)$ and $(Y, \mc{N}, \nu)$. 
+
+Define $\mu\otimes\nu:\mc{M}\otimes\mc{N}\to[0,+\oo]$ by 
+\[
+\mu\otimes\nu(E) = \int_X\nu(E_x)\,d\mu(x) = \int_Y\mu(E^y)\,d\nu(y)
+\]
+Then
+\begin{enumerate}[label=(\roman*)]
+\item $\mu\otimes\nu$ is a $\sigma$-finite measfure on $\mc{M}\otimes\mc{N}$ 
+\item $\mu\otimes\nu$ is the unique measure on $\mc{M}\otimes\mc{N}$ satisfying
+\[
+\mu\otimes\nu(A\times B) = \mu(A)\nu(B)\,\forall A \in \mc{M},B\in\mc{N}
+\]
+\end{enumerate}
+
+\proof
+
+We will first show $(i)$. It is clear that $\mu\otimes\nu(\varnothing) = 0$. Furthermore, if $\{E_i\}\seq{i} \in (\mc{M}\otimes\mc{N})^\N$ is a sequence of disjoint sets, then $\{(E_i)_x\}\seq{i}\in\mc{N}^\N$ are disjoint and
+\begin{align*}
+\mu\otimes\nu(\cup\seq{i}E_i) & = \int_X\nu(\cup\seq{i}(E_i)_x)\,d\mu(x) = \sum\seq{i}\int_X\nu((E_i)_x)\,d\mu(x) \\
+& = \sum\seq{i}\mu\otimes\nu((E_i)_x) \\
+\end{align*}
+
+Thus $\mu\otimes\nu$ is a measure. To see $\sigma$-finiteness, let $\{A_i\}\seq{i} \in \mc{M}^\N, \{B_i\}\seq{i}\in\mc{N}^\N$, with $\cup_iA_i = X, \cup_iB_i = Y, \mu(A_i), \mu(B_i)< \oo$ for all $i$. As before, we may assume without loss of generality that $A_i, B_i$ are increasing sequences, so $\cup\seq{i}(A_i\times B_i) = X\times Y$. 
+
+By definition, $\mu\otimes\nu(A_i\times B_i) = \mu(A_i)\nu(B_i)<\oo$. Thus $\mu\otimes\nu$ is $\sigma$-finite. 
+
+In order to prove uniqueness, let $\mc{A}$ be the algebra of finite disjoint unions of rectangles. Last time, we showed $\ms{M}(\mc{A}) = \mc{M}\otimes\mc{N}$. 
+
+Suppose $\sigma$ is a measure on $\mc{M}\otimes\mc{N}$ satisfying
+\[
+\sigma(A\times B) = \mu(A)\nu(B)\,\,\forall A \in \mc{M}, B \in \mc{N}
+\]
+Note that, for any $E \in \mc{A}$, $E = \coprod_{i=1}^n(A_i\times B_i)$, 
+\[
+\sigma(E) = \sum_{i=1}^n\sigma(A_i\times B_i) = \sum_{i=1}^n\mu\otimes\nu(A_i \times B_i) = \mu\otimes\nu(E)
+\]
+Since $\mu\otimes \nu$ satisfies the stronger $\sigma$-finite condition, we conclude 
+\[
+\mu\otimes\nu(E) = \sigma(E)\,\,\forall E \in \mc{M}\otimes\mc{N}
+\]
+\qed
+
+The following can be considered the 9th major theorem of the course: 
+\thm (Fubini/Tonelli) 
+Consider $\sigma$-finite measure spaces $(X,\mc{M},\mu), (Y,\mc{N},\nu)$. 
+\begin{enumerate}[label=(\roman*)]
+\item Tonelli: 
+
+Given $f:X\times Y\to[0, +\oo]$ which is $(\mc{M}\otimes\mc{N}, \mc{B}_{\bar{\R}}$ measurable, then $x\mapsto\int f(x, y)\,d\nu(y)$ and $y\mapsto\int f(x, y)\,d\mu(x)$ are $(\mc{M},\mc{B}_{\bar{\R}})$ and $(\mc{N}, \mc{B}_{\bar{\R}})$ measurable, respectively
+\begin{align*}
+\int_{X\times Y}f(x, y)\,d\mu\otimes\nu(x, y) & = \int_X\left(\int_Yf(x, y)\,d\nu(y)\right)\,d\mu(x) \\
+& = \int_Y\left(\int_Xf(x, y)\,d\mu(y)\right)\,d\nu(x) \\
+\end{align*}
+
+\item Fubini:
+Given $f\in L^1(\mu\otimes\nu)$, then $y\mapsto f(x, y) \in L^1(\nu)$ for $\mu$-almost all $x$, and $x\mapsto f(x, y) \in L^1(\mu)$ for $\nu$-almost all $y$, and the above holds. 
+
+\end{enumerate}
+
+\proof
+
+We will start with Tonelli. For any $E \in \mc{M}\otimes\mc{N}$, we have already shown that $x\mapsto \nu(E_x)$ and $y\mapsto\mu(E^y)$ are $(\mc{M},\mc{B}_\R)$-measurable and $(\mc{N}, \mc{B}_\R)$-measurable. Now, 
+\begin{align*}
+\int_{X\times Y}1_E\,d\mu\otimes\nu & = \int_X\left(\int_Y1_E(x, y)\,d\nu(y)\right)\,d\mu(x) \\
+& = \int_X\nu(E_x)\,d\mu(x) \\
+& = \int_Y\mu(E^y)\,d\nu(y) \\
+& = \int_Y\left(\int_X1_E(x, y)\,d\mu(x)\right)\,d\nu(y) \\
+\end{align*}
+Thus, the conclusion of the theorem holds for all $f = 1_E$ indicator functions. 
+
+By linearity of the integral, the theorem holds for simple functions. For general nonnegative measurable $f$, take a sequence of simple functions $\varphi_n\uparrow f$ pointwise. Then, by the monotone convergence theorem, for all $x \in X$, 
+\[
+\int\varphi_n(x, y),d\nu(y) \uparrow\int f(x, y)\,d\nu(y)
+\]
+so $x\mapsto \int f(x, y)\,d\nu(y)$ is measurable and 
+\begin{align*}
+\int f\,d\mu\otimes\nu & = \lim_{n\to\oo}\int\varphi_n\,d\mu\otimes\nu = \lim_{n\to\oo}\iint\varphi_n\,d\nu\,d\mu \\
+& = \int\lim_{n\to\oo}\int\varphi_n\,d\nu\,d\mu = \iint f\,d\nu\,d\mu \\
+\end{align*}
+and similarly with the roles of $\mu, \nu$ interchanged. It remains to show Fubini. Since $f \in L^1(\mu\otimes\nu),$ by Tonelli
+\[
++\oo > \int|f|\,d\mu\otimes\nu = \int\left(\int|f|\,d\nu\right)\,d\mu = \iint|f|\,d\mu\,d\nu 
+\]
+so $x\mapsto \int|f(x, y)|\,d\nu(y)< \oo$ $\mu$-almost everywhere, and $y\mapsto\int|f(x, y)|\,d\mu(x)< \oo$ $\nu$-almost everywhere. 
+
+Furthermore, 
+\begin{align*}
+-\int|f(x, y)|\,d\nu(y) \leq \int f(x, y)\,d\nu(y) \leq \int|f(x, y)|\,d\nu(y) \\
+\iff \\
+\abs*{\int f(x, y)\,d\nu(y)} \leq \int|f(x, y)|\,d\nu(y) \\
+\end{align*} 
+Thus
+\[
+\int\abs*{\int f(x, y)\,d\nu(y)}\,d\mu(x) \leq \iint|f(x, y)\,d\nu(y)\,d\mu(x) 
+\]
+so $x\mapsto \int f(x, y)\,d\nu(y) \in L^1(\mu)$ and similarly with $\mu, \nu$ interchanged. Finally, if we apply Tonelli to the positive and negative parts of $f$, we are done. 
+
+\qed
+
+Application of Tonelli: ``Layer-cake representation of integral" 
+
+\prop Consider a $\sigma$-finite measure $(X,\mc{M}, \mu)$ and $f:X\to[0,+\oo]$ measurable. Let $\nu$ be a measure on $\mc{B}_\R$ such that
+\[
+\varnothing(t)\eqdef\nu([0, t))<\oo\,\,\forall t> 0
+\]
+Then
+\begin{enumerate}[label=(\roman*)]
+\item $\varnothing\circ f$ is measurable. 
+\item $t\mapsto\mu(\{x:f(x)>t\})$ is measurable. 
+\item $\int_X\varnothing(f(x))\,d\mu(x) = \int_{[0, +\oo)}\mu(\{x: f(x) > t\})\,d\nu$
+\end{enumerate}
+
+\rem 
+\begin{enumerate}[label=(\alph*)]
+\item Choose $\nu(A) = p\int_{A\cap[0, +\oo)}s^{p - 1}\,ds$ for $p > 0$, 
+\[
+\int_X(f(x))^p\,d\mu(x) = p\int_{[0, +\oo)}t^{p - 1}\mu(\{x:f(x) > t\})\,dt
+\]
+\item In particular, for $p = 1$, 
+\[
+\int f(x)\,d\mu(x) = \int_{[0, +\oo)}\mu(\{x:f(x) > t\})\,dt
+\]
+\end{enumerate}
+\proof
+
+Since $(x, t)\mapsto f(x)$, $(x, t) \mapsto t$ are $\mc{M}\otimes\mc{B}_\R$ measurable, 
+\[
+\{(x, t):f(x) > t\} \in \mc{M}\otimes\mc{B}_\R
+\]
+so Tonelli ensure $(ii)$ and $(i)$ follows by monotonicity of $\varnothing$. 
+
+Finally, 
+\begin{align*}
+\int_{[0, +\oo)}\mu(\{x:f(x) > t\})\,d\nu(t) & = \int_{[0, + \oo)}\int_X1_{\{(x, t): f(x) > t \}}(x, t)\,d\mu(x)\,d\nu(t) \\
+& = \int_X\int_{[0, +\oo)}1_{\{(x, t):f(x) > t\}}(x, t)\,d\nu(t)\,d\mu(x) \\
+& = \int_X\nu(\{t:f(x) > t\} \cap[0, +\oo))\,d\mu(x) \\
+& = \int_X\nu([0, f(x))\,d\mu(x) \\
+& = \int_X\varnothing(f(x))\,d\mu(x) \\
+\end{align*}
+
+\qed
 
 
 
